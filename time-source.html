@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Time Source — Průvodce časovou dotací</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lz-string/1.4.4/lz-string.min.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --amber:#C8813A;--amber-dark:#a8661f;--amber-light:#FFF0E0;
+  --text:#1A1A18;--text2:#5A5A56;--text3:#999890;
+  --bg:#F7F5F1;--bg2:#EDEBE6;--bg3:#fff;
+  --border:rgba(26,26,24,0.12);--border2:rgba(26,26,24,0.22);
+  --radius:8px;--radius-lg:12px;
+  --shadow:0 2px 12px rgba(0,0,0,0.07);
+}
+body{font-family:'IBM Plex Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;flex-direction:column;align-items:center}
+#app{width:100%;max-width:800px;padding:2rem 1.5rem 4rem;margin:0 auto}
+
+/* LANG BAR */
+.lang-bar{display:flex;justify-content:flex-end;gap:6px;margin-bottom:2rem}
+.lang-btn{background:none;border:0.5px solid var(--border2);border-radius:var(--radius);padding:4px 12px;font-size:12px;cursor:pointer;color:var(--text2);font-family:'IBM Plex Sans',sans-serif;transition:all .15s}
+.lang-btn.active,.lang-btn:hover{background:var(--bg2);color:var(--text);border-color:var(--border2)}
+.lang-btn.active{font-weight:500;border-color:var(--amber);color:var(--amber)}
+
+/* PROGRESS */
+.progress-wrap{margin-bottom:2rem}
+.prog-track{display:flex;height:3px;border-radius:2px;overflow:hidden;background:var(--border);margin-bottom:8px}
+.prog-seg{flex:1;background:var(--border);transition:background .3s}
+.prog-seg.done,.prog-seg.active{background:var(--amber)}
+.prog-labels{display:flex;justify-content:space-between}
+.prog-lbl{font-size:10px;color:var(--text3);cursor:default;transition:color .2s;max-width:72px;text-align:center;line-height:1.3}
+.prog-lbl.done{color:var(--text2);cursor:pointer}
+.prog-lbl.done:hover{color:var(--text)}
+.prog-lbl.active{color:var(--amber);font-weight:500}
+
+/* TYPOGRAPHY */
+.playfair{font-family:'Playfair Display',serif}
+.step-title{font-family:'Playfair Display',serif;font-size:26px;font-weight:500;color:var(--text);margin-bottom:.5rem;line-height:1.3}
+.step-sub{font-size:14px;color:var(--text2);margin-bottom:2rem;line-height:1.7}
+.divider{height:.5px;background:var(--border);margin:2rem 0}
+
+/* INPUTS */
+.input-group{margin-bottom:1.25rem}
+.input-label{font-size:11px;font-weight:500;color:var(--text2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;display:block}
+.input-field{width:100%;padding:10px 14px;border:.5px solid var(--border);border-radius:var(--radius);font-size:14px;font-family:'IBM Plex Sans',sans-serif;background:var(--bg3);color:var(--text);transition:border-color .2s}
+.input-field:focus{outline:none;border-color:var(--amber)}
+
+/* ACTIVITY CARDS */
+.activity-card{border:.5px solid var(--border);border-left:3px solid transparent;border-radius:var(--radius);padding:14px 16px;margin-bottom:10px;background:var(--bg3);transition:all .2s}
+.activity-card.set{border-left-color:var(--amber)}
+.activity-card:hover{border-color:var(--border2);border-left-color:var(--amber)}
+.activity-card-top{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.activity-name{font-size:14px;font-weight:500;color:var(--text);flex:1}
+.info-wrap{position:relative;cursor:pointer}
+.info-icon{color:var(--text3);font-size:16px;display:block}
+.tooltip{display:none;position:absolute;right:0;top:24px;background:var(--bg3);border:.5px solid var(--border2);border-radius:var(--radius);padding:10px 14px;font-size:12px;color:var(--text2);line-height:1.5;width:230px;z-index:200;box-shadow:var(--shadow)}
+.info-wrap:hover .tooltip{display:block}
+.preset-chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.chip{padding:4px 10px;border:.5px solid var(--border2);border-radius:20px;font-size:12px;cursor:pointer;color:var(--text2);background:none;font-family:'IBM Plex Sans',sans-serif;transition:all .15s}
+.chip:hover{border-color:var(--amber);color:var(--amber)}
+.chip.active{background:var(--amber);border-color:var(--amber);color:#fff}
+.hours-row{display:flex;align-items:center;gap:8px}
+.hours-input{width:80px;padding:6px 10px;border:.5px solid var(--border);border-radius:var(--radius);font-size:13px;font-family:'IBM Plex Sans',sans-serif;color:var(--text);background:var(--bg3);transition:border-color .2s}
+.hours-input:focus{outline:none;border-color:var(--amber)}
+.hours-unit{font-size:12px;color:var(--text3)}
+.cat-subtotal{text-align:right;margin-top:.5rem;margin-bottom:1rem;font-size:13px;color:var(--text2)}
+.cat-subtotal span{color:var(--amber);font-weight:500}
+
+/* ADD ACTIVITY */
+.add-activity-form{border:.5px dashed var(--border2);border-radius:var(--radius);padding:14px 16px;margin-bottom:10px;background:var(--bg)}
+.add-activity-form .input-field{margin-bottom:8px;font-size:13px;padding:8px 12px}
+.add-row{display:flex;gap:8px;align-items:center}
+.btn-add-confirm{padding:7px 16px;background:var(--amber);border:none;border-radius:var(--radius);color:#fff;font-size:13px;font-family:'IBM Plex Sans',sans-serif;cursor:pointer;font-weight:500;transition:background .15s}
+.btn-add-confirm:hover{background:var(--amber-dark)}
+.btn-add-cancel{padding:7px 14px;background:none;border:.5px solid var(--border2);border-radius:var(--radius);color:var(--text2);font-size:13px;font-family:'IBM Plex Sans',sans-serif;cursor:pointer;transition:all .15s}
+.btn-add-cancel:hover{background:var(--bg2)}
+.btn-add-activity{display:flex;align-items:center;gap:6px;padding:8px 14px;background:none;border:.5px dashed var(--border2);border-radius:var(--radius);color:var(--text3);font-size:13px;font-family:'IBM Plex Sans',sans-serif;cursor:pointer;transition:all .15s;margin-bottom:1rem}
+.btn-add-activity:hover{border-color:var(--amber);color:var(--amber)}
+.btn-remove-act{background:none;border:none;cursor:pointer;color:var(--text3);font-size:14px;padding:2px 4px;border-radius:4px;transition:color .15s;flex-shrink:0}
+.btn-remove-act:hover{color:#c0392b}
+
+/* NAV */
+.nav-btns{display:flex;justify-content:space-between;align-items:center;margin-top:2rem}
+.btn{padding:10px 22px;border-radius:var(--radius);font-size:14px;font-family:'IBM Plex Sans',sans-serif;cursor:pointer;transition:all .15s;font-weight:500;display:inline-flex;align-items:center;gap:6px}
+.btn-ghost{background:none;border:.5px solid var(--border2);color:var(--text2)}
+.btn-ghost:hover{background:var(--bg2);color:var(--text)}
+.btn-primary{background:var(--amber);border:none;color:#fff}
+.btn-primary:hover{background:var(--amber-dark)}
+.btn-primary:active{transform:scale(.98)}
+.skip-warn{font-size:12px;color:var(--amber);margin-top:.5rem;text-align:center;min-height:18px}
+
+/* SUMMARY */
+.client-meta{background:var(--bg2);border-radius:var(--radius);padding:1rem 1.25rem;margin-bottom:2rem;font-size:13px}
+.client-meta-row{display:flex;gap:8px;margin-bottom:5px}
+.client-meta-row:last-child{margin-bottom:0}
+.meta-key{color:var(--text2);min-width:80px;flex-shrink:0}
+.meta-val{color:var(--text);font-weight:500}
+.total-box{background:var(--bg2);border-radius:var(--radius-lg);padding:1.5rem 2rem;margin:2rem 0;display:flex;justify-content:space-between;align-items:center}
+.total-label{font-size:14px;color:var(--text2)}
+.total-value{font-family:'Playfair Display',serif;font-size:34px;color:var(--amber);font-weight:600}
+.total-days{font-size:12px;color:var(--text3);margin-top:2px;text-align:right}
+.sum-cat-title{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:var(--text3);margin:1.5rem 0 .5rem;padding-bottom:4px;border-bottom:.5px solid var(--border)}
+.sum-row{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:.5px solid var(--border);font-size:13px}
+.sum-row:last-child{border-bottom:none}
+.sum-row-name{color:var(--text2)}
+.sum-row-hours{color:var(--text);font-weight:500}
+.action-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:1.5rem}
+.action-btn{display:inline-flex;align-items:center;gap:7px;padding:9px 18px;border:.5px solid var(--border2);border-radius:var(--radius);background:none;font-size:13px;font-family:'IBM Plex Sans',sans-serif;cursor:pointer;color:var(--text2);transition:all .15s}
+.action-btn:hover{background:var(--bg2);color:var(--text)}
+.action-btn.primary{background:var(--amber);border-color:var(--amber);color:#fff}
+.action-btn.primary:hover{background:var(--amber-dark)}
+
+/* LOGO UPLOAD */
+.logo-section{margin-bottom:1.25rem}
+.logo-upload-area{border:.5px dashed var(--border2);border-radius:var(--radius);padding:20px;text-align:center;cursor:pointer;transition:all .2s;background:var(--bg)}
+.logo-upload-area:hover{border-color:var(--amber);background:var(--amber-light)}
+.logo-preview{max-height:60px;max-width:200px;object-fit:contain;display:block;margin:0 auto}
+.logo-preview-wrap{position:relative;display:inline-block;margin-bottom:8px}
+.logo-remove{position:absolute;top:-8px;right:-8px;background:#fff;border:.5px solid var(--border2);border-radius:50%;width:20px;height:20px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:11px;color:var(--text2);transition:all .15s}
+.logo-remove:hover{background:#fee;color:#c0392b}
+.logo-url-row{display:flex;gap:8px;margin-top:8px}
+.logo-url-input{flex:1;padding:8px 12px;border:.5px solid var(--border);border-radius:var(--radius);font-size:13px;font-family:'IBM Plex Sans',sans-serif;color:var(--text);background:var(--bg3)}
+.logo-url-input:focus{outline:none;border-color:var(--amber)}
+.btn-logo-url{padding:8px 14px;background:var(--amber);border:none;border-radius:var(--radius);color:#fff;font-size:13px;font-family:'IBM Plex Sans',sans-serif;cursor:pointer;font-weight:500;white-space:nowrap}
+
+/* LOCKED VIEW */
+.locked-banner{background:#FFF4E6;border:.5px solid #E8A94A;border-radius:var(--radius);padding:12px 18px;margin-bottom:2rem;display:flex;align-items:center;gap:10px;font-size:13px;color:#7A4810}
+.locked-logo{max-height:80px;max-width:240px;object-fit:contain;display:block;margin:0 auto}
+.locked-header{padding-top:2.5rem;margin-bottom:2rem}
+.locked-header .step-title{margin-bottom:0}
+.btn-edit-act{background:none;border:none;cursor:pointer;color:var(--text3);font-size:14px;padding:2px 4px;border-radius:4px;transition:color .15s;flex-shrink:0}
+.btn-edit-act:hover{color:var(--amber)}
+
+/* MODAL */
+.modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;z-index:500;opacity:0;pointer-events:none;transition:opacity .2s}
+.modal-backdrop.open{opacity:1;pointer-events:all}
+.modal{background:var(--bg3);border:.5px solid var(--border2);border-radius:var(--radius-lg);padding:2rem;max-width:460px;width:92%;max-height:85vh;overflow-y:auto;box-shadow:var(--shadow);position:relative;transform:translateY(16px);transition:transform .2s}
+.modal-backdrop.open .modal{transform:translateY(0)}
+.modal-title{font-family:'Playfair Display',serif;font-size:18px;margin-bottom:.5rem;color:var(--text)}
+.modal-desc{font-size:13px;color:var(--text2);margin-bottom:1rem;line-height:1.6}
+.modal-close{position:absolute;top:14px;right:14px;background:none;border:none;cursor:pointer;font-size:18px;color:var(--text3);padding:4px;border-radius:4px;transition:color .15s}
+.modal-close:hover{color:var(--text)}
+.url-box{background:var(--bg2);border-radius:var(--radius);padding:10px 14px;font-size:11px;color:var(--text2);word-break:break-all;margin-bottom:10px;line-height:1.5;font-family:monospace}
+.copy-btn{width:100%;padding:9px;border:.5px solid var(--border2);border-radius:var(--radius);background:none;font-size:13px;font-family:'IBM Plex Sans',sans-serif;cursor:pointer;color:var(--text2);margin-bottom:8px;display:flex;align-items:center;justify-content:center;gap:6px;transition:all .15s}
+.copy-btn:hover{background:var(--bg2)}
+.modal-sep{height:.5px;background:var(--border);margin:14px 0}
+.modal-note{font-size:11px;color:var(--text3);margin-top:1rem;line-height:1.6}
+.tiny-label{font-size:11px;color:var(--text3);margin:10px 0 6px}
+
+/* WELCOME */
+.welcome-icon{font-size:44px;color:var(--amber);margin-bottom:1.5rem;display:block}
+
+/* PRINT */
+@media print{
+  .lang-bar,.nav-btns,.action-row,.progress-wrap,.add-activity-form,.btn-add-activity,.btn-remove-act{display:none!important}
+  body{background:#fff}
+  .locked-banner{display:none!important}
+}
+
+/* TOAST */
+.toast{position:fixed;bottom:24px;right:24px;background:var(--text);color:#fff;padding:10px 18px;border-radius:var(--radius);font-size:13px;font-family:'IBM Plex Sans',sans-serif;z-index:999;opacity:0;transform:translateY(8px);transition:all .25s;pointer-events:none}
+.toast.show{opacity:1;transform:translateY(0)}
+</style>
+</head>
+<body>
+
+<div id="app">
+  <div class="lang-bar">
+    <button class="lang-btn active" onclick="setLang('cs')">CS</button>
+    <button class="lang-btn" onclick="setLang('en')">EN</button>
+    <button class="lang-btn" onclick="setLang('de')">DE</button>
+  </div>
+  <div id="progress-wrap" class="progress-wrap" style="display:none"></div>
+  <div id="main-content"></div>
+</div>
+
+<!-- SHARE MODAL -->
+<div class="modal-backdrop" id="share-modal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('share-modal')" aria-label="Zavřít"><i class="ti ti-x"></i></button>
+    <p class="modal-title" id="modal-share-title"></p>
+    <p class="modal-desc" id="modal-share-desc"></p>
+    <div class="url-box" id="share-url-box"></div>
+    <button class="copy-btn" onclick="copyUrl('long')" id="copy-long-btn"><i class="ti ti-copy"></i><span id="copy-long-label"></span></button>
+    <div class="modal-sep"></div>
+    <p class="tiny-label" id="or-shorten-label"></p>
+    <button class="copy-btn" onclick="shortenUrl()" id="shorten-btn"><i class="ti ti-link"></i><span id="shorten-label"></span></button>
+    <div id="short-url-area" style="display:none">
+      <div class="url-box" id="short-url-box"></div>
+      <button class="copy-btn" onclick="copyUrl('short')"><i class="ti ti-copy"></i><span id="copy-short-label"></span></button>
+    </div>
+    <p class="modal-note" id="modal-share-note"></p>
+  </div>
+</div>
+
+<!-- ADD ACTIVITY MODAL -->
+<div class="modal-backdrop" id="add-modal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('add-modal')" aria-label="Zavřít"><i class="ti ti-x"></i></button>
+    <p class="modal-title" id="add-modal-title"></p>
+    <div class="input-group" style="margin-top:1rem">
+      <label class="input-label" id="add-name-label"></label>
+      <input class="input-field" id="add-act-name" placeholder="" style="font-size:14px">
+    </div>
+    <div class="input-group">
+      <label class="input-label" id="add-desc-label"></label>
+      <textarea class="input-field" id="add-act-desc" rows="3" placeholder="" style="font-size:13px;resize:vertical"></textarea>
+    </div>
+    <div class="input-group">
+      <label class="input-label" id="add-presets-label"></label>
+      <input class="input-field" id="add-act-presets" placeholder="0.5, 1, 2, 3, 4" style="font-size:13px">
+    </div>
+    <div style="display:flex;gap:8px;margin-top:1rem">
+      <button class="btn btn-primary" onclick="confirmAddActivity()" id="add-confirm-btn" style="flex:1"></button>
+      <button class="btn btn-ghost" onclick="closeModal('add-modal')" id="add-cancel-btn"></button>
+    </div>
+  </div>
+</div>
+
+<!-- EDIT ACTIVITY MODAL -->
+<div class="modal-backdrop" id="edit-modal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('edit-modal')" aria-label="Zavrít"><i class="ti ti-x"></i></button>
+    <p class="modal-title" id="edit-modal-title"></p>
+    <p style="font-size:12px;color:var(--text3);margin-bottom:1.25rem;line-height:1.5" id="edit-modal-hint"></p>
+    <div id="edit-modal-lang-tabs" style="display:flex;gap:6px;margin-bottom:1.25rem"></div>
+    <div id="edit-modal-fields"></div>
+    <div class="input-group">
+      <label class="input-label" id="edit-presets-label"></label>
+      <input class="input-field" id="edit-act-presets" style="font-size:13px">
+    </div>
+    <div style="display:flex;gap:8px;margin-top:1rem">
+      <button class="btn btn-primary" onclick="confirmEditActivity()" id="edit-confirm-btn" style="flex:1"></button>
+      <button class="btn btn-ghost" onclick="closeModal('edit-modal')" id="edit-cancel-btn"></button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const PRESETS_DEFAULT = [0.5, 1, 2, 3, 4];
+
+const T = {
+  cs:{
+    appName:'Time Source',appTagline:'Průvodce nastavením časové dotace pro emailový marketing',
+    welcome:'Vítejte v průvodci',welcomeSub:'Tento nástroj pomáhá nastavit realistický odhad času pro všechny emailové aktivity — od analýzy po reporting. Na konci získáte souhrn ke sdílení s klientem.',
+    clientName:'Jméno klienta',projectName:'Název projektu',goal:'Cíl projektu',
+    clientNamePh:'např. Somavedic',projectNamePh:'např. Emailový marketing Q3',goalPh:'např. Spustit 3 automatizace a první newsletter',
+    logoLabel:'Logo klienta (pro pohled klienta)',logoUploadHint:'Klikněte pro nahrání souboru',logoUrlLabel:'nebo vložte URL loga',logoUrlBtn:'Načíst',
+    start:'Začít',back:'Zpět',next:'Další',summary:'Souhrn',summaryTitle:'Souhrn časové dotace',
+    totalLabel:'Celkem hodin',workingDays:'pracovních dní (8h)',
+    shareBtn:'Sdílet s klientem',editBtn:'Upravit nastavení',printBtn:'Tisk / Export PDF',saveBtn:'Uložit jako soubor',loadBtn:'Načíst soubor',
+    skipWarn:'Žádná aktivita nebyla nastavena. Pokračujte nebo se vraťte a nastavte hodnoty.',
+    stepLabel:'Krok',of:'z',subtotalLabel:'Součet kategorie',hours:'h',manualLabel:'Ručně',
+    addActivity:'Přidat aktivitu',addModalTitle:'Nová aktivita',addNameLabel:'Název aktivity',addDescLabel:'Popis (zobrazuje se při najetí myší)',addPresetsLabel:'Preset hodnoty (oddělené čárkou)',addConfirm:'Přidat',addCancel:'Zrušit',
+    removeActTip:'Odebrat aktivitu',editActTip:'Upravit aktivitu',editModalTitle:'Upravit aktivitu',editModalHint:'Název a popis upravte pro každý jazyk zvlášť.',editPresetsLabel:'Preset hodnoty (oddělené čárkou)',editConfirm:'Uložit',editCancel:'Zrušit',
+    modalShareTitle:'Sdílet s klientem',modalShareDesc:'Odkaz otevře zamčený pohled — klient uvidí data jen ke čtení.',
+    copyLong:'Kopírovat odkaz',orShorten:'nebo zkrátit odkaz',shorten:'Zkrátit odkaz (TinyURL)',copyShort:'Kopírovat zkrácený odkaz',
+    modalNote:'🔒 Klient uvidí data pouze ke čtení. Žádné změny nejsou možné.',
+    lockedBanner:'Zobrazení pro klienta — pouze ke čtení',
+    copied:'Zkopírováno!',shortening:'Zkracuji...',shortenFail:'Zkrácení se nezdařilo.',
+    client:'Klient',project:'Projekt',goal2:'Cíl',progWelcome:'Start',progSummary:'Souhrn',
+    toastSaved:'Soubor uložen',toastLoaded:'Soubor načten',toastLoadErr:'Chyba načítání souboru',
+  },
+  en:{
+    appName:'Time Source',appTagline:'Email marketing time estimation guide',
+    welcome:'Welcome to the guide',welcomeSub:'This tool helps set a realistic time estimate for all email marketing activities — from analysis to reporting. At the end you get a summary to share with your client.',
+    clientName:'Client name',projectName:'Project name',goal:'Project goal',
+    clientNamePh:'e.g. Somavedic',projectNamePh:'e.g. Email marketing Q3',goalPh:'e.g. Launch 3 automations and first newsletter',
+    logoLabel:'Client logo (shown in client view)',logoUploadHint:'Click to upload file',logoUrlLabel:'or paste logo URL',logoUrlBtn:'Load',
+    start:'Start',back:'Back',next:'Next',summary:'Summary',summaryTitle:'Time estimate summary',
+    totalLabel:'Total hours',workingDays:'working days (8h)',
+    shareBtn:'Share with client',editBtn:'Edit settings',printBtn:'Print / Export PDF',saveBtn:'Save as file',loadBtn:'Load file',
+    skipWarn:'No activities set. Continue or go back to set values.',
+    stepLabel:'Step',of:'of',subtotalLabel:'Category subtotal',hours:'h',manualLabel:'Manual',
+    addActivity:'Add activity',addModalTitle:'New activity',addNameLabel:'Activity name',addDescLabel:'Description (shown on hover)',addPresetsLabel:'Preset values (comma separated)',addConfirm:'Add',addCancel:'Cancel',
+    removeActTip:'Remove activity',editActTip:'Edit activity',editModalTitle:'Edit activity',editModalHint:'Edit the name and description for each language separately.',editPresetsLabel:'Preset values (comma separated)',editConfirm:'Save',editCancel:'Cancel',
+    modalShareTitle:'Share with client',modalShareDesc:'The link opens a locked view — the client sees read-only data.',
+    copyLong:'Copy link',orShorten:'or shorten the link',shorten:'Shorten link (TinyURL)',copyShort:'Copy short link',
+    modalNote:'🔒 The client sees read-only data. No changes possible.',
+    lockedBanner:'Client view — read only',
+    copied:'Copied!',shortening:'Shortening...',shortenFail:'Shortening failed.',
+    client:'Client',project:'Project',goal2:'Goal',progWelcome:'Start',progSummary:'Summary',
+    toastSaved:'File saved',toastLoaded:'File loaded',toastLoadErr:'Error loading file',
+  },
+  de:{
+    appName:'Time Source',appTagline:'Leitfaden zur E-Mail-Marketing Zeitschätzung',
+    welcome:'Willkommen beim Leitfaden',welcomeSub:'Dieses Tool hilft, eine realistische Zeitschätzung für alle E-Mail-Marketing-Aktivitäten zu erstellen — von der Analyse bis zum Reporting.',
+    clientName:'Kundenname',projectName:'Projektname',goal:'Projektziel',
+    clientNamePh:'z.B. Somavedic',projectNamePh:'z.B. E-Mail-Marketing Q3',goalPh:'z.B. 3 Automationen und ersten Newsletter starten',
+    logoLabel:'Kunden-Logo (in der Kundenansicht)',logoUploadHint:'Klicken zum Hochladen',logoUrlLabel:'oder Logo-URL einfügen',logoUrlBtn:'Laden',
+    start:'Starten',back:'Zurück',next:'Weiter',summary:'Übersicht',summaryTitle:'Zeitschätzung Übersicht',
+    totalLabel:'Stunden gesamt',workingDays:'Arbeitstage (8h)',
+    shareBtn:'Mit Kunden teilen',editBtn:'Einstellungen bearbeiten',printBtn:'Drucken / PDF exportieren',saveBtn:'Als Datei speichern',loadBtn:'Datei laden',
+    skipWarn:'Keine Aktivitäten gesetzt. Fortfahren oder zurückgehen.',
+    stepLabel:'Schritt',of:'von',subtotalLabel:'Kategorie-Zwischensumme',hours:'Std.',manualLabel:'Manuell',
+    addActivity:'Aktivität hinzufügen',addModalTitle:'Neue Aktivität',addNameLabel:'Name der Aktivität',addDescLabel:'Beschreibung (erscheint beim Hover)',addPresetsLabel:'Preset-Werte (kommagetrennt)',addConfirm:'Hinzufügen',addCancel:'Abbrechen',
+    removeActTip:'Aktivität entfernen',editActTip:'Aktivität bearbeiten',editModalTitle:'Aktivität bearbeiten',editModalHint:'Name und Beschreibung für jede Sprache separat bearbeiten.',editPresetsLabel:'Preset-Werte (kommagetrennt)',editConfirm:'Speichern',editCancel:'Abbrechen',
+    modalShareTitle:'Mit Kunden teilen',modalShareDesc:'Der Link öffnet eine gesperrte Ansicht — der Kunde sieht nur Lesezugriff.',
+    copyLong:'Link kopieren',orShorten:'oder Link kürzen',shorten:'Link kürzen (TinyURL)',copyShort:'Kurzen Link kopieren',
+    modalNote:'🔒 Der Kunde sieht nur Lesezugriff. Keine Änderungen möglich.',
+    lockedBanner:'Kundenansicht — nur Lesezugriff',
+    copied:'Kopiert!',shortening:'Kürze...',shortenFail:'Kürzung fehlgeschlagen.',
+    client:'Kunde',project:'Projekt',goal2:'Ziel',progWelcome:'Start',progSummary:'Übersicht',
+    toastSaved:'Datei gespeichert',toastLoaded:'Datei geladen',toastLoadErr:'Fehler beim Laden',
+  }
+};
+
+const BASE_CATEGORIES = [
+  {id:'analysis',name:{cs:'Analýza a onboarding',en:'Analysis & onboarding',de:'Analyse & Onboarding'},activities:[
+    {id:'audit',name:{cs:'Audit stávajícího účtu',en:'Existing account audit',de:'Account-Audit'},tip:{cs:'Kontrola stávajících kampaní, automatizací, segmentů a nastavení platformy.',en:'Review of existing campaigns, automations, segments and platform settings.',de:'Überprüfung bestehender Kampagnen, Automationen und Segmente.'},presets:[0.5,1,2,3]},
+    {id:'kickoff',name:{cs:'Kickoff schůzka s klientem',en:'Client kickoff meeting',de:'Kickoff-Meeting'},tip:{cs:'Úvodní schůzka pro definování cílů, procesů a odpovědností.',en:'Initial meeting to define goals, processes and responsibilities.',de:'Erstes Meeting zur Festlegung von Zielen und Verantwortlichkeiten.'},presets:[0.5,1,1.5,2]},
+    {id:'kpi',name:{cs:'Definice cílů a KPI',en:'Goal & KPI definition',de:'Ziel- & KPI-Definition'},tip:{cs:'Nastavení měřitelných ukazatelů: OR, CTR, konverze, růst databáze.',en:'Setting measurable metrics: OR, CTR, conversions, list growth.',de:'Festlegen messbarer Kennzahlen: OR, CTR, Konversionen.'},presets:[0.5,1,2]},
+    {id:'competition',name:{cs:'Analýza konkurence',en:'Competitor analysis',de:'Wettbewerbsanalyse'},tip:{cs:'Přihlášení k newsletterům konkurence, analýza strategie a designu.',en:'Subscribe to competitor newsletters, analyze strategy and design.',de:'Newsletter der Konkurrenz analysieren.'},presets:[1,2,3,4]},
+  ]},
+  {id:'tech',name:{cs:'Technické nastavení',en:'Technical setup',de:'Technische Einrichtung'},activities:[
+    {id:'dns',name:{cs:'DNS nastavení (SPF, DKIM, DMARC)',en:'DNS setup (SPF, DKIM, DMARC)',de:'DNS-Einrichtung'},tip:{cs:'Ověření domény a nastavení autentizačních záznamů pro doručitelnost.',en:'Domain verification and authentication records for deliverability.',de:'Domain-Verifizierung und Authentifizierungseinträge.'},presets:[0.5,1,2,3]},
+    {id:'platform',name:{cs:'Napojení platformy a integrace',en:'Platform integration',de:'Plattform-Integration'},tip:{cs:'Propojení e-commerce, CRM nebo webu s emailovou platformou.',en:'Connecting e-commerce, CRM or website to the email platform.',de:'Verbindung von E-Commerce oder CRM mit der E-Mail-Plattform.'},presets:[1,2,3,4,6]},
+    {id:'import',name:{cs:'Import a čištění kontaktů',en:'Contact import & cleaning',de:'Kontakt-Import & Bereinigung'},tip:{cs:'Import existující databáze, odstranění duplicit a nastavení souhlasů.',en:'Importing existing database, removing duplicates, setting up consents.',de:'Importieren der Datenbank und Einrichten von Einwilligungen.'},presets:[1,2,3,4]},
+    {id:'segments',name:{cs:'Nastavení segmentů',en:'Segment setup',de:'Segmente einrichten'},tip:{cs:'Vytvoření klíčových segmentů: noví zákazníci, aktivní, neaktivní, VIP.',en:'Creating key segments: new customers, active, inactive, VIP.',de:'Erstellen wichtiger Segmente: Neukunden, aktiv, inaktiv, VIP.'},presets:[1,2,3,4]},
+  ]},
+  {id:'content',name:{cs:'Obsahová strategie',en:'Content strategy',de:'Inhaltsstrategie'},activities:[
+    {id:'tov',name:{cs:'Tone of voice a brand guidelines',en:'Tone of voice & brand guidelines',de:'Tone of Voice & Markenrichtlinien'},tip:{cs:'Definice hlasu značky a stylu komunikace pro emaily.',en:'Defining brand voice and communication style for emails.',de:'Markenstimme und Kommunikationsstil für E-Mails festlegen.'},presets:[1,2,3]},
+    {id:'plan',name:{cs:'Obsahový plán (editorial calendar)',en:'Content plan (editorial calendar)',de:'Redaktionskalender'},tip:{cs:'Plán témat, frekvence a typů emailů na 1–3 měsíce dopředu.',en:'Planning topics, frequency and email types 1–3 months ahead.',de:'Planung von Themen und Frequenz 1–3 Monate im Voraus.'},presets:[1,2,3,4]},
+    {id:'templates',name:{cs:'Návrh a tvorba šablon',en:'Template design & creation',de:'Vorlagen-Erstellung'},tip:{cs:'Grafické šablony pro newsletter, promo email a transakční emaily.',en:'Graphic templates for newsletter, promo and transactional emails.',de:'Grafische Vorlagen für Newsletter und Promo-E-Mails.'},presets:[2,4,6,8]},
+    {id:'approval',name:{cs:'Schválení klientem',en:'Client approval round',de:'Kundenfreigabe'},tip:{cs:'Iterace a korekce na základě zpětné vazby klienta.',en:'Iteration and corrections based on client feedback.',de:'Iteration und Korrekturen basierend auf Kundenfeedback.'},presets:[0.5,1,2]},
+  ]},
+  {id:'automation',name:{cs:'Automatizace',en:'Automations',de:'Automationen'},activities:[
+    {id:'welcome',name:{cs:'Welcome flow',en:'Welcome flow',de:'Willkommens-Flow'},tip:{cs:'Uvítací série pro nové odběratele — typicky 3–5 emailů s timeringem.',en:'Welcome series for new subscribers — typically 3–5 emails with timing.',de:'Willkommensserie für neue Abonnenten — typisch 3–5 E-Mails.'},presets:[2,3,4,6]},
+    {id:'winback',name:{cs:'Win-back / reaktivační flow',en:'Win-back / reactivation flow',de:'Win-back-Flow'},tip:{cs:'Reaktivace neaktivních kontaktů bez aktivity 90+ dní.',en:'Reactivating inactive contacts with no activity for 90+ days.',de:'Reaktivierung inaktiver Kontakte ohne Aktivität seit 90+ Tagen.'},presets:[2,3,4,6]},
+    {id:'abandoned',name:{cs:'Abandoned cart flow',en:'Abandoned cart flow',de:'Warenkorbabbruch-Flow'},tip:{cs:'Série emailů pro zákazníky, kteří opustili košík bez objednávky.',en:'Email series for customers who abandoned their cart.',de:'E-Mail-Serie für Kunden, die den Warenkorb verlassen haben.'},presets:[2,3,4,6,8]},
+    {id:'postpurchase',name:{cs:'Post-purchase flow',en:'Post-purchase flow',de:'Nach-Kauf-Flow'},tip:{cs:'Emaily po nákupu: potvrzení, cross-sell, recenze, opakovaný nákup.',en:'Post-purchase emails: confirmation, cross-sell, review, repurchase.',de:'E-Mails nach dem Kauf: Bestätigung, Cross-Sell, Bewertung.'},presets:[2,3,4,6]},
+    {id:'birthday',name:{cs:'Birthday / výroční flow',en:'Birthday / anniversary flow',de:'Geburtstags-Flow'},tip:{cs:'Personalizovaný email k narozeninám nebo výročí nákupu.',en:'Personalized email for birthdays or purchase anniversaries.',de:'Personalisierte E-Mail zum Geburtstag oder Kaufjubiläum.'},presets:[1,2,3]},
+  ]},
+  {id:'campaigns',name:{cs:'Kampaně',en:'Campaigns',de:'Kampagnen'},activities:[
+    {id:'brief',name:{cs:'Briefing kampaně',en:'Campaign briefing',de:'Kampagnen-Briefing'},tip:{cs:'Definice cíle, cílové skupiny, klíčové zprávy a CTA.',en:'Defining goal, target audience, key message and CTA.',de:'Festlegen von Ziel, Zielgruppe und Kernbotschaft.'},presets:[0.5,1,2]},
+    {id:'copy',name:{cs:'Copywriting emailu',en:'Email copywriting',de:'E-Mail-Copywriting'},tip:{cs:'Psaní předmětu, pre-headeru a těla emailu včetně CTA.',en:'Writing subject line, preheader and email body including CTA.',de:'Betreffzeile, Preheader und E-Mail-Text verfassen.'},presets:[1,2,3,4]},
+    {id:'design',name:{cs:'Design a HTML příprava',en:'Design & HTML setup',de:'Design & HTML-Erstellung'},tip:{cs:'Grafická úprava šablony, přizpůsobení obsahu, mobilní optimalizace.',en:'Template adaptation, content adjustments, mobile optimization.',de:'Vorlagenanpassung, Inhaltsanpassungen, Mobile-Optimierung.'},presets:[1,2,3,4]},
+    {id:'testing',name:{cs:'Testování a QA',en:'Testing & QA',de:'Testen & QA'},tip:{cs:'Testovací odeslání, kontrola zobrazení, linky a personalizace.',en:'Test sends, rendering checks, links and personalization tokens.',de:'Testversände, Rendering-Prüfung und Links.'},presets:[0.5,1,2]},
+    {id:'send',name:{cs:'Odeslání a monitoring',en:'Send & monitoring',de:'Versand & Monitoring'},tip:{cs:'Finální odeslání a sledování prvních výsledků v 24h.',en:'Final send and monitoring first results in 24h.',de:'Finaler Versand und erste Ergebnisse in den ersten 24h.'},presets:[0.5,1,1.5]},
+  ]},
+  {id:'reporting',name:{cs:'Reporting a optimalizace',en:'Reporting & optimization',de:'Reporting & Optimierung'},activities:[
+    {id:'setup_report',name:{cs:'Nastavení reportovacích šablon',en:'Reporting template setup',de:'Berichtsvorlagen einrichten'},tip:{cs:'Příprava šablony reportu: OR, CTR, revenue, bounces.',en:'Setting up report template: OR, CTR, revenue, bounces.',de:'Aufbau einer Berichtsvorlage: OR, CTR, Umsatz, Bounces.'},presets:[1,2,3]},
+    {id:'first_report',name:{cs:'Příprava prvního reportu',en:'First report preparation',de:'Erstbericht vorbereiten'},tip:{cs:'Sběr dat, analýza výsledků prvního měsíce a prezentace klientovi.',en:'Data collection, first month analysis and client presentation.',de:'Datencollection und Analyse der ersten Monatsergebnisse.'},presets:[1,2,3,4]},
+    {id:'abtest',name:{cs:'A/B testy a iterace',en:'A/B testing & iteration',de:'A/B-Tests & Iteration'},tip:{cs:'Nastavení A/B testu předmětu nebo obsahu a implementace vítěze.',en:'Setting up A/B test and implementing the winner.',de:'A/B-Test einrichten und Gewinner implementieren.'},presets:[1,2,3]},
+    {id:'optimize',name:{cs:'Optimalizace segmentů a flows',en:'Segment & flow optimization',de:'Segment- & Flow-Optimierung'},tip:{cs:'Na základě dat úprava podmínek, přehodnocení segmentů a flows.',en:'Based on data, adjusting conditions, segments and flows.',de:'Basierend auf Daten Bedingungen und Flows anpassen.'},presets:[1,2,3,4]},
+  ]},
+];
+
+let state = {
+  lang:'cs', step:0,
+  clientName:'', projectName:'', goal:'', logoData:'',
+  hours:{}, customActivities:{},
+};
+let isLocked = false;
+let shortUrlCache = null;
+let addingToCatId = null;
+let editingAct = null;
+let editingCatId = null;
+let editLangTab = "cs";
+
+function t(k){return T[state.lang][k]||k}
+
+function setLang(l){
+  state.lang=l;
+  document.querySelectorAll('.lang-btn').forEach(b=>b.classList.toggle('active',b.textContent===l.toUpperCase()));
+  render();
+}
+
+function totalHours(){
+  return Object.values(state.hours).reduce((a,b)=>a+(parseFloat(b)||0),0);
+}
+
+function catHours(catId){
+  const acts=getAllActivities(catId);
+  return acts.reduce((a,act)=>a+(parseFloat(state.hours[act.id])||0),0);
+}
+
+function getAllActivities(catId){
+  const base=BASE_CATEGORIES.find(c=>c.id===catId);
+  const baseActs=base?base.activities:[];
+  const custom=(state.customActivities[catId]||[]);
+  return [...baseActs,...custom];
+}
+
+function setHours(id,val){
+  state.hours[id]=val;
+  renderCategoryContent();
+}
+
+function showToast(msg){
+  const el=document.getElementById('toast');
+  el.textContent=msg;el.classList.add('show');
+  setTimeout(()=>el.classList.remove('show'),2500);
+}
+
+// SAVE / LOAD
+function saveToFile(){
+  const data={version:1,...state};
+  const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;
+  const name=(state.projectName||'time-source').toLowerCase().replace(/\s+/g,'-');
+  a.download=name+'.ts.json';
+  a.click();
+  URL.revokeObjectURL(url);
+  showToast(t('toastSaved'));
+}
+
+function triggerLoad(){
+  const inp=document.createElement('input');
+  inp.type='file';inp.accept='.json,.ts.json';
+  inp.onchange=e=>{
+    const file=e.target.files[0];if(!file)return;
+    const reader=new FileReader();
+    reader.onload=ev=>{
+      try{
+        const data=JSON.parse(ev.target.result);
+        state={lang:state.lang,...data};
+        isLocked=false;
+        render();
+        showToast(t('toastLoaded'));
+      }catch(err){showToast(t('toastLoadErr'));}
+    };
+    reader.readAsText(file);
+  };
+  inp.click();
+}
+
+// LOGO
+function triggerLogoUpload(){
+  const inp=document.createElement('input');
+  inp.type='file';inp.accept='image/*';
+  inp.onchange=e=>{
+    const file=e.target.files[0];if(!file)return;
+    const reader=new FileReader();
+    reader.onload=ev=>{state.logoData=ev.target.result;renderWelcomeContent();};
+    reader.readAsDataURL(file);
+  };
+  inp.click();
+}
+
+function loadLogoFromUrl(){
+  const inp=document.getElementById('logo-url-inp');
+  if(!inp)return;
+  const url=inp.value.trim();
+  if(url){state.logoData=url;renderWelcomeContent();}
+}
+
+function removeLogo(){state.logoData='';renderWelcomeContent();}
+
+// SHARE URL
+function getShareUrl(){
+  const data={...state,isLocked:true};
+  const json=JSON.stringify(data);
+  const compressed=LZString.compressToEncodedURIComponent(json);
+  return location.href.split('?')[0]+'?ts='+compressed;
+}
+
+async function shortenUrl(){
+  document.getElementById('shorten-label').textContent=t('shortening');
+  try{
+    const r=await fetch('https://tinyurl.com/api-create.php?url='+encodeURIComponent(getShareUrl()));
+    const s=await r.text();
+    if(s.startsWith('http')){
+      shortUrlCache=s;
+      document.getElementById('short-url-box').textContent=s;
+      document.getElementById('short-url-area').style.display='block';
+      document.getElementById('shorten-label').textContent=t('shorten');
+    }else{document.getElementById('shorten-label').textContent=t('shortenFail');}
+  }catch{document.getElementById('shorten-label').textContent=t('shortenFail');}
+}
+
+function copyUrl(type){
+  const url=type==='short'?shortUrlCache:getShareUrl();
+  navigator.clipboard.writeText(url).then(()=>{
+    showToast(t('copied'));
+  });
+}
+
+function openModal(id){document.getElementById(id).classList.add('open');}
+function closeModal(id){document.getElementById(id).classList.remove('open');}
+
+function openShareModal(){
+  document.getElementById('modal-share-title').textContent=t('modalShareTitle');
+  document.getElementById('modal-share-desc').textContent=t('modalShareDesc');
+  document.getElementById('copy-long-label').textContent=t('copyLong');
+  document.getElementById('shorten-label').textContent=t('shorten');
+  document.getElementById('copy-short-label').textContent=t('copyShort');
+  document.getElementById('or-shorten-label').textContent=t('orShorten');
+  document.getElementById('modal-share-note').textContent=t('modalNote');
+  document.getElementById('share-url-box').textContent=getShareUrl();
+  document.getElementById('short-url-area').style.display='none';
+  shortUrlCache=null;
+  openModal('share-modal');
+}
+
+function openAddActivityModal(catId){
+  addingToCatId=catId;
+  document.getElementById('add-modal-title').textContent=t('addModalTitle');
+  document.getElementById('add-name-label').textContent=t('addNameLabel');
+  document.getElementById('add-desc-label').textContent=t('addDescLabel');
+  document.getElementById('add-presets-label').textContent=t('addPresetsLabel');
+  document.getElementById('add-confirm-btn').textContent=t('addConfirm');
+  document.getElementById('add-cancel-btn').textContent=t('addCancel');
+  document.getElementById('add-act-name').value='';
+  document.getElementById('add-act-desc').value='';
+  document.getElementById('add-act-presets').value='0.5, 1, 2, 3';
+  openModal('add-modal');
+  setTimeout(()=>document.getElementById('add-act-name').focus(),200);
+}
+
+function confirmAddActivity(){
+  const name=document.getElementById('add-act-name').value.trim();
+  const desc=document.getElementById('add-act-desc').value.trim();
+  const presetsRaw=document.getElementById('add-act-presets').value;
+  if(!name)return;
+  const presets=presetsRaw.split(',').map(s=>parseFloat(s.trim())).filter(n=>!isNaN(n));
+  const id='custom_'+Date.now();
+  if(!state.customActivities[addingToCatId])state.customActivities[addingToCatId]=[];
+  state.customActivities[addingToCatId].push({
+    id,
+    name:{cs:name,en:name,de:name},
+    tip:{cs:desc||'—',en:desc||'—',de:desc||'—'},
+    presets:presets.length?presets:PRESETS_DEFAULT,
+    isCustom:true
+  });
+  closeModal('add-modal');
+  renderCategoryContent();
+}
+
+
+function openEditActivityModal(catId, actId){
+  editingCatId = catId;
+  // Find in base or custom
+  const base = BASE_CATEGORIES.find(c=>c.id===catId);
+  let act = base ? base.activities.find(a=>a.id===actId) : null;
+  if(!act) act = (state.customActivities[catId]||[]).find(a=>a.id===actId);
+  if(!act) return;
+  editingAct = act;
+  editLangTab = state.lang;
+  document.getElementById('edit-modal-title').textContent = t('editModalTitle');
+  document.getElementById('edit-modal-hint').textContent = t('editModalHint');
+  document.getElementById('edit-presets-label').textContent = t('editPresetsLabel');
+  document.getElementById('edit-confirm-btn').textContent = t('editConfirm');
+  document.getElementById('edit-cancel-btn').textContent = t('editCancel');
+  renderEditLangTabs();
+  renderEditFields();
+  document.getElementById('edit-act-presets').value = act.presets.join(', ');
+  openModal('edit-modal');
+  setTimeout(()=>{const f=document.getElementById('edit-field-name');if(f)f.focus();},200);
+}
+
+function renderEditLangTabs(){
+  const tabs = document.getElementById('edit-modal-lang-tabs');
+  if(!tabs) return;
+  tabs.innerHTML = ['cs','en','de'].map(l=>
+    `<button class="lang-btn ${editLangTab===l?'active':''}" onclick="editLangTab='${l}';renderEditLangTabs();renderEditFields()">${l.toUpperCase()}</button>`
+  ).join('');
+}
+
+function renderEditFields(){
+  const el = document.getElementById('edit-modal-fields');
+  if(!el||!editingAct) return;
+  // get current overrides or fall back to original
+  const overrides = state.activityOverrides || {};
+  const key = editingAct.id;
+  const nameVal = (overrides[key] && overrides[key].name && overrides[key].name[editLangTab]) || editingAct.name[editLangTab] || '';
+  const tipVal  = (overrides[key] && overrides[key].tip  && overrides[key].tip[editLangTab])  || editingAct.tip[editLangTab]  || '';
+  el.innerHTML = `
+    <div class="input-group">
+      <label class="input-label" id="edit-name-label-dyn">${t('addNameLabel')} (${editLangTab.toUpperCase()})</label>
+      <input class="input-field" id="edit-field-name" value="${nameVal.replace(/"/g,'&quot;')}" style="font-size:14px" oninput="storeEditField('name',this.value)">
+    </div>
+    <div class="input-group">
+      <label class="input-label" id="edit-desc-label-dyn">${t('addDescLabel')} (${editLangTab.toUpperCase()})</label>
+      <textarea class="input-field" id="edit-field-desc" rows="3" style="font-size:13px;resize:vertical" oninput="storeEditField('tip',this.value)">${tipVal}</textarea>
+    </div>
+  `;
+}
+
+// Temporary buffer while editing (before Save)
+let _editBuf = {};
+function storeEditField(field, val){
+  if(!_editBuf[editingAct.id]) _editBuf[editingAct.id] = {name:{},tip:{}};
+  _editBuf[editingAct.id][field][editLangTab] = val;
+}
+
+function confirmEditActivity(){
+  if(!editingAct) return;
+  if(!state.activityOverrides) state.activityOverrides = {};
+  const id = editingAct.id;
+  if(!state.activityOverrides[id]) state.activityOverrides[id] = {name:{cs:'',en:'',de:''},tip:{cs:'',en:'',de:''}};
+  // Flush textarea/input current values into buf first
+  const nameEl = document.getElementById('edit-field-name');
+  const tipEl  = document.getElementById('edit-field-desc');
+  if(nameEl) storeEditField('name', nameEl.value);
+  if(tipEl)  storeEditField('tip',  tipEl.value);
+  // Merge buf into overrides (all 3 langs)
+  const buf = _editBuf[id] || {};
+  ['cs','en','de'].forEach(l=>{
+    if(buf.name && buf.name[l] !== undefined) state.activityOverrides[id].name[l] = buf.name[l];
+    if(buf.tip  && buf.tip[l]  !== undefined) state.activityOverrides[id].tip[l]  = buf.tip[l];
+  });
+  // Fill blanks with original
+  ['cs','en','de'].forEach(l=>{
+    if(!state.activityOverrides[id].name[l]) state.activityOverrides[id].name[l] = editingAct.name[l];
+    if(!state.activityOverrides[id].tip[l])  state.activityOverrides[id].tip[l]  = editingAct.tip[l];
+  });
+  // Also update presets
+  const presetsRaw = document.getElementById('edit-act-presets').value;
+  const presets = presetsRaw.split(',').map(s=>parseFloat(s.trim())).filter(n=>!isNaN(n));
+  if(presets.length) state.activityOverrides[id].presets = presets;
+  _editBuf[id] = {};
+  closeModal('edit-modal');
+  renderCategoryContent();
+}
+
+// Helper: get effective name/tip/presets for an activity (applies overrides)
+function getActDisplay(act){
+  const ov = (state.activityOverrides||{})[act.id];
+  return {
+    name: (ov&&ov.name&&ov.name[state.lang]) || act.name[state.lang],
+    tip:  (ov&&ov.tip &&ov.tip[state.lang])  || act.tip[state.lang],
+    presets: (ov&&ov.presets) || act.presets
+  };
+}
+
+function removeActivity(catId,actId){
+  if(!state.customActivities[catId])return;
+  state.customActivities[catId]=state.customActivities[catId].filter(a=>a.id!==actId);
+  delete state.hours[actId];
+  renderCategoryContent();
+}
+
+// RENDER
+function render(){
+  const pw=document.getElementById('progress-wrap');
+  if(isLocked||state.step===0){pw.style.display='none';}else{pw.style.display='block';renderProgressBar();}
+  const c=document.getElementById('main-content');
+  if(isLocked){renderLocked(c);}
+  else if(state.step===0){renderWelcome(c);}
+  else if(state.step<=BASE_CATEGORIES.length){renderCategory(c,state.step-1);}
+  else{renderSummary(c);}
+}
+
+function renderProgressBar(){
+  const pw=document.getElementById('progress-wrap');
+  const total=BASE_CATEGORIES.length+2;
+  let bars='',labels='';
+  for(let i=0;i<total;i++){
+    const done=i<state.step,active=i===state.step;
+    bars+=`<div class="prog-seg ${done?'done':active?'active':''}"></div>`;
+    let lbl=i===0?t('progWelcome'):i===total-1?t('progSummary'):BASE_CATEGORIES[i-1]?.name[state.lang]||'';
+    const click=i<=state.step?`onclick="state.step=${i};render()"`:'';
+    labels+=`<span class="prog-lbl ${done?'done':active?'active':''}" ${click}>${lbl}</span>`;
+  }
+  pw.innerHTML=`<div class="prog-track">${bars}</div><div class="prog-labels">${labels}</div>`;
+}
+
+function renderWelcome(c){
+  c.innerHTML=`
+    <div class="welcome-icon"><i class="ti ti-mail" aria-hidden="true"></i></div>
+    <h1 class="step-title playfair">${t('appName')}</h1>
+    <p class="step-sub">${t('appTagline')}</p>
+    <div class="divider"></div>
+    <h2 class="step-title playfair" style="font-size:20px;margin-bottom:.75rem">${t('welcome')}</h2>
+    <p class="step-sub">${t('welcomeSub')}</p>
+    <div id="welcome-form"></div>
+  `;
+  renderWelcomeContent();
+}
+
+function renderWelcomeContent(){
+  const el=document.getElementById('welcome-form');
+  if(!el)return;
+  let logoBlock='';
+  if(state.logoData){
+    logoBlock=`
+      <div style="margin-bottom:1rem">
+        <div class="logo-preview-wrap">
+          <img src="${state.logoData}" class="logo-preview" alt="logo">
+          <button class="logo-remove" onclick="removeLogo()" title="${t('removeActTip')}"><i class="ti ti-x"></i></button>
+        </div>
+      </div>`;
+  }else{
+    logoBlock=`
+      <div class="logo-upload-area" onclick="triggerLogoUpload()" role="button" tabindex="0" aria-label="${t('logoLabel')}">
+        <i class="ti ti-photo" style="font-size:28px;color:var(--amber);margin-bottom:8px;display:block" aria-hidden="true"></i>
+        <p style="font-size:13px;color:var(--text2)">${t('logoUploadHint')}</p>
+      </div>
+      <div class="logo-url-row">
+        <input class="logo-url-input" id="logo-url-inp" placeholder="${t('logoUrlLabel')}" type="url">
+        <button class="btn-logo-url" onclick="loadLogoFromUrl()">${t('logoUrlBtn')}</button>
+      </div>`;
+  }
+  el.innerHTML=`
+    <div class="input-group"><label class="input-label">${t('clientName')}</label><input class="input-field" placeholder="${t('clientNamePh')}" value="${state.clientName}" oninput="state.clientName=this.value"></div>
+    <div class="input-group"><label class="input-label">${t('projectName')}</label><input class="input-field" placeholder="${t('projectNamePh')}" value="${state.projectName}" oninput="state.projectName=this.value"></div>
+    <div class="input-group"><label class="input-label">${t('goal')}</label><input class="input-field" placeholder="${t('goalPh')}" value="${state.goal}" oninput="state.goal=this.value"></div>
+    <div class="input-group logo-section">
+      <label class="input-label">${t('logoLabel')}</label>
+      ${logoBlock}
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-top:1.5rem;flex-wrap:wrap;gap:10px">
+      <button class="action-btn" onclick="triggerLoad()"><i class="ti ti-upload" aria-hidden="true"></i> ${t('loadBtn')}</button>
+      <button class="btn btn-primary" onclick="state.step=1;render()">${t('start')} <i class="ti ti-arrow-right" aria-hidden="true"></i></button>
+    </div>
+  `;
+}
+
+function renderCategory(c,idx){
+  const cat=BASE_CATEGORIES[idx];
+  c.innerHTML=`
+    <p style="font-size:11px;color:var(--text3);margin-bottom:.5rem;text-transform:uppercase;letter-spacing:.06em">${t('stepLabel')} ${state.step} ${t('of')} ${BASE_CATEGORIES.length}</p>
+    <h2 class="step-title playfair">${cat.name[state.lang]}</h2>
+    <p class="step-sub"></p>
+    <div id="cat-activities"></div>
+    <div class="cat-subtotal" id="cat-subtotal"></div>
+    <button class="btn-add-activity" onclick="openAddActivityModal('${cat.id}')"><i class="ti ti-plus" aria-hidden="true"></i> ${t('addActivity')}</button>
+    <div class="skip-warn" id="skip-warn"></div>
+    <div class="nav-btns">
+      <button class="btn btn-ghost" onclick="state.step--;render()"><i class="ti ti-arrow-left" aria-hidden="true"></i> ${t('back')}</button>
+      <button class="btn btn-primary" onclick="handleNext()" id="next-btn">${state.step===BASE_CATEGORIES.length?t('summary'):t('next')} <i class="ti ti-arrow-right" aria-hidden="true"></i></button>
+    </div>
+  `;
+  renderCategoryContent();
+}
+
+function renderCategoryContent(){
+  const catIdx=state.step-1;
+  if(catIdx<0||catIdx>=BASE_CATEGORIES.length)return;
+  const cat=BASE_CATEGORIES[catIdx];
+  const acts=getAllActivities(cat.id);
+  const subtotalEl=document.getElementById('cat-subtotal');
+  const actsEl=document.getElementById('cat-activities');
+  if(!actsEl)return;
+  let html='';
+  for(const act of acts){
+    const h=parseFloat(state.hours[act.id])||0;
+    const isSet=h>0;
+    let chips='';
+    const _presets=(state.activityOverrides&&state.activityOverrides[act.id]&&state.activityOverrides[act.id].presets)||act.presets;
+    for(const p of _presets){
+      chips+=`<button class="chip ${state.hours[act.id]==p?'active':''}" onclick="setHours('${act.id}',${p})">${p}${t('hours')}</button>`;
+    }
+    const removeBtn=act.isCustom?`<button class="btn-remove-act" onclick="removeActivity('${cat.id}','${act.id}')" title="${t('removeActTip')}" aria-label="${t('removeActTip')}"><i class="ti ti-trash" aria-hidden="true"></i></button>`:'';
+    const d=getActDisplay(act);
+    html+=`
+      <div class="activity-card ${isSet?'set':''}">
+        <div class="activity-card-top">
+          <span class="activity-name">${d.name}</span>
+          ${removeBtn}
+          <button class="btn-edit-act" onclick="openEditActivityModal('${cat.id}','${act.id}')" title="${t('editActTip')}" aria-label="${t('editActTip')}"><i class="ti ti-pencil" aria-hidden="true"></i></button>
+          <span class="info-wrap" tabindex="0" aria-label="${d.tip}">
+            <i class="ti ti-info-circle info-icon" aria-hidden="true"></i>
+            <span class="tooltip" role="tooltip">${d.tip}</span>
+          </span>
+        </div>
+        <div class="preset-chips">${chips}</div>
+        <div class="hours-row">
+          <input type="number" class="hours-input" min="0" step="0.5" value="${h||''}" placeholder="${t('manualLabel')}" oninput="setHours('${act.id}',parseFloat(this.value)||0)" aria-label="${act.name[state.lang]}">
+          <span class="hours-unit">${t('hours')}</span>
+        </div>
+      </div>`;
+  }
+  actsEl.innerHTML=html;
+  const ch=catHours(cat.id);
+  if(subtotalEl)subtotalEl.innerHTML=`${t('subtotalLabel')}: <span>${ch.toFixed(1)}${t('hours')}</span>`;
+}
+
+function handleNext(){
+  const catIdx=state.step-1;
+  if(catIdx>=0&&catIdx<BASE_CATEGORIES.length){
+    const cat=BASE_CATEGORIES[catIdx];
+    const acts=getAllActivities(cat.id);
+    const allZero=acts.every(a=>!(parseFloat(state.hours[a.id])||0));
+    if(allZero){
+      const w=document.getElementById('skip-warn');
+      if(w){w.textContent=t('skipWarn');return;}
+    }
+  }
+  state.step++;render();
+}
+
+function renderSummary(c){
+  const total=totalHours();
+  const days=(total/8).toFixed(1);
+  let cats='';
+  for(const cat of BASE_CATEGORIES){
+    const ch=catHours(cat.id);
+    let rows='';
+    for(const act of getAllActivities(cat.id)){
+      const h=parseFloat(state.hours[act.id])||0;
+      if(h>0)rows+=`<div class="sum-row"><span class="sum-row-name">${act.name[state.lang]}</span><span class="sum-row-hours">${h.toFixed(1)}${t('hours')}</span></div>`;
+    }
+    if(rows)cats+=`<p class="sum-cat-title">${cat.name[state.lang]} — ${ch.toFixed(1)}${t('hours')}</p>${rows}`;
+  }
+  c.innerHTML=`
+    <h2 class="step-title playfair">${t('summaryTitle')}</h2>
+    <div class="divider"></div>
+    <div class="client-meta">
+      <div class="client-meta-row"><span class="meta-key">${t('client')}</span><span class="meta-val">${state.clientName||'—'}</span></div>
+      <div class="client-meta-row"><span class="meta-key">${t('project')}</span><span class="meta-val">${state.projectName||'—'}</span></div>
+      <div class="client-meta-row"><span class="meta-key">${t('goal2')}</span><span class="meta-val">${state.goal||'—'}</span></div>
+    </div>
+    <div class="total-box">
+      <span class="total-label">${t('totalLabel')}</span>
+      <div style="text-align:right">
+        <div class="total-value">${total.toFixed(1)}${t('hours')}</div>
+        <div class="total-days">${days} ${t('workingDays')}</div>
+      </div>
+    </div>
+    <div>${cats}</div>
+    <div class="action-row">
+      <button class="action-btn primary" onclick="openShareModal()"><i class="ti ti-share" aria-hidden="true"></i> ${t('shareBtn')}</button>
+      <button class="action-btn" onclick="window.print()"><i class="ti ti-printer" aria-hidden="true"></i> ${t('printBtn')}</button>
+      <button class="action-btn" onclick="saveToFile()"><i class="ti ti-download" aria-hidden="true"></i> ${t('saveBtn')}</button>
+    </div>
+    <div class="nav-btns" style="margin-top:1.5rem">
+      <button class="btn btn-ghost" onclick="state.step--;render()"><i class="ti ti-arrow-left" aria-hidden="true"></i> ${t('back')}</button>
+      <button class="btn btn-ghost" onclick="state.step=1;render()"><i class="ti ti-edit" aria-hidden="true"></i> ${t('editBtn')}</button>
+    </div>
+  `;
+}
+
+function renderLocked(c){
+  const total=totalHours();
+  const days=(total/8).toFixed(1);
+  let cats='';
+  for(const cat of BASE_CATEGORIES){
+    const ch=catHours(cat.id);
+    let rows='';
+    for(const act of getAllActivities(cat.id)){
+      const h=parseFloat(state.hours[act.id])||0;
+      if(h>0)rows+=`<div class="sum-row"><span class="sum-row-name">${act.name[state.lang]}</span><span class="sum-row-hours">${h.toFixed(1)}${t('hours')}</span></div>`;
+    }
+    if(rows)cats+=`<p class="sum-cat-title">${cat.name[state.lang]} — ${ch.toFixed(1)}${t('hours')}</p>${rows}`;
+  }
+  const logoHtml=state.logoData?`<img src="${state.logoData}" class="locked-logo" alt="${state.clientName||'logo'}">`:'' ;
+  c.innerHTML=`
+    <div class="locked-banner"><i class="ti ti-lock" aria-hidden="true"></i> ${t('lockedBanner')} ${state.clientName?'· '+state.clientName:''}</div>
+    <div class="locked-header">
+      ${logoHtml}
+      <h2 class="step-title playfair" style="text-align:${state.logoData?'center':'left'};margin-top:${state.logoData?'1.25rem':'0'}">${t('summaryTitle')}</h2>
+    </div>
+    <div class="divider"></div>
+    <div class="client-meta">
+      <div class="client-meta-row"><span class="meta-key">${t('client')}</span><span class="meta-val">${state.clientName||'—'}</span></div>
+      <div class="client-meta-row"><span class="meta-key">${t('project')}</span><span class="meta-val">${state.projectName||'—'}</span></div>
+      <div class="client-meta-row"><span class="meta-key">${t('goal2')}</span><span class="meta-val">${state.goal||'—'}</span></div>
+    </div>
+    <div class="total-box">
+      <span class="total-label">${t('totalLabel')}</span>
+      <div style="text-align:right">
+        <div class="total-value">${total.toFixed(1)}${t('hours')}</div>
+        <div class="total-days">${days} ${t('workingDays')}</div>
+      </div>
+    </div>
+    <div>${cats}</div>
+  `;
+}
+
+// INIT
+(function(){
+  const params=new URLSearchParams(location.search);
+  const ts=params.get('ts');
+  if(ts){
+    try{
+      const parsed=JSON.parse(LZString.decompressFromEncodedURIComponent(ts));
+      state={...state,...parsed};
+      isLocked=true;
+    }catch(e){}
+  }
+  render();
+})();
+</script>
+</body>
+</html>
