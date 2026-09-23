@@ -145,6 +145,9 @@ const T = {
     sub:"Odhad časové náročnosti e-mailového projektu",
     zadani:"Zadání", klient:"Klient", projekt:"Název projektu", cil:"Cíl spolupráce",
     sazba:"Hodinová sazba (Kč)", sazbaHint:"Nechat prázdné, pokud se má výstup odevzdat jen v hodinách.",
+    klientPh:"Firma, které se nacenuje", projektPh:"Co se nacenuje, třeba Rozjezd 2026",
+    projektHint:"Klient je firma, projekt je konkrétní nacenění. U jednoho klienta jich vznikne víc, proto se projekt propisuje do názvu souboru i do nacenění.",
+    cilPh:"Rozjet newsletter a uvítací sérii, do půl roku dostat e-mail na desetinu tržeb.",
     komunikace:"Komunikace a schvalování", komunikaceIn:"Komunikace a schvalování (% z hodin specialisty)",
     komunikaceHint:"Připočítá se automaticky. Nepatří mezi úkony, protože se na ni jinak zapomene.",
     vyber:"Které kategorie se budou řešit",
@@ -167,6 +170,9 @@ const T = {
     sub:"Email project time estimate",
     zadani:"Brief", klient:"Client", projekt:"Project name", cil:"Goal",
     sazba:"Hourly rate (CZK)", sazbaHint:"Leave empty to hand over hours only.",
+    klientPh:"The company being quoted", projektPh:"What is being quoted, e.g. Setup 2026",
+    projektHint:"Client is the company, project is one estimate. One client usually has several.",
+    cilPh:"Launch the newsletter and a welcome series, get email to a tenth of revenue within six months.",
     komunikace:"Communication and approvals", komunikaceIn:"Communication and approvals (% of specialist hours)",
     komunikaceHint:"Added automatically.",
     vyber:"Categories in scope", vyberHint:"The wizard only walks through ticked categories.",
@@ -188,6 +194,9 @@ const T = {
     sub:"Zeitschätzung für ein E-Mail-Projekt",
     zadani:"Briefing", klient:"Kunde", projekt:"Projektname", cil:"Ziel",
     sazba:"Stundensatz (CZK)", sazbaHint:"Leer lassen, um nur Stunden auszuweisen.",
+    klientPh:"Firma, für die kalkuliert wird", projektPh:"Was kalkuliert wird, z. B. Setup 2026",
+    projektHint:"Kunde ist die Firma, Projekt ist eine einzelne Kalkulation.",
+    cilPh:"Newsletter und Willkommensserie starten, in sechs Monaten ein Zehntel des Umsatzes über E-Mail.",
     komunikace:"Kommunikation und Freigaben", komunikaceIn:"Kommunikation und Freigaben (% der Spezialistenstunden)",
     komunikaceHint:"Wird automatisch addiert.",
     vyber:"Kategorien im Umfang", vyberHint:"Der Assistent zeigt nur gewählte Kategorien.",
@@ -334,15 +343,16 @@ function viewZadani(){
       <div class="grid2">
         <div>
           <label class="f">${t("klient")}</label>
-          <input type="text" id="i-klient" value="${esc(state.klient)}">
+          <input type="text" id="i-klient" placeholder="${esc(t("klientPh"))}" value="${esc(state.klient)}">
         </div>
         <div>
           <label class="f">${t("projekt")}</label>
-          <input type="text" id="i-projekt" value="${esc(state.projekt)}">
+          <input type="text" id="i-projekt" placeholder="${esc(t("projektPh"))}" value="${esc(state.projekt)}">
         </div>
       </div>
+      <div class="hint">${t("projektHint")}</div>
       <label class="f">${t("cil")}</label>
-      <textarea id="i-cil">${esc(state.cil)}</textarea>
+      <textarea id="i-cil" placeholder="${esc(t("cilPh"))}">${esc(state.cil)}</textarea>
       <div class="grid2">
         <div>
           <label class="f">${t("sazba")}</label>
@@ -676,7 +686,7 @@ function exportMd(){
   const sazba = Number(state.sazba) || 0;
   const dnes = new Date().toISOString().slice(0,10);
   const l = [];
-  l.push("# Nacenění: " + (state.klient || "klient"));
+  l.push("# Nacenění: " + (state.klient || "klient") + (state.projekt ? ", " + state.projekt : ""));
   l.push("");
   l.push("Odhad vznikl v Time Source " + dnes + ". Hodiny jsou odhad, ne závazek.");
   l.push("");
