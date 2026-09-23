@@ -1,0 +1,1200 @@
+[
+  {
+    "id": "platform",
+    "phase": "before",
+    "icon": "⚙️",
+    "name": {
+      "cs": "Výběr & setup platformy",
+      "en": "Platform selection & setup",
+      "de": "Plattformauswahl & Setup"
+    },
+    "description": {
+      "cs": "Výběr správného nástroje a jeho základní konfigurace — základ celé spolupráce.",
+      "en": "Choosing the right tool and its basic configuration — the foundation of the whole engagement.",
+      "de": "Auswahl des richtigen Tools und dessen Grundkonfiguration — Basis der gesamten Zusammenarbeit."
+    },
+    "activities": [
+      {
+        "kind": "hours",
+        "id": "pl-eval",
+        "name": {
+          "cs": "Evaluace a výběr e-mail platformy",
+          "en": "Email platform evaluation & selection",
+          "de": "E-Mail-Plattform-Evaluierung & Auswahl"
+        },
+        "tooltip": {
+          "cs": "Srovnání platforem (Klaviyo, Mailchimp, ActiveCampaign…), analýza požadavků klienta, doporučení s odůvodněním.",
+          "en": "Comparing platforms (Klaviyo, Mailchimp, ActiveCampaign…), analysing client requirements, recommendation with justification.",
+          "de": "Plattformvergleich (Klaviyo, Mailchimp, ActiveCampaign…), Anforderungsanalyse, Empfehlung mit Begründung."
+        },
+        "minHours": 2,
+        "maxHours": 5,
+        "avgHours": 3
+      },
+      {
+        "kind": "hours",
+        "id": "pl-account",
+        "name": {
+          "cs": "Vytvoření a konfigurace účtu",
+          "en": "Account creation & configuration",
+          "de": "Kontoerstellung & Konfiguration"
+        },
+        "tooltip": {
+          "cs": "Zakládání účtu, základní nastavení — odesílatel, branding, timezone, měna, notifikace.",
+          "en": "Creating the account, basic settings — sender, branding, timezone, currency, notifications.",
+          "de": "Kontoerstellung, Grundeinstellungen — Absender, Branding, Zeitzone, Währung, Benachrichtigungen."
+        },
+        "minHours": 0.5,
+        "maxHours": 2,
+        "avgHours": 1
+      },
+      {
+        "kind": "hours",
+        "id": "pl-dns",
+        "name": {
+          "cs": "DNS setup (SPF, DKIM, DMARC)",
+          "en": "DNS setup (SPF, DKIM, DMARC)",
+          "de": "DNS-Setup (SPF, DKIM, DMARC)"
+        },
+        "tooltip": {
+          "cs": "Nastavení a ověření autentizačních záznamů domény. Složitá platforma nebo více domén prodlouží čas.",
+          "en": "Setting up and verifying domain authentication records. Complex platforms or multiple domains extend time.",
+          "de": "Einrichtung und Verifizierung von Domain-Authentifizierungseinträgen."
+        },
+        "minHours": 1,
+        "maxHours": 3,
+        "avgHours": 2
+      },
+      {
+        "kind": "hours",
+        "id": "pl-senddomain",
+        "name": {
+          "cs": "Nastavení vlastní odesílací domény",
+          "en": "Custom sending domain setup",
+          "de": "Eigene Absenderdomain einrichten"
+        },
+        "tooltip": {
+          "cs": "Konfigurace subdomény pro odesílání (např. mail.brand.cz). DNS záznamy + ověření v platformě.",
+          "en": "Configuring a subdomain for sending (e.g. mail.brand.com). DNS records + platform verification.",
+          "de": "Konfiguration einer Subdomain für den Versand (z.B. mail.marke.de)."
+        },
+        "minHours": 1,
+        "maxHours": 3,
+        "avgHours": 2
+      },
+      {
+        "kind": "hours",
+        "id": "pl-integration",
+        "name": {
+          "cs": "Integrace e-shop / CRM / platforma",
+          "en": "E-shop / CRM / platform integration",
+          "de": "E-Shop / CRM / Plattform-Integration"
+        },
+        "tooltip": {
+          "cs": "Propojení s e-shopem (Shopify, WooCommerce…) nebo CRM. Nativní integrace ~2 h; custom API nebo Make/Zapier až 6 h.",
+          "en": "Connecting to an e-shop (Shopify, WooCommerce…) or CRM. Native integration ~2 h; custom API or Make/Zapier up to 6 h.",
+          "de": "Verbindung mit E-Shop (Shopify, WooCommerce…) oder CRM. Native Integration ~2 h; Custom-API bis 6 h."
+        },
+        "minHours": 2,
+        "maxHours": 6,
+        "avgHours": 3
+      }
+    ]
+  },
+  {
+    "id": "onboarding",
+    "phase": "before",
+    "icon": "🚀",
+    "name": {
+      "cs": "Onboarding & audit",
+      "en": "Onboarding & audit",
+      "de": "Onboarding & Audit"
+    },
+    "description": {
+      "cs": "Poznání klienta, jeho dat a nastavení základní infrastruktury e-mail marketingu.",
+      "en": "Getting to know the client, their data and setting up the basic email marketing infrastructure.",
+      "de": "Den Kunden kennenlernen, seine Daten und die grundlegende E-Mail-Marketing-Infrastruktur aufbauen."
+    },
+    "activities": [
+      {
+        "kind": "hours",
+        "id": "ob-briefing",
+        "name": {
+          "cs": "Úvodní briefing a kick-off",
+          "en": "Initial briefing & kick-off",
+          "de": "Erstbriefing & Kick-off"
+        },
+        "tooltip": {
+          "cs": "Schůzka s klientem — cíle, procesy, odpovědnosti, harmonogram. Online call ~1 h + příprava a zápisky ~1 h.",
+          "en": "Meeting with the client — goals, processes, responsibilities, timeline. Online call ~1 h + prep and notes ~1 h.",
+          "de": "Meeting mit dem Kunden — Ziele, Prozesse, Verantwortlichkeiten, Zeitplan."
+        },
+        "minHours": 1,
+        "maxHours": 3,
+        "avgHours": 2
+      },
+      {
+        "kind": "hours",
+        "id": "ob-audit",
+        "name": {
+          "cs": "Audit stávajícího e-mail marketingu",
+          "en": "Existing email marketing audit",
+          "de": "Audit des bestehenden E-Mail-Marketings"
+        },
+        "tooltip": {
+          "cs": "Analýza stávajícího stavu — seznam, kampaně, flows, doručitelnost, metriky. Závisí na objemu historických dat.",
+          "en": "Analysis of the current state — list, campaigns, flows, deliverability, metrics. Depends on historical data volume.",
+          "de": "Analyse des Ist-Zustands — Liste, Kampagnen, Flows, Zustellbarkeit, Metriken."
+        },
+        "minHours": 3,
+        "maxHours": 8,
+        "avgHours": 5
+      },
+      {
+        "kind": "hours",
+        "id": "ob-import",
+        "name": {
+          "cs": "Import a čištění kontaktní databáze",
+          "en": "Contact database import & cleaning",
+          "de": "Import & Bereinigung der Kontaktdatenbank"
+        },
+        "tooltip": {
+          "cs": "Import existujícího seznamu, deduplikace, kategorizace souhlasů, tagování. Nestrukturovaná data výrazně prodlužují čas.",
+          "en": "Importing existing list, deduplication, consent categorisation, tagging. Unstructured data significantly extends time.",
+          "de": "Import der bestehenden Liste, Deduplizierung, Einwilligungskategorisierung."
+        },
+        "minHours": 2,
+        "maxHours": 8,
+        "avgHours": 4
+      },
+      {
+        "kind": "hours",
+        "id": "ob-lists",
+        "name": {
+          "cs": "Nastavení struktury seznamů, tagů a segmentů",
+          "en": "List structure, tags & segment setup",
+          "de": "Listen-, Tag- & Segmentstruktur einrichten"
+        },
+        "tooltip": {
+          "cs": "Definice segmentů, skupin, tagů nebo vlastností. Komplexní B2B hierarchie nebo multi-market nastavení trvá déle.",
+          "en": "Defining segments, groups, tags or properties. Complex B2B or multi-market setups take longer.",
+          "de": "Definition von Segmenten, Gruppen, Tags oder Eigenschaften."
+        },
+        "minHours": 1,
+        "maxHours": 4,
+        "avgHours": 2
+      },
+      {
+        "kind": "hours",
+        "id": "ob-template",
+        "name": {
+          "cs": "Master šablona e-mailu (branding)",
+          "en": "Email master template (branding)",
+          "de": "E-Mail-Master-Template (Branding)"
+        },
+        "tooltip": {
+          "cs": "Vytvoření brandové HTML šablony nebo konfigurace drag & drop editoru. Custom HTML ~3–5 h; komplexní s dark mode až 10 h.",
+          "en": "Creating a branded HTML template or configuring a drag & drop editor. Custom HTML ~3–5 h; complex with dark mode up to 10 h.",
+          "de": "Erstellung einer Marken-HTML-Vorlage oder Konfiguration des Drag & Drop-Editors."
+        },
+        "minHours": 3,
+        "maxHours": 10,
+        "avgHours": 6
+      },
+      {
+        "kind": "hours",
+        "id": "ob-optin",
+        "name": {
+          "cs": "Opt-in formuláře a pop-upy",
+          "en": "Opt-in forms & pop-ups",
+          "de": "Opt-in-Formulare & Pop-ups"
+        },
+        "tooltip": {
+          "cs": "Vytvoření a napojení registračních formulářů (embedded, pop-up, landing page). Více formulářů nebo custom design prodlouží čas.",
+          "en": "Creating and connecting registration forms (embedded, pop-up, landing page). Multiple forms or custom design extend time.",
+          "de": "Erstellung und Verknüpfung von Anmeldeformularen."
+        },
+        "minHours": 2,
+        "maxHours": 5,
+        "avgHours": 3
+      },
+      {
+        "kind": "hours",
+        "id": "ob-doubleoptin",
+        "name": {
+          "cs": "Double opt-in proces",
+          "en": "Double opt-in process",
+          "de": "Double-Opt-in-Prozess"
+        },
+        "tooltip": {
+          "cs": "Konfigurace potvrzovacích e-mailů a logiky pro double opt-in. Jednoduchá platforma ~1 h; custom stránka ~3 h.",
+          "en": "Configuring confirmation emails and double opt-in logic. Simple platform ~1 h; custom page ~3 h.",
+          "de": "Konfiguration von Bestätigungs-E-Mails und Double-Opt-in-Logik."
+        },
+        "minHours": 1,
+        "maxHours": 3,
+        "avgHours": 2
+      },
+      {
+        "kind": "hours",
+        "id": "ob-utm",
+        "name": {
+          "cs": "UTM tracking a napojení na analytiku",
+          "en": "UTM tracking & analytics connection",
+          "de": "UTM-Tracking & Analytics-Anbindung"
+        },
+        "tooltip": {
+          "cs": "Konfigurace UTM parametrů a propojení s Google Analytics / GA4. Jednorázové nastavení; průběžná kontrola ~30 min.",
+          "en": "Configuring UTM parameters and connecting to Google Analytics / GA4. One-time setup; ongoing checks ~30 min.",
+          "de": "Konfiguration von UTM-Parametern und Verknüpfung mit Google Analytics / GA4."
+        },
+        "minHours": 1,
+        "maxHours": 3,
+        "avgHours": 2
+      },
+      {
+        "kind": "hours",
+        "id": "ob-migration",
+        "name": {
+          "cs": "Migrace z jiné platformy",
+          "en": "Migration from another platform",
+          "de": "Migration von einer anderen Plattform"
+        },
+        "tooltip": {
+          "cs": "Přesun kampaní, flows, šablon, kontaktů z jedné platformy do druhé. Závisí na rozsahu — počet flows, velikost databáze.",
+          "en": "Moving campaigns, flows, templates, contacts from one platform to another. Depends on scope — number of flows, database size.",
+          "de": "Übertragung von Kampagnen, Flows, Vorlagen, Kontakten von einer Plattform zur anderen."
+        },
+        "minHours": 5,
+        "maxHours": 20,
+        "avgHours": 10
+      },
+      {
+        "kind": "hours",
+        "id": "ob-warmup",
+        "name": {
+          "cs": "Warm-up nové domény / IP",
+          "en": "New domain / IP warm-up",
+          "de": "Neue Domain / IP Warm-up"
+        },
+        "tooltip": {
+          "cs": "Postupné zvyšování objemu odesílání pro budování reputace. Plánování + monitoring po dobu 4–8 týdnů.",
+          "en": "Gradually increasing sending volume to build reputation. Planning + monitoring for 4–8 weeks.",
+          "de": "Schrittweise Erhöhung des Versandvolumens zum Aufbau der Reputation."
+        },
+        "minHours": 2,
+        "maxHours": 6,
+        "avgHours": 3
+      }
+    ]
+  },
+  {
+    "id": "initial-flows",
+    "phase": "before",
+    "icon": "🔄",
+    "name": {
+      "cs": "Počáteční automatizace",
+      "en": "Initial automations",
+      "de": "Initiale Automatisierungen"
+    },
+    "description": {
+      "cs": "Flows které se nastavují jednou a pak běží automaticky — základ každé spolupráce.",
+      "en": "Flows set up once and then run automatically — the foundation of any engagement.",
+      "de": "Flows, die einmal eingerichtet werden und dann automatisch laufen."
+    },
+    "activities": [
+      {
+        "kind": "units",
+        "id": "if-welcome",
+        "name": {
+          "cs": "Welcome flow",
+          "en": "Welcome flow",
+          "de": "Welcome-Flow"
+        },
+        "tooltip": {
+          "cs": "Automatizace po registraci nebo první objednávce. Zahrnuje strategii, copywriting, design, build a testování.",
+          "en": "Automation after registration or first purchase. Includes strategy, copywriting, design, build and testing.",
+          "de": "Automatisierung nach Registrierung oder Erstkauf. Inkl. Strategie, Copywriting, Design, Build und Testing."
+        },
+        "unitLabel": {
+          "cs": "flow (2–4 e-maily)",
+          "en": "flow (2–4 emails)",
+          "de": "Flow (2–4 E-Mails)"
+        },
+        "complexity": {
+          "simple": {
+            "label": {
+              "cs": "Jednoduchý (2 e-maily, bez větvení)",
+              "en": "Simple (2 emails, no branching)",
+              "de": "Einfach (2 E-Mails, kein Verzweigen)"
+            },
+            "hoursPerUnit": 5
+          },
+          "standard": {
+            "label": {
+              "cs": "Standardní (3–4 e-maily, základní větvení)",
+              "en": "Standard (3–4 emails, basic branching)",
+              "de": "Standard (3–4 E-Mails, einfache Verzweigung)"
+            },
+            "hoursPerUnit": 10
+          },
+          "complex": {
+            "label": {
+              "cs": "Komplexní (4+ e-maily, podmíněná logika)",
+              "en": "Complex (4+ emails, conditional logic)",
+              "de": "Komplex (4+ E-Mails, bedingte Logik)"
+            },
+            "hoursPerUnit": 18
+          }
+        }
+      },
+      {
+        "kind": "units",
+        "id": "if-cart",
+        "name": {
+          "cs": "Abandoned cart flow",
+          "en": "Abandoned cart flow",
+          "de": "Abandoned-Cart-Flow"
+        },
+        "tooltip": {
+          "cs": "Automatizace pro opuštěné košíky. Závisí na propojení s e-shopem a počtu variant (produkt, hodnota košíku).",
+          "en": "Automation for abandoned shopping carts. Depends on e-shop connection and variants (product, cart value).",
+          "de": "Automatisierung für verlassene Warenkörbe."
+        },
+        "unitLabel": {
+          "cs": "flow (2–3 e-maily)",
+          "en": "flow (2–3 emails)",
+          "de": "Flow (2–3 E-Mails)"
+        },
+        "complexity": {
+          "simple": {
+            "label": {
+              "cs": "Jednoduchý (2 e-maily, bez segmentace)",
+              "en": "Simple (2 emails, no segmentation)",
+              "de": "Einfach (2 E-Mails, keine Segmentierung)"
+            },
+            "hoursPerUnit": 5
+          },
+          "standard": {
+            "label": {
+              "cs": "Standardní (3 e-maily, základní segmentace)",
+              "en": "Standard (3 emails, basic segmentation)",
+              "de": "Standard (3 E-Mails, einfache Segmentierung)"
+            },
+            "hoursPerUnit": 9
+          },
+          "complex": {
+            "label": {
+              "cs": "Komplexní (3+ e-maily, segmentace dle hodnoty)",
+              "en": "Complex (3+ emails, value-based segmentation)",
+              "de": "Komplex (3+ E-Mails, wertbasierte Segmentierung)"
+            },
+            "hoursPerUnit": 15
+          }
+        }
+      },
+      {
+        "kind": "units",
+        "id": "if-postpurchase",
+        "name": {
+          "cs": "Post-purchase flow",
+          "en": "Post-purchase flow",
+          "de": "Post-Purchase-Flow"
+        },
+        "tooltip": {
+          "cs": "Série po zakoupení — potvrzení, doporučení, upsell, recenze.",
+          "en": "Series after purchase — confirmation, recommendations, upsell, reviews.",
+          "de": "Serie nach dem Kauf — Bestätigung, Empfehlungen, Upsell, Bewertungen."
+        },
+        "unitLabel": {
+          "cs": "flow",
+          "en": "flow",
+          "de": "Flow"
+        },
+        "complexity": {
+          "simple": {
+            "label": {
+              "cs": "Jednoduchý (2–3 e-maily)",
+              "en": "Simple (2–3 emails)",
+              "de": "Einfach (2–3 E-Mails)"
+            },
+            "hoursPerUnit": 5
+          },
+          "standard": {
+            "label": {
+              "cs": "Standardní (4–5 e-mailů, cross-sell)",
+              "en": "Standard (4–5 emails, cross-sell)",
+              "de": "Standard (4–5 E-Mails, Cross-Sell)"
+            },
+            "hoursPerUnit": 10
+          },
+          "complex": {
+            "label": {
+              "cs": "Komplexní (6+ e-mailů, segmentace dle kategorie)",
+              "en": "Complex (6+ emails, category segmentation)",
+              "de": "Komplex (6+ E-Mails, Kategorie-Segmentierung)"
+            },
+            "hoursPerUnit": 18
+          }
+        }
+      },
+      {
+        "kind": "units",
+        "id": "if-winback",
+        "name": {
+          "cs": "Winback / re-engagement flow",
+          "en": "Winback / re-engagement flow",
+          "de": "Winback / Re-Engagement-Flow"
+        },
+        "tooltip": {
+          "cs": "Reaktivace neaktivních kontaktů — série se sunset protokolem.",
+          "en": "Reactivating inactive contacts — series with sunset protocol.",
+          "de": "Reaktivierung inaktiver Kontakte — Serie mit Sunset-Protokoll."
+        },
+        "unitLabel": {
+          "cs": "flow",
+          "en": "flow",
+          "de": "Flow"
+        },
+        "complexity": {
+          "simple": {
+            "label": {
+              "cs": "Jednoduchý (2 e-maily)",
+              "en": "Simple (2 emails)",
+              "de": "Einfach (2 E-Mails)"
+            },
+            "hoursPerUnit": 4
+          },
+          "standard": {
+            "label": {
+              "cs": "Standardní (3–4 e-maily + sunset)",
+              "en": "Standard (3–4 emails + sunset)",
+              "de": "Standard (3–4 E-Mails + Sunset)"
+            },
+            "hoursPerUnit": 8
+          },
+          "complex": {
+            "label": {
+              "cs": "Komplexní (5+ e-mailů, segmentace dle aktivity)",
+              "en": "Complex (5+ emails, activity segmentation)",
+              "de": "Komplex (5+ E-Mails, Aktivitätssegmentierung)"
+            },
+            "hoursPerUnit": 14
+          }
+        }
+      },
+      {
+        "kind": "units",
+        "id": "if-browse",
+        "name": {
+          "cs": "Browse / product abandonment flow",
+          "en": "Browse / product abandonment flow",
+          "de": "Browse / Product-Abandonment-Flow"
+        },
+        "tooltip": {
+          "cs": "Automatizace na základě prohlížení produktů. Vyžaduje pixel tracking nebo integraci s e-shopem.",
+          "en": "Automation based on product browsing. Requires pixel tracking or e-shop integration.",
+          "de": "Automatisierung basierend auf dem Browsen von Produkten. Erfordert Pixel-Tracking."
+        },
+        "unitLabel": {
+          "cs": "flow",
+          "en": "flow",
+          "de": "Flow"
+        },
+        "complexity": {
+          "simple": {
+            "label": {
+              "cs": "Jednoduchý (1–2 e-maily)",
+              "en": "Simple (1–2 emails)",
+              "de": "Einfach (1–2 E-Mails)"
+            },
+            "hoursPerUnit": 5
+          },
+          "standard": {
+            "label": {
+              "cs": "Standardní (3 e-maily, kategoriové větvení)",
+              "en": "Standard (3 emails, category branching)",
+              "de": "Standard (3 E-Mails, Kategorieverzweigung)"
+            },
+            "hoursPerUnit": 10
+          },
+          "complex": {
+            "label": {
+              "cs": "Komplexní (produktová dynamika, custom segmenty)",
+              "en": "Complex (product dynamics, custom segments)",
+              "de": "Komplex (Produktdynamik, benutzerdefinierte Segmente)"
+            },
+            "hoursPerUnit": 18
+          }
+        }
+      },
+      {
+        "kind": "units",
+        "id": "if-b2b",
+        "name": {
+          "cs": "B2B lead nurture flow",
+          "en": "B2B lead nurture flow",
+          "de": "B2B Lead-Nurture-Flow"
+        },
+        "tooltip": {
+          "cs": "Série pro potenciální zákazníky od lead magnetu po obchodní kontakt.",
+          "en": "Series for potential customers from lead magnet to sales contact.",
+          "de": "Serie für potenzielle Kunden vom Lead-Magneten bis zum Vertriebskontakt."
+        },
+        "unitLabel": {
+          "cs": "flow",
+          "en": "flow",
+          "de": "Flow"
+        },
+        "complexity": {
+          "simple": {
+            "label": {
+              "cs": "Jednoduchý (3–4 e-maily)",
+              "en": "Simple (3–4 emails)",
+              "de": "Einfach (3–4 E-Mails)"
+            },
+            "hoursPerUnit": 6
+          },
+          "standard": {
+            "label": {
+              "cs": "Standardní (5–7 e-mailů, základní scoring)",
+              "en": "Standard (5–7 emails, basic scoring)",
+              "de": "Standard (5–7 E-Mails, einfaches Scoring)"
+            },
+            "hoursPerUnit": 12
+          },
+          "complex": {
+            "label": {
+              "cs": "Komplexní (8+ e-mailů, lead scoring, CRM sync)",
+              "en": "Complex (8+ emails, lead scoring, CRM sync)",
+              "de": "Komplex (8+ E-Mails, Lead-Scoring, CRM-Sync)"
+            },
+            "hoursPerUnit": 22
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "campaigns",
+    "phase": "during",
+    "icon": "📧",
+    "name": {
+      "cs": "E-mailové kampaně",
+      "en": "Email campaigns",
+      "de": "E-Mail-Kampagnen"
+    },
+    "description": {
+      "cs": "Pravidelné kampaně — newslettery, promo, sezónní akce. Hodiny = na 1 kampaň × počet kampaní / měsíc.",
+      "en": "Regular campaigns — newsletters, promos, seasonal actions. Hours = per 1 campaign × campaigns per month.",
+      "de": "Regelmäßige Kampagnen — Newsletter, Promos, Saisonaktionen. Stunden = pro 1 Kampagne × Kampagnen / Monat."
+    },
+    "activities": [
+      {
+        "kind": "units",
+        "id": "ca-campaign",
+        "name": {
+          "cs": "E-mailová kampaň (brief → odeslání)",
+          "en": "Email campaign (brief → send)",
+          "de": "E-Mail-Kampagne (Brief → Versand)"
+        },
+        "tooltip": {
+          "cs": "Kompletní zpracování kampaně: brief, copywriting, design, build v platformě, testování, odeslání, základní vyhodnocení.",
+          "en": "Complete campaign processing: brief, copywriting, design, platform build, testing, send, basic evaluation.",
+          "de": "Vollständige Kampagnenbearbeitung: Brief, Copywriting, Design, Plattform-Build, Testing, Versand, Auswertung."
+        },
+        "unitLabel": {
+          "cs": "kampaň / měsíc",
+          "en": "campaign / month",
+          "de": "Kampagne / Monat"
+        },
+        "complexity": {
+          "simple": {
+            "label": {
+              "cs": "Jednoduchá (text, 1 sekce, hotový design)",
+              "en": "Simple (text, 1 section, ready design)",
+              "de": "Einfach (Text, 1 Abschnitt, fertiges Design)"
+            },
+            "hoursPerUnit": 3
+          },
+          "standard": {
+            "label": {
+              "cs": "Standardní (multi-sekce, vlastní vizuály)",
+              "en": "Standard (multi-section, custom visuals)",
+              "de": "Standard (Mehrere Abschnitte, eigene Visuals)"
+            },
+            "hoursPerUnit": 5
+          },
+          "complex": {
+            "label": {
+              "cs": "Komplexní (storytelling, A/B test, custom HTML)",
+              "en": "Complex (storytelling, A/B test, custom HTML)",
+              "de": "Komplex (Storytelling, A/B-Test, Custom HTML)"
+            },
+            "hoursPerUnit": 9
+          }
+        }
+      },
+      {
+        "kind": "units",
+        "id": "ca-abtest",
+        "name": {
+          "cs": "A/B test — příprava a vyhodnocení",
+          "en": "A/B test — setup & evaluation",
+          "de": "A/B-Test — Setup & Auswertung"
+        },
+        "tooltip": {
+          "cs": "Návrh variant, nastavení v platformě, analýza výsledků a implementace vítěze.",
+          "en": "Designing variants, platform setup, result analysis and implementing the winner.",
+          "de": "Variantenplanung, Plattform-Setup, Ergebnisanalyse und Gewinner-Implementierung."
+        },
+        "unitLabel": {
+          "cs": "test / měsíc",
+          "en": "test / month",
+          "de": "Test / Monat"
+        },
+        "complexity": {
+          "simple": {
+            "label": {
+              "cs": "Subject line test",
+              "en": "Subject line test",
+              "de": "Betreffzeilen-Test"
+            },
+            "hoursPerUnit": 1
+          },
+          "standard": {
+            "label": {
+              "cs": "Obsah / CTA test",
+              "en": "Content / CTA test",
+              "de": "Inhalt / CTA-Test"
+            },
+            "hoursPerUnit": 2
+          },
+          "complex": {
+            "label": {
+              "cs": "Multi-variant layout test",
+              "en": "Multi-variant layout test",
+              "de": "Multi-Variant-Layout-Test"
+            },
+            "hoursPerUnit": 4
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "list-management",
+    "phase": "during",
+    "icon": "👥",
+    "name": {
+      "cs": "Správa databáze",
+      "en": "Database management",
+      "de": "Datenbankverwaltung"
+    },
+    "description": {
+      "cs": "Průběžná péče o kvalitu a strukturu kontaktní databáze.",
+      "en": "Ongoing care of the quality and structure of the contact database.",
+      "de": "Laufende Pflege der Qualität und Struktur der Kontaktdatenbank."
+    },
+    "activities": [
+      {
+        "kind": "hours",
+        "id": "lm-cleaning",
+        "name": {
+          "cs": "Čištění databáze (měsíčně)",
+          "en": "Database cleaning (monthly)",
+          "de": "Datenbankbereinigung (monatlich)"
+        },
+        "tooltip": {
+          "cs": "Odstranění hard bounce, trvalých unsubscribes, neaktivních kontaktů. Závisí na velikosti databáze.",
+          "en": "Removing hard bounces, permanent unsubscribes, inactive contacts. Depends on database size.",
+          "de": "Entfernung von Hard Bounces, dauerhaften Abmeldungen, inaktiven Kontakten."
+        },
+        "minHours": 0.5,
+        "maxHours": 3,
+        "avgHours": 1
+      },
+      {
+        "kind": "hours",
+        "id": "lm-import",
+        "name": {
+          "cs": "Import nových kontaktů",
+          "en": "New contacts import",
+          "de": "Import neuer Kontakte"
+        },
+        "tooltip": {
+          "cs": "Nahrání, mapování polí a kategorizace nové dávky kontaktů. Malý čistý import ~30 min; velký nebo nestrukturovaný ~2 h.",
+          "en": "Uploading, field mapping and categorising a new batch. Small clean import ~30 min; large or unstructured ~2 h.",
+          "de": "Upload, Feldzuordnung und Kategorisierung neuer Kontakte."
+        },
+        "minHours": 0.5,
+        "maxHours": 2,
+        "avgHours": 1
+      },
+      {
+        "kind": "hours",
+        "id": "lm-segment",
+        "name": {
+          "cs": "Tvorba a správa segmentů",
+          "en": "Segment creation & management",
+          "de": "Segmenterstellung & -verwaltung"
+        },
+        "tooltip": {
+          "cs": "Definice nových segmentů nebo úprava stávajících dle chování, vlastností nebo aktivity.",
+          "en": "Defining new segments or modifying existing ones based on behaviour, properties or activity.",
+          "de": "Definition neuer Segmente oder Anpassung bestehender nach Verhalten, Eigenschaften oder Aktivität."
+        },
+        "minHours": 0.5,
+        "maxHours": 2,
+        "avgHours": 1
+      },
+      {
+        "kind": "hours",
+        "id": "lm-tags",
+        "name": {
+          "cs": "Správa tagů a custom fields",
+          "en": "Tag & custom field management",
+          "de": "Tag- & Custom-Field-Verwaltung"
+        },
+        "tooltip": {
+          "cs": "Úprava, doplnění nebo reorganizace tagů a vlastních polí kontaktů.",
+          "en": "Editing, adding or reorganising tags and custom contact fields.",
+          "de": "Bearbeitung, Ergänzung oder Neuorganisation von Tags und benutzerdefinierten Kontaktfeldern."
+        },
+        "minHours": 0.5,
+        "maxHours": 2,
+        "avgHours": 1
+      }
+    ]
+  },
+  {
+    "id": "reporting",
+    "phase": "during",
+    "icon": "📊",
+    "name": {
+      "cs": "Reporting & analytika",
+      "en": "Reporting & analytics",
+      "de": "Reporting & Analytik"
+    },
+    "description": {
+      "cs": "Měření a vyhodnocování výkonu. Automatizovaný reporting zkrátí čas o 30–50 %.",
+      "en": "Measuring and evaluating performance. Automated reporting reduces time by 30–50%.",
+      "de": "Messung und Bewertung der Leistung. Automatisiertes Reporting reduziert Zeit um 30–50%."
+    },
+    "activities": [
+      {
+        "kind": "units",
+        "id": "re-monthly",
+        "name": {
+          "cs": "Měsíční výkonnostní report",
+          "en": "Monthly performance report",
+          "de": "Monatlicher Leistungsbericht"
+        },
+        "tooltip": {
+          "cs": "Přehled klíčových metrik za měsíc, porovnání s cíli a předchozím obdobím, doporučení.",
+          "en": "Overview of key metrics for the month, comparison with goals and previous period, recommendations.",
+          "de": "Überblick über Schlüsselmetriken des Monats, Vergleich mit Zielen und Vorperiode, Empfehlungen."
+        },
+        "unitLabel": {
+          "cs": "report / měsíc",
+          "en": "report / month",
+          "de": "Bericht / Monat"
+        },
+        "complexity": {
+          "simple": {
+            "label": {
+              "cs": "Základní (metriky, bez analýzy)",
+              "en": "Basic (metrics, no analysis)",
+              "de": "Basis (Metriken, ohne Analyse)"
+            },
+            "hoursPerUnit": 1.5
+          },
+          "standard": {
+            "label": {
+              "cs": "Standardní (metriky + doporučení)",
+              "en": "Standard (metrics + recommendations)",
+              "de": "Standard (Metriken + Empfehlungen)"
+            },
+            "hoursPerUnit": 3
+          },
+          "complex": {
+            "label": {
+              "cs": "Pokročilý (YoY, segment analýza, prezentace)",
+              "en": "Advanced (YoY, segment analysis, presentation)",
+              "de": "Fortgeschritten (YoY, Segmentanalyse, Präsentation)"
+            },
+            "hoursPerUnit": 5
+          }
+        }
+      },
+      {
+        "kind": "hours",
+        "id": "re-flows",
+        "name": {
+          "cs": "Analýza výkonnosti flows",
+          "en": "Flow performance analysis",
+          "de": "Flow-Performance-Analyse"
+        },
+        "tooltip": {
+          "cs": "Pravidelný přehled metrik automatizovaných sekvencí. Klaviyo má detailní flow analytics.",
+          "en": "Regular overview of automated sequence metrics. Klaviyo has detailed flow analytics.",
+          "de": "Regelmäßiger Überblick über Metriken automatisierter Sequenzen."
+        },
+        "minHours": 1,
+        "maxHours": 3,
+        "avgHours": 2
+      },
+      {
+        "kind": "hours",
+        "id": "re-quarterly",
+        "name": {
+          "cs": "Kvartální strategický přehled",
+          "en": "Quarterly strategic review",
+          "de": "Vierteljährlicher strategischer Überblick"
+        },
+        "tooltip": {
+          "cs": "Souhrnná prezentace výsledků, trendů a doporučení pro příští kvartál. Příprava + prezentace klientovi.",
+          "en": "Summary presentation of results, trends and recommendations for next quarter. Prep + client presentation.",
+          "de": "Zusammenfassende Präsentation von Ergebnissen, Trends und Empfehlungen für das nächste Quartal."
+        },
+        "minHours": 3,
+        "maxHours": 6,
+        "avgHours": 4
+      }
+    ]
+  },
+  {
+    "id": "technical-ongoing",
+    "phase": "during",
+    "icon": "🔧",
+    "name": {
+      "cs": "Technická péče",
+      "en": "Technical maintenance",
+      "de": "Technische Pflege"
+    },
+    "description": {
+      "cs": "Průběžná technická péče o doručitelnost, infrastrukturu a reputaci.",
+      "en": "Ongoing technical care of deliverability, infrastructure and reputation.",
+      "de": "Laufende technische Pflege von Zustellbarkeit, Infrastruktur und Reputation."
+    },
+    "activities": [
+      {
+        "kind": "hours",
+        "id": "tt-monitoring",
+        "name": {
+          "cs": "Monitoring doručitelnosti (měsíčně)",
+          "en": "Deliverability monitoring (monthly)",
+          "de": "Zustellbarkeits-Monitoring (monatlich)"
+        },
+        "tooltip": {
+          "cs": "Kontrola reputace domény, sender score, blacklistů. Nástroje: Google Postmaster, MXToolbox.",
+          "en": "Checking domain reputation, sender score, blacklists. Tools: Google Postmaster, MXToolbox.",
+          "de": "Prüfung von Domain-Reputation, Sender-Score, Blacklists. Tools: Google Postmaster, MXToolbox."
+        },
+        "minHours": 0.5,
+        "maxHours": 2,
+        "avgHours": 1
+      },
+      {
+        "kind": "hours",
+        "id": "tt-dns",
+        "name": {
+          "cs": "Kontrola DNS záznamů",
+          "en": "DNS record check",
+          "de": "DNS-Eintrags-Prüfung"
+        },
+        "tooltip": {
+          "cs": "Ověření platnosti SPF, DKIM, DMARC; aktualizace při změnách. Rutinní kontrola ~30 min.",
+          "en": "Verifying SPF, DKIM, DMARC validity; updating on changes. Routine check ~30 min.",
+          "de": "Überprüfung der SPF, DKIM, DMARC-Gültigkeit; Aktualisierung bei Änderungen."
+        },
+        "minHours": 0.5,
+        "maxHours": 1,
+        "avgHours": 0.5
+      },
+      {
+        "kind": "hours",
+        "id": "tt-suppression",
+        "name": {
+          "cs": "Správa suppression listu",
+          "en": "Suppression list management",
+          "de": "Suppression-Listen-Verwaltung"
+        },
+        "tooltip": {
+          "cs": "Aktualizace a synchronizace suppression listu napříč platformami. Kritické při multi-platform situacích.",
+          "en": "Updating and synchronising the suppression list across platforms. Critical in multi-platform situations.",
+          "de": "Aktualisierung und Synchronisierung der Suppression-Liste über Plattformen hinweg."
+        },
+        "minHours": 0.5,
+        "maxHours": 1,
+        "avgHours": 0.5
+      }
+    ]
+  },
+  {
+    "id": "strategy",
+    "phase": "adhoc",
+    "icon": "🎯",
+    "name": {
+      "cs": "Strategie & konzultace",
+      "en": "Strategy & consulting",
+      "de": "Strategie & Beratung"
+    },
+    "description": {
+      "cs": "Jednorázové strategické aktivity nad rámec retaineru — typicky projektově fakturované.",
+      "en": "One-time strategic activities beyond the retainer scope — typically billed per project.",
+      "de": "Einmalige strategische Aktivitäten außerhalb des Retainers — typischerweise projektbasiert abgerechnet."
+    },
+    "activities": [
+      {
+        "kind": "hours",
+        "id": "st-strategy",
+        "name": {
+          "cs": "E-mail marketing strategie",
+          "en": "Email marketing strategy",
+          "de": "E-Mail-Marketing-Strategie"
+        },
+        "tooltip": {
+          "cs": "Tvorba komplexní strategie — cíle, kanály, flows, frekvence, segmenty. Menší klient ~4 h; multi-market ~12 h.",
+          "en": "Creating a comprehensive strategy — goals, channels, flows, frequency, segments. Smaller client ~4 h; multi-market ~12 h.",
+          "de": "Erstellung einer umfassenden Strategie — Ziele, Kanäle, Flows, Frequenz, Segmente."
+        },
+        "minHours": 4,
+        "maxHours": 12,
+        "avgHours": 7
+      },
+      {
+        "kind": "hours",
+        "id": "st-fullaudit",
+        "name": {
+          "cs": "Kompletní audit e-mail strategie",
+          "en": "Full email strategy audit",
+          "de": "Vollständiger E-Mail-Strategie-Audit"
+        },
+        "tooltip": {
+          "cs": "Hloubková analýza celého e-mail ekosystému s doporučeními. Kampaně, flows, doručitelnost, databáze, šablony.",
+          "en": "In-depth analysis of the entire email ecosystem with recommendations. Campaigns, flows, deliverability, database, templates.",
+          "de": "Tiefgehende Analyse des gesamten E-Mail-Ökosystems mit Empfehlungen."
+        },
+        "minHours": 4,
+        "maxHours": 10,
+        "avgHours": 6
+      },
+      {
+        "kind": "hours",
+        "id": "st-consult",
+        "name": {
+          "cs": "Konzultace (ad hoc)",
+          "en": "Consultation (ad hoc)",
+          "de": "Beratung (ad hoc)"
+        },
+        "tooltip": {
+          "cs": "Jednorázová konzultace k strategii, problému nebo výběru platformy. Hodinový call + příprava.",
+          "en": "One-time consultation on strategy, a problem or platform selection. Hour call + preparation.",
+          "de": "Einmalige Beratung zu Strategie, Problem oder Plattformauswahl."
+        },
+        "minHours": 1,
+        "maxHours": 3,
+        "avgHours": 1.5
+      },
+      {
+        "kind": "hours",
+        "id": "st-workshop",
+        "name": {
+          "cs": "Workshop / školení klientského týmu",
+          "en": "Workshop / client team training",
+          "de": "Workshop / Kundeteam-Schulung"
+        },
+        "tooltip": {
+          "cs": "Interní školení klienta na práci s platformou nebo e-mail marketingem. Online ~2–3 h; prezenční s materiály ~4–6 h.",
+          "en": "Internal client training on platform use or email marketing. Online ~2–3 h; in-person with materials ~4–6 h.",
+          "de": "Interne Schulung des Kunden zur Plattformnutzung oder E-Mail-Marketing."
+        },
+        "minHours": 2,
+        "maxHours": 6,
+        "avgHours": 3
+      },
+      {
+        "kind": "hours",
+        "id": "st-multimarket",
+        "name": {
+          "cs": "Vícejazyčný / multi-market setup",
+          "en": "Multilingual / multi-market setup",
+          "de": "Mehrsprachiges / Multi-Market-Setup"
+        },
+        "tooltip": {
+          "cs": "6 trhů (CZ, SK, DE, UK, US, SG) vyžaduje strukturu, šablony a flows pro každý trh.",
+          "en": "6 markets (CZ, SK, DE, UK, US, SG) requires structure, templates and flows for each market.",
+          "de": "6 Märkte (CZ, SK, DE, UK, US, SG) erfordern Struktur, Vorlagen und Flows für jeden Markt."
+        },
+        "minHours": 4,
+        "maxHours": 12,
+        "avgHours": 7
+      }
+    ]
+  },
+  {
+    "id": "technical-adhoc",
+    "phase": "adhoc",
+    "icon": "⚠️",
+    "name": {
+      "cs": "Technické zásahy",
+      "en": "Technical interventions",
+      "de": "Technische Eingriffe"
+    },
+    "description": {
+      "cs": "Nepravidelné technické úkony — řešení problémů s doručitelností, migrace a integrace.",
+      "en": "Irregular technical tasks — deliverability issues, migrations and integrations.",
+      "de": "Unregelmäßige technische Aufgaben — Zustellbarkeitsprobleme, Migrationen und Integrationen."
+    },
+    "activities": [
+      {
+        "kind": "hours",
+        "id": "ta-blacklist",
+        "name": {
+          "cs": "Řešení blacklistingu domény / IP",
+          "en": "Domain / IP blacklist resolution",
+          "de": "Domain / IP Blacklisting-Behebung"
+        },
+        "tooltip": {
+          "cs": "Identifikace příčiny, žádost o odblokování, nápravná opatření. Může trvat dny.",
+          "en": "Identifying the cause, requesting removal, corrective measures. Can take days.",
+          "de": "Ursachenidentifikation, Entsperrungsantrag, Korrekturmaßnahmen."
+        },
+        "minHours": 2,
+        "maxHours": 8,
+        "avgHours": 4
+      },
+      {
+        "kind": "hours",
+        "id": "ta-bounce",
+        "name": {
+          "cs": "Diagnostika bounce problémů",
+          "en": "Bounce problem diagnostics",
+          "de": "Bounce-Problem-Diagnose"
+        },
+        "tooltip": {
+          "cs": "Analýza soft/hard bounce, identifikace příčin, nápravná opatření.",
+          "en": "Analysing soft/hard bounce, identifying causes, corrective measures.",
+          "de": "Analyse von Soft/Hard Bounce, Ursachenidentifikation, Korrekturmaßnahmen."
+        },
+        "minHours": 1,
+        "maxHours": 4,
+        "avgHours": 2
+      },
+      {
+        "kind": "hours",
+        "id": "ta-api",
+        "name": {
+          "cs": "Technická podpora při API integraci",
+          "en": "Technical support for API integration",
+          "de": "Technische Unterstützung bei API-Integration"
+        },
+        "tooltip": {
+          "cs": "Konzultace nebo testování integrace přes API s vývojářem klienta. Specialista v roli konzultanta, ne developera.",
+          "en": "Consulting or testing API integration with the client's developer. Specialist as consultant, not developer.",
+          "de": "Beratung oder Testen der API-Integration mit dem Kunden-Entwickler."
+        },
+        "minHours": 1,
+        "maxHours": 6,
+        "avgHours": 3
+      },
+      {
+        "kind": "hours",
+        "id": "ta-migration",
+        "name": {
+          "cs": "Migrace mezi platformami (projektově)",
+          "en": "Platform migration (project basis)",
+          "de": "Plattform-Migration (projektbasiert)"
+        },
+        "tooltip": {
+          "cs": "Přesun z jedné platformy do druhé. Komplexní migrace s flows a historií dat ~15–20 h.",
+          "en": "Moving from one platform to another. Complex migration with flows and data history ~15–20 h.",
+          "de": "Wechsel von einer Plattform zur anderen. Komplexe Migration mit Flows und Datenverlauf ~15–20 h."
+        },
+        "minHours": 5,
+        "maxHours": 20,
+        "avgHours": 10
+      }
+    ]
+  },
+  {
+    "id": "cold-outreach",
+    "phase": "adhoc",
+    "icon": "📨",
+    "name": {
+      "cs": "Cold outreach",
+      "en": "Cold outreach",
+      "de": "Cold Outreach"
+    },
+    "description": {
+      "cs": "Nastavení a řízení B2B studené emailové kampaně — oddělená disciplína od e-mail marketingu.",
+      "en": "Setting up and managing B2B cold email campaigns — a separate discipline from email marketing.",
+      "de": "Einrichten und Verwalten von B2B Cold-E-Mail-Kampagnen — eine eigene Disziplin."
+    },
+    "activities": [
+      {
+        "kind": "hours",
+        "id": "co-setup",
+        "name": {
+          "cs": "Setup cold outreach nástroje",
+          "en": "Cold outreach tool setup",
+          "de": "Cold-Outreach-Tool-Setup"
+        },
+        "tooltip": {
+          "cs": "Konfigurace sekvence ve Woodpecker nebo Instantly. Doménový setup, warming, základní sekvence.",
+          "en": "Configuring a sequence in Woodpecker or Instantly. Domain setup, warming, basic sequence.",
+          "de": "Konfiguration einer Sequenz in Woodpecker oder Instantly. Domain-Setup, Warming."
+        },
+        "minHours": 2,
+        "maxHours": 6,
+        "avgHours": 3
+      },
+      {
+        "kind": "units",
+        "id": "co-sequence",
+        "name": {
+          "cs": "Copywriting cold outreach sekvence",
+          "en": "Cold outreach sequence copywriting",
+          "de": "Cold-Outreach-Sequenz-Copywriting"
+        },
+        "tooltip": {
+          "cs": "Napsání série studených e-mailů. B2B sales outreach s personalizací a follow-up kroky.",
+          "en": "Writing a series of cold emails. B2B sales outreach with personalisation and follow-up steps.",
+          "de": "Verfassen einer Serie von Cold-E-Mails. B2B-Sales-Outreach mit Personalisierung."
+        },
+        "unitLabel": {
+          "cs": "sekvence",
+          "en": "sequence",
+          "de": "Sequenz"
+        },
+        "complexity": {
+          "simple": {
+            "label": {
+              "cs": "Krátká (3 kroky, bez personalizace)",
+              "en": "Short (3 steps, no personalisation)",
+              "de": "Kurz (3 Schritte, ohne Personalisierung)"
+            },
+            "hoursPerUnit": 2
+          },
+          "standard": {
+            "label": {
+              "cs": "Standardní (4–5 kroků, personalizace)",
+              "en": "Standard (4–5 steps, personalisation)",
+              "de": "Standard (4–5 Schritte, Personalisierung)"
+            },
+            "hoursPerUnit": 4
+          },
+          "complex": {
+            "label": {
+              "cs": "Komplexní (5+ kroků, multi-persona)",
+              "en": "Complex (5+ steps, multi-persona)",
+              "de": "Komplex (5+ Schritte, Multi-Persona)"
+            },
+            "hoursPerUnit": 7
+          }
+        }
+      }
+    ]
+  }
+]
