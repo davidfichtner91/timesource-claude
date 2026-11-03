@@ -18,7 +18,9 @@ if (i < 0 || j < 0) {
 }
 
 JSON.parse(cat); // spadne dřív, než se vyrobí rozbitý index.html
-const out = tpl.slice(0, i + START.length) + cat.trim() + tpl.slice(j);
+// Logo CreatiComu pro tisk nacenění se vkládá inline, aby appka zůstala jedním souborem.
+const logo = fs.readFileSync(path.join(__dirname, "app", "logo-creaticom.svg"), "utf8").trim();
+const out = (tpl.slice(0, i + START.length) + cat.trim() + tpl.slice(j)).replace("<!--__LOGO__-->", logo);
 fs.writeFileSync(path.join(__dirname, "index.html"), out, "utf8");
 
 const d = JSON.parse(cat);

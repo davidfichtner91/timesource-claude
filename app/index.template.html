@@ -28,9 +28,6 @@ header .wrap{padding-bottom:0;display:flex;align-items:center;justify-content:sp
 .home{background:none;border:0;color:#fff;font:inherit;font-size:22px;font-weight:700;cursor:pointer;padding:0;text-align:left}
 .home:hover{opacity:.85}
 header .sub{color:#fff;opacity:.9;font-size:13px}
-.langs{display:flex;gap:6px}
-.langs button{background:transparent;border:1px solid rgba(255,255,255,.55);color:#fff;border-radius:6px;padding:4px 9px;font:inherit;font-size:12px;cursor:pointer}
-.langs button.on{background:#fff;color:var(--pink);border-color:#fff;font-weight:600}
 
 .card{background:#fff;border:var(--line);border-radius:var(--radius);padding:20px;margin:18px 0}
 label.f{display:block;margin:12px 0 4px;font-size:13px;color:var(--gray)}
@@ -87,7 +84,6 @@ details.kat .kbody{padding:0 16px 10px}
 .act .head input[type=checkbox]{margin-top:5px;width:16px;height:16px;accent-color:var(--pink);flex:none}
 .act .name{flex:1}
 .act .name strong{font-weight:600}
-.act .tip{font-size:12.5px;color:var(--gray);margin:2px 0 0}
 .act .sum{text-align:right;white-space:nowrap;font-weight:600}
 .act .sum .int{display:block;font-weight:400;font-size:12px;color:var(--gray)}
 .act .ctl{margin:8px 0 0 26px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;font-size:13px}
@@ -111,10 +107,17 @@ aside .card{margin:0 0 14px}
 .prepinac input{accent-color:var(--pink);width:16px;height:16px}
 .interni{background:#fafafa;border:1px dashed #cfcfcf}
 .interni h3{font-size:14px}
-.interni table{width:100%;border-collapse:collapse;font-size:13px}
-.interni td,.interni th{padding:5px 4px;border-bottom:var(--line);text-align:right;white-space:nowrap}
-.interni th{font-size:11px;color:var(--gray);font-weight:600}
-.interni td:first-child,.interni th:first-child{text-align:left}
+.iblok{border-bottom:var(--line);padding:8px 0}
+.ihlava{display:flex;justify-content:space-between;font-weight:600;font-size:14px}
+.ipomer{color:var(--pink)}
+.iblok dl{display:grid;grid-template-columns:auto 1fr;gap:2px 12px;margin:4px 0 0;font-size:13px}
+.iblok dt{color:var(--gray)}
+.iblok dd{margin:0;text-align:right;white-space:nowrap}
+.info{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:50%;
+  border:1px solid #ccc;background:#fff;color:var(--gray);font:600 11px/1 Poppins,sans-serif;cursor:pointer;margin-left:6px;vertical-align:1px;padding:0}
+.info:hover,.info.on{border-color:var(--pink);color:var(--pink)}
+.vysvetlivka{font-size:12.5px;margin:4px 0 0;color:var(--dark)}
+.vysvetlivka .tech{display:block;color:var(--gray);margin-top:2px}
 .akce{display:grid;gap:8px}
 .akce .btn{width:100%}
 .mbar{display:none}
@@ -140,17 +143,35 @@ details.nast summary{cursor:pointer;font-weight:600}
   .wrap{padding-left:16px;padding-right:16px}
   .act .ctl{margin-left:0}
   .act .ctl select{min-width:0;max-width:100%}
-  .interni{overflow-x:auto}
 }
 @media print{
   body{background:#fff;font-size:12px}
   body > *:not(#tisk){display:none !important}
-  #tisk{display:block;padding:0 10px}
-  #tisk h1{font-size:20px;border-bottom:3px solid var(--pink);padding-bottom:6px}
-  #tisk table{width:100%;border-collapse:collapse;margin:6px 0 14px}
-  #tisk td,#tisk th{padding:5px 6px;border-bottom:1px solid #ddd;text-align:left}
-  #tisk td.num,#tisk th.num{text-align:right}
-  #tisk tr.total td{font-weight:700;border-top:2px solid var(--dark)}
+  @page{size:A4;margin:14mm 16mm}
+  #tisk{display:block;color:var(--dark);-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .tpruh{height:6px;border-radius:3px;background:linear-gradient(135deg,#FD5D47 0%,#EA406F 100%);margin-bottom:18px}
+  .thlava{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px}
+  .tlogo svg{height:34px;width:auto;display:block}
+  .tdatum{font-size:11px;color:var(--gray)}
+  #tisk h1{font-size:24px;color:var(--pink);margin:0}
+  .tklient{font-size:14px;font-weight:600;margin:2px 0 0}
+  .tcil{font-size:12px;margin:10px 0 0}
+  .tprehled{display:flex;gap:10px;margin:18px 0 8px}
+  .tdlazdice{flex:1;border:1px solid rgba(0,0,0,.18);border-radius:12px;padding:10px 12px}
+  .tdlazdice span{display:block;font-size:11px;color:var(--gray)}
+  .tdlazdice strong{display:block;font-size:17px;color:var(--pink)}
+  .tdlazdice small{font-size:10px;color:var(--gray)}
+  #tisk section{break-inside:auto;margin-top:16px}
+  .tfaze{display:flex;align-items:baseline;gap:8px;border-bottom:2px solid var(--lightpink);padding-bottom:3px;break-after:avoid;page-break-after:avoid}
+  #tisk table tr:first-child{break-before:avoid;page-break-before:avoid}
+  .tfaze h2{font-size:15px;margin:0}
+  .tfaze span{font-size:11px;color:var(--gray)}
+  #tisk table{width:100%;border-collapse:collapse;margin:4px 0 0}
+  #tisk td{padding:6px 4px;border-bottom:1px solid #eee;vertical-align:top;font-size:11.5px}
+  #tisk tr{break-inside:avoid}
+  #tisk td.num{text-align:right;white-space:nowrap;padding-left:16px}
+  .tpopis{display:block;color:var(--gray);font-size:10.5px;margin-top:1px}
+  #tisk tr.total td{font-weight:700;border-bottom:0;border-top:1.5px solid var(--dark)}
 }
 </style>
 </head>
@@ -162,7 +183,6 @@ details.nast summary{cursor:pointer;font-weight:600}
       <button class="home" id="b-home" title="Zpět na úvod">@ktivity</button>
       <div class="sub">Nacenění e-mailového projektu</div>
     </div>
-    <div class="langs" id="langs"></div>
   </div>
 </header>
 
@@ -186,6 +206,7 @@ const state = {
   acts:{},               // id -> {sel,hours,units,cx,skut}
   vlastni:{},            // katId -> [{name,hours,skut}]
   otevrene:{},           // katId -> true, rozbalené kategorie
+  info:{},               // id úkonu -> true, rozbalená vysvětlivka
 };
 
 function nacistNastaveni(){
@@ -281,7 +302,7 @@ function polozkyFaze(f){
       if(!h) return;
       const s = state.acts[a.id];
       out.push({kat:c, nazev:L(a.name), pocet: a.kind === "units" ? Number(s.units)||0 : null,
-        jednotka: L(a.unitLabel), h, skut: skutecneUkonu(a), cena: cena(h)});
+        jednotka: L(a.unitLabel), popis: L(a.popisKlient), h, skut: skutecneUkonu(a), cena: cena(h)});
     });
     vlastniKat(c.id).forEach(v => {
       const h = Number(v.hours)||0;
@@ -289,7 +310,8 @@ function polozkyFaze(f){
     });
   });
   const kh = hodinyKomunikace(f);
-  if(kh) out.push({kat:null, nazev:"Koordinace, komunikace a schvalování", komunikace:true, h:kh, skut:kh, cena: cena(kh)});
+  if(kh) out.push({kat:null, nazev:"Koordinace, komunikace a schvalování", komunikace:true,
+    popis:"Hovory, schvalovací kola a zápisy, které k práci v této fázi patří.", h:kh, skut:kh, cena: cena(kh)});
   return out;
 }
 function soucetFaze(f){
@@ -304,16 +326,9 @@ function pocetVybranych(c){
 
 /* ── vykreslení ────────────────────────────────────────────────────────────── */
 function render(){
-  renderLangs();
   if(state.view === "home") viewHome(); else viewEditor();
 }
 
-function renderLangs(){
-  $("#langs").innerHTML = ["cs","en","de"].map(l =>
-    `<button class="${l===state.lang?"on":""}" data-l="${l}">${l.toUpperCase()}</button>`).join("");
-  $("#langs").querySelectorAll("button").forEach(b =>
-    b.onclick = () => { state.lang = b.dataset.l; render(); });
-}
 
 /* úvod */
 function odhadTypu(typ){
@@ -476,11 +491,15 @@ function radekUkonu(a){
       placeholder="${fmtH(h*(1-(a.uspora||0)))}" data-skut="${a.id}"> h</label>`;
   }
   const int = on && state.interni ? `<span class="int">${fmtH(h)} h → ${fmtH(skutecneUkonu(a))} h</span>` : "";
+  // Odborný název působí odborně, proto zůstává. Lidské vysvětlení je pod „i“
+  // a stejnou větu dostane klient v nacenění pod názvem položky.
+  const otevreno = state.info[a.id];
   return `<div class="act ${on?"":"vypnuto"}">
     <div class="head">
       <input type="checkbox" data-s="${a.id}" ${on?"checked":""} aria-label="${esc(L(a.name))}">
-      <div class="name"><strong>${esc(L(a.name))}</strong>${a.role === "account" ? `<span class="role">account</span>` : ""}
-        <p class="tip">${esc(L(a.tooltip))}</p></div>
+      <div class="name"><strong>${esc(L(a.name))}</strong>${a.role === "account" ? `<span class="role">account</span>` : ""}<button
+        class="info ${otevreno?"on":""}" data-info="${a.id}" title="${esc(L(a.popisKlient))}" aria-label="Vysvětlivka" aria-expanded="${otevreno?"true":"false"}">i</button>
+        ${otevreno ? `<p class="vysvetlivka">${esc(L(a.popisKlient))}<span class="tech">${esc(L(a.tooltip))}</span></p>` : ""}</div>
       <div class="sum">${on ? fmtKc(cena(h)) : ""}${int}</div>
     </div>${ctl ? `<div class="ctl">${ctl}</div>` : ""}</div>`;
 }
@@ -527,18 +546,24 @@ function souhrnHtml(){
     </div>`;
 }
 
+// Bloky pod sebou místo tabulky: v úzkém sloupci souhrnu se pět sloupců nevejde.
 function interniHtml(r){
   const n = state.nastaveni;
-  const radky = [["Rozjezd", r.f.before], ["Měsíčně", r.f.during], ["Na vyžádání", r.f.adhoc], ["Ukončení", r.f.after]]
+  const bloky = [["Rozjezd", r.f.before], ["Měsíčně", r.f.during], ["Na vyžádání", r.f.adhoc], ["Ukončení", r.f.after]]
     .filter(([,s]) => s.cena).map(([nazev, s]) => {
       const nak = naklad(s.skut);
-      return `<tr><td>${nazev}</td><td>${fmtH(s.h)} → ${fmtH(s.skut)}</td><td>${fmtKc(nak)}</td><td>${fmtKc(s.cena - nak)}</td><td>${nak ? fmtH(s.cena / nak) + "×" : "–"}</td></tr>`;
+      return `<div class="iblok">
+        <div class="ihlava"><span>${nazev}</span><span class="ipomer">${nak ? fmtH(s.cena / nak) + "×" : "–"}</span></div>
+        <dl><dt>Hodiny</dt><dd>${fmtH(s.h)} → ${fmtH(s.skut)}</dd>
+          <dt>Cena</dt><dd>${fmtKc(s.cena)}</dd>
+          <dt>Náklad</dt><dd>${fmtKc(nak)}</dd>
+          <dt>Marže</dt><dd>${fmtKc(s.cena - nak)}</dd></dl>
+      </div>`;
     }).join("");
   return `<div class="card interni">
     <h3>Interní pohled</h3>
-    <table><thead><tr><th></th><th>hodiny</th><th>náklad</th><th>marže</th><th>cena / náklad</th></tr></thead>
-    <tbody>${radky || `<tr><td colspan="5" class="muted">Nic k výpočtu.</td></tr>`}</tbody></table>
-    <p class="hint">Hodiny „katalog → skutečně“. Skutečné hodiny počítá výchozí odhad úspory s Claudem
+    ${bloky || `<p class="muted" style="font-size:13px">Nic k výpočtu.</p>`}
+    <p class="hint">Číslo vpravo je poměr ceny a nákladu. Hodiny „katalog → skutečně“. Skutečné hodiny počítá výchozí odhad úspory s Claudem
       (texty 40 %, data 30 %, technika 20 %, schůzky 0 %), dokud se u úkonu nevyplní naměřené číslo.
       Sazby ${fmtKc(n.cenovaSazba)}/h cena a ${fmtKc(n.nakladovaSazba)}/h náklad se mění na úvodní stránce.</p>
   </div>`;
@@ -560,6 +585,7 @@ function vazbyEditoru(){
   v.querySelectorAll("[data-u]").forEach(i => i.onchange = () => { actState(i.dataset.u).units = Number(i.value)||0; prekreslit(); });
   v.querySelectorAll("[data-c]").forEach(sel => sel.onchange = () => { actState(sel.dataset.c).cx = sel.value; prekreslit(); });
   v.querySelectorAll("[data-p]").forEach(b => b.onclick = () => { actState(b.dataset.p).hours = Number(b.dataset.v); prekreslit(); });
+  v.querySelectorAll("[data-info]").forEach(b => b.onclick = () => { state.info[b.dataset.info] = !state.info[b.dataset.info]; prekreslit(); });
   v.querySelectorAll("[data-skut]").forEach(i => i.onchange = () => { actState(i.dataset.skut).skut = i.value === "" ? null : Number(i.value); prekreslit(); });
   v.querySelectorAll("[data-pridat]").forEach(b => b.onclick = () => {
     const n = prompt("Název úkonu");
@@ -587,36 +613,48 @@ function vazbyEditoru(){
 function nazevPolozky(p){
   return p.pocet != null && p.pocet !== 1 ? p.pocet + "× " + p.nazev : p.nazev;
 }
-function hlavickaNaceneni(){
-  return "Nacenění: " + (state.klient || "klient") + (state.projekt ? ", " + state.projekt : "");
-}
+const NADPIS_NACENENI = "Nacenění e-mail marketingu";
+const podnadpisNaceneni = () => [state.klient, state.projekt].filter(Boolean).join(", ");
 
 function exportMd(){
-  const l = ["# " + hlavickaNaceneni(), ""];
+  const l = ["# " + NADPIS_NACENENI + (podnadpisNaceneni() ? ": " + podnadpisNaceneni() : ""), ""];
   l.push("Datum: " + new Date().toLocaleDateString("cs-CZ"), "");
   if(state.cil) l.push("**Cíl spolupráce.** " + state.cil, "");
   FAZE.forEach(f => {
     const pol = polozkyFaze(f.id);
     if(!pol.length) return;
     l.push("## " + f.cs + " (" + f.fakturace.cs + ")", "", "| Položka | Cena |", "|---|---:|");
-    pol.forEach(p => l.push("| " + nazevPolozky(p) + " | " + fmtKc(p.cena) + " |"));
+    pol.forEach(p => l.push("| **" + nazevPolozky(p) + "**" + (p.popis ? "<br>" + p.popis : "") + " | " + fmtKc(p.cena) + " |"));
     l.push("| **Celkem** | **" + fmtKc(soucetFaze(f.id).cena) + "** |", "");
   });
   stahni(nazevSouboru("naceneni") + ".md", l.join("\n"), "text/markdown");
 }
 
+// Tisková verze je dokument CreatiComu pro klienta: bílá stránka, logo, růžové nadpisy,
+// přechod jen v tenkém pruhu nahoře. Vysvětlivka jde pod název, „i“ v PDF nefunguje.
 function tisk(){
   const sekce = FAZE.map(f => {
     const pol = polozkyFaze(f.id);
     if(!pol.length) return "";
-    return `<h2>${esc(f.cs)} <small>(${esc(f.fakturace.cs)})</small></h2>
-      <table><thead><tr><th>Položka</th><th class="num">Cena</th></tr></thead><tbody>
-      ${pol.map(p => `<tr><td>${esc(nazevPolozky(p))}</td><td class="num">${fmtKc(p.cena)}</td></tr>`).join("")}
-      <tr class="total"><td>Celkem</td><td class="num">${fmtKc(soucetFaze(f.id).cena)}</td></tr></tbody></table>`;
+    return `<section>
+      <div class="tfaze"><h2>${esc(f.cs)}</h2><span>${esc(f.fakturace.cs)}</span></div>
+      <table><tbody>
+      ${pol.map(p => `<tr><td><strong>${esc(nazevPolozky(p))}</strong>${p.popis ? `<span class="tpopis">${esc(p.popis)}</span>` : ""}</td>
+        <td class="num">${fmtKc(p.cena)}</td></tr>`).join("")}
+      <tr class="total"><td>Celkem ${esc(f.fakturace.cs)}</td><td class="num">${fmtKc(soucetFaze(f.id).cena)}</td></tr></tbody></table>
+    </section>`;
   }).join("");
-  $("#tisk").innerHTML = `<h1>${esc(hlavickaNaceneni())}</h1>
-    <p>Datum: ${new Date().toLocaleDateString("cs-CZ")}</p>
-    ${state.cil ? `<p><strong>Cíl spolupráce.</strong> ${esc(state.cil)}</p>` : ""}${sekce}`;
+  const r = rozpocet();
+  const prehled = [["Rozjezd", "jednorázově", r.start], ["Měsíční správa", "každý měsíc", r.mesic],
+                   ["Na vyžádání", "při objednání", r.adhoc], ["Ukončení spolupráce", "jednorázově na konci", r.konec]]
+    .filter(x => x[2]).map(([n, k, v]) => `<div class="tdlazdice"><span>${n}</span><strong>${fmtKc(v)}</strong><small>${k}</small></div>`).join("");
+  $("#tisk").innerHTML = `<div class="tpruh"></div>
+    <div class="thlava"><div class="tlogo"><!--__LOGO__--></div><div class="tdatum">${new Date().toLocaleDateString("cs-CZ")}</div></div>
+    <h1>${NADPIS_NACENENI}</h1>
+    ${podnadpisNaceneni() ? `<p class="tklient">${esc(podnadpisNaceneni())}</p>` : ""}
+    ${state.cil ? `<p class="tcil"><strong>Cíl spolupráce.</strong> ${esc(state.cil)}</p>` : ""}
+    <div class="tprehled">${prehled}</div>
+    ${sekce}`;
   window.print();
 }
 

@@ -244,6 +244,72 @@ cats.forEach((cat) => {
   });
 });
 
+// ── 4c. Popis pro klienta ─────────────────────────────────────────────────────
+// Odborný název zůstává, pod ním jde v nacenění jedna věta lidsky: co klient
+// dostane a proč. Pravidla pro texty příjemcům platí i tady (bez rodu, bez davu).
+const POPIS_KLIENT = {
+  "pl-eval": "Doporučení nástroje, který bude odpovídat velikosti databáze, rozpočtu a plánům.",
+  "pl-account": "Založení účtu a základní nastavení, aby se z něj dalo hned posílat.",
+  "pl-dns": "Ověření domény, aby e-maily nekončily ve spamu a nikdo je nemohl podvrhnout.",
+  "pl-senddomain": "E-maily odcházejí z vlastní domény, ne z obecné adresy nástroje.",
+  "pl-integration": "Propojení s e-shopem nebo rezervačním systémem, aby se kontakty a nákupy propisovaly samy.",
+  "ob-briefing": "Úvodní schůzka o cílech, zákaznících a tom, kdo co schvaluje.",
+  "ob-audit": "Rozbor dosavadních kampaní a dat s tím, co funguje a co opravit.",
+  "ob-import": "Převod kontaktů do nástroje a vyřazení neplatných nebo duplicitních adres.",
+  "ob-lists": "Rozdělení kontaktů do skupin, aby šlo psát každé skupině zvlášť.",
+  "ob-template": "Grafická šablona e-mailu v barvách a stylu značky, správně zobrazená i na mobilu.",
+  "ob-optin": "Formuláře na webu, přes které se nové kontakty přihlašují k odběru.",
+  "ob-doubleoptin": "Potvrzení přihlášení e-mailem. Chrání databázi před falešnými adresami a splňuje GDPR.",
+  "ob-utm": "Označení odkazů, aby bylo v analytice vidět, kolik návštěv a tržeb přinesl e-mail.",
+  "ob-migration": "Převod kontaktů, šablon a automatizací z dosavadního nástroje bez ztráty dat.",
+  "ob-warmup": "Postupné zvyšování objemu u nové domény, aby si ji schránky nezařadily mezi spam.",
+  "if-welcome": "E-maily, které nový odběratel dostane hned po přihlášení. Představí značku a nabídnou první důvod k nákupu nebo návštěvě.",
+  "if-cart": "Připomenutí zboží, které zůstalo v košíku bez dokončené objednávky.",
+  "if-postpurchase": "E-maily po nákupu: poděkování, tipy k produktu a žádost o recenzi.",
+  "if-winback": "Série pro zákazníky, kteří delší dobu nenakoupili, s pozvánkou zpět.",
+  "if-browse": "Připomenutí produktů, které si někdo prohlížel a nekoupil.",
+  "if-b2b": "Navazující e-maily po poptávce, aby obchodní příležitost nevychladla.",
+  "co-setup": "Nastavení nástroje, ze kterého se oslovovací e-maily posílají.",
+  "co-mailbox": "Samostatné odesílací schránky a doména, aby oslovování neohrozilo běžnou poštu firmy.",
+  "co-warmup": "Postupné zahřívání nových schránek, aby e-maily od začátku chodily do doručené pošty.",
+  "co-list-setup": "Výběr firem a kontaktních osob, které má smysl oslovit.",
+  "co-sequence": "Text prvního oslovení a jednoho navázání.",
+  "ca-campaign": "Kompletní e-mail od zadání přes text a grafiku po odeslání správné skupině.",
+  "ca-abtest": "Porovnání dvou variant předmětu nebo obsahu a vyhodnocení, která funguje lépe.",
+  "lm-cleaning": "Pravidelné vyřazování neaktivních a nefunkčních adres, které zhoršují doručitelnost.",
+  "lm-import": "Doplnění nových kontaktů, například z akcí nebo z provozovny.",
+  "lm-segment": "Úprava skupin kontaktů podle chování, aby e-maily šly tomu, koho zajímají.",
+  "lm-tags": "Údržba štítků a doplňujících údajů u kontaktů.",
+  "re-monthly": "Přehled výsledků za měsíc s komentářem a doporučením na další měsíc.",
+  "re-flows": "Kontrola výkonu automatických e-mailů a návrh úprav.",
+  "re-quarterly": "Čtvrtletní schůzka nad výsledky a plánem na další období.",
+  "tt-monitoring": "Hlídání, jestli e-maily dorážejí do doručené pošty a ne do spamu.",
+  "tt-dns": "Kontrola, že ověření domény zůstává platné.",
+  "tt-suppression": "Správa adres, na které se nesmí posílat, například odhlášených.",
+  "co-list-monthly": "Doplnění dalších firem k oslovení a vyřazení těch, které už odpověděly.",
+  "co-snippets": "Kontrola personalizace před odesláním, aby žádný e-mail neodešel s prázdným polem.",
+  "co-wave": "Spuštění měsíčního oslovování a hlídání, že běží bez potíží.",
+  "co-replies": "Roztřídění odpovědí a předání zájemců obchodu.",
+  "co-report": "Přehled, kolik firem bylo osloveno, kolik odpovědělo a kolik schůzek vzniklo.",
+  "st-strategy": "Plán e-mailingu: komu, co a jak často posílat a jaké automatizace postavit.",
+  "st-fullaudit": "Hloubkový rozbor celého e-mailingu s prioritizovanými doporučeními.",
+  "st-consult": "Konzultace k aktuální otázce mimo běžnou správu.",
+  "st-workshop": "Školení týmu, jak s e-mailingem pracovat.",
+  "st-multimarket": "Nastavení pro víc jazyků nebo zemí, aby každý trh dostával vlastní obsah.",
+  "ta-blacklist": "Řešení situace, kdy se doména nebo IP adresa dostane na seznam spammerů.",
+  "ta-bounce": "Zjištění, proč se e-maily vracejí jako nedoručitelné, a náprava.",
+  "ta-api": "Technická pomoc při propojení nástroje s dalšími systémy.",
+  "ta-migration": "Převod e-mailingu do jiného nástroje jako samostatný projekt.",
+  "of-handover": "Předávací dokument a schůzka se soupisem všeho, co v účtu běží.",
+  "of-access": "Předání vlastnictví účtu a odebrání přístupů agentury.",
+  "of-export": "Předání databáze, šablon a reportů, aby zůstaly k dispozici i po ukončení spolupráce.",
+};
+
+cats.forEach((cat) => cat.activities.forEach((a) => {
+  if (!POPIS_KLIENT[a.id]) throw new Error("Úkon " + a.id + " nemá popis pro klienta v POPIS_KLIENT");
+  a.popisKlient = { cs: POPIS_KLIENT[a.id] };
+}));
+
 // ── 5. Šablony nacenění ───────────────────────────────────────────────────────
 // Předvyberou úkony i s počty, account pak jen ubírá a ladí. Úkon se zapisuje jako
 // id (průměrné hodiny, jedna jednotka standardní složitosti), nebo jako objekt

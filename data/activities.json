@@ -381,7 +381,10 @@
           "maxHours": 5,
           "avgHours": 3,
           "role": "specialista",
-          "uspora": 0.2
+          "uspora": 0.2,
+          "popisKlient": {
+            "cs": "Doporučení nástroje, který bude odpovídat velikosti databáze, rozpočtu a plánům."
+          }
         },
         {
           "kind": "hours",
@@ -400,7 +403,10 @@
           "maxHours": 2,
           "avgHours": 1,
           "role": "specialista",
-          "uspora": 0.2
+          "uspora": 0.2,
+          "popisKlient": {
+            "cs": "Založení účtu a základní nastavení, aby se z něj dalo hned posílat."
+          }
         },
         {
           "kind": "hours",
@@ -419,7 +425,10 @@
           "maxHours": 3,
           "avgHours": 2,
           "role": "specialista",
-          "uspora": 0.2
+          "uspora": 0.2,
+          "popisKlient": {
+            "cs": "Ověření domény, aby e-maily nekončily ve spamu a nikdo je nemohl podvrhnout."
+          }
         },
         {
           "kind": "hours",
@@ -438,7 +447,10 @@
           "maxHours": 3,
           "avgHours": 2,
           "role": "specialista",
-          "uspora": 0.2
+          "uspora": 0.2,
+          "popisKlient": {
+            "cs": "E-maily odcházejí z vlastní domény, ne z obecné adresy nástroje."
+          }
         },
         {
           "kind": "hours",
@@ -457,7 +469,10 @@
           "maxHours": 6,
           "avgHours": 3,
           "role": "specialista",
-          "uspora": 0.2
+          "uspora": 0.2,
+          "popisKlient": {
+            "cs": "Propojení s e-shopem nebo rezervačním systémem, aby se kontakty a nákupy propisovaly samy."
+          }
         }
       ]
     },
@@ -493,7 +508,10 @@
           "maxHours": 3,
           "avgHours": 2,
           "role": "account",
-          "uspora": 0
+          "uspora": 0,
+          "popisKlient": {
+            "cs": "Úvodní schůzka o cílech, zákaznících a tom, kdo co schvaluje."
+          }
         },
         {
           "kind": "hours",
@@ -512,7 +530,10 @@
           "maxHours": 8,
           "avgHours": 5,
           "role": "specialista",
-          "uspora": 0.4
+          "uspora": 0.4,
+          "popisKlient": {
+            "cs": "Rozbor dosavadních kampaní a dat s tím, co funguje a co opravit."
+          }
         },
         {
           "kind": "hours",
@@ -531,7 +552,10 @@
           "maxHours": 8,
           "avgHours": 4,
           "role": "specialista",
-          "uspora": 0.3
+          "uspora": 0.3,
+          "popisKlient": {
+            "cs": "Převod kontaktů do nástroje a vyřazení neplatných nebo duplicitních adres."
+          }
         },
         {
           "kind": "hours",
@@ -550,7 +574,10 @@
           "maxHours": 4,
           "avgHours": 2,
           "role": "specialista",
-          "uspora": 0.3
+          "uspora": 0.3,
+          "popisKlient": {
+            "cs": "Rozdělení kontaktů do skupin, aby šlo psát každé skupině zvlášť."
+          }
         },
         {
           "kind": "hours",
@@ -569,7 +596,10 @@
           "maxHours": 10,
           "avgHours": 6,
           "role": "specialista",
-          "uspora": 0.4
+          "uspora": 0.4,
+          "popisKlient": {
+            "cs": "Grafická šablona e-mailu v barvách a stylu značky, správně zobrazená i na mobilu."
+          }
         },
         {
           "kind": "hours",
@@ -588,7 +618,10 @@
           "maxHours": 5,
           "avgHours": 3,
           "role": "specialista",
-          "uspora": 0.2
+          "uspora": 0.2,
+          "popisKlient": {
+            "cs": "Formuláře na webu, přes které se nové kontakty přihlašují k odběru."
+          }
         },
         {
           "kind": "hours",
@@ -607,7 +640,10 @@
           "maxHours": 3,
           "avgHours": 2,
           "role": "specialista",
-          "uspora": 0.2
+          "uspora": 0.2,
+          "popisKlient": {
+            "cs": "Potvrzení přihlášení e-mailem. Chrání databázi před falešnými adresami a splňuje GDPR."
+          }
         },
         {
           "kind": "hours",
@@ -626,7 +662,10 @@
           "maxHours": 3,
           "avgHours": 2,
           "role": "specialista",
-          "uspora": 0.2
+          "uspora": 0.2,
+          "popisKlient": {
+            "cs": "Označení odkazů, aby bylo v analytice vidět, kolik návštěv a tržeb přinesl e-mail."
+          }
         },
         {
           "kind": "hours",
@@ -645,7 +684,10 @@
           "maxHours": 20,
           "avgHours": 10,
           "role": "specialista",
-          "uspora": 0.2
+          "uspora": 0.2,
+          "popisKlient": {
+            "cs": "Převod kontaktů, šablon a automatizací z dosavadního nástroje bez ztráty dat."
+          }
         },
         {
           "kind": "hours",
@@ -664,7 +706,10 @@
           "maxHours": 6,
           "avgHours": 3,
           "role": "specialista",
-          "uspora": 0.2
+          "uspora": 0.2,
+          "popisKlient": {
+            "cs": "Postupné zvyšování objemu u nové domény, aby si ji schránky nezařadily mezi spam."
+          }
         }
       ]
     },
@@ -728,7 +773,10 @@
             }
           },
           "role": "specialista",
-          "uspora": 0.4
+          "uspora": 0.4,
+          "popisKlient": {
+            "cs": "E-maily, které nový odběratel dostane hned po přihlášení. Představí značku a nabídnou první důvod k nákupu nebo návštěvě."
+          }
         },
         {
           "kind": "units",
@@ -775,7 +823,10 @@
             }
           },
           "role": "specialista",
-          "uspora": 0.4
+          "uspora": 0.4,
+          "popisKlient": {
+            "cs": "Připomenutí zboží, které zůstalo v košíku bez dokončené objednávky."
+          }
         },
         {
           "kind": "units",
@@ -822,7 +873,10 @@
             }
           },
           "role": "specialista",
-          "uspora": 0.4
+          "uspora": 0.4,
+          "popisKlient": {
+            "cs": "E-maily po nákupu: poděkování, tipy k produktu a žádost o recenzi."
+          }
         },
         {
           "kind": "units",
@@ -869,7 +923,10 @@
             }
           },
           "role": "specialista",
-          "uspora": 0.4
+          "uspora": 0.4,
+          "popisKlient": {
+            "cs": "Série pro zákazníky, kteří delší dobu nenakoupili, s pozvánkou zpět."
+          }
         },
         {
           "kind": "units",
@@ -916,7 +973,10 @@
             }
           },
           "role": "specialista",
-          "uspora": 0.4
+          "uspora": 0.4,
+          "popisKlient": {
+            "cs": "Připomenutí produktů, které si někdo prohlížel a nekoupil."
+          }
         },
         {
           "kind": "units",
@@ -963,7 +1023,10 @@
             }
           },
           "role": "specialista",
-          "uspora": 0.4
+          "uspora": 0.4,
+          "popisKlient": {
+            "cs": "Navazující e-maily po poptávce, aby obchodní příležitost nevychladla."
+          }
         }
       ]
     },
@@ -999,7 +1062,10 @@
           "maxHours": 6,
           "avgHours": 3,
           "role": "specialista",
-          "uspora": 0.2
+          "uspora": 0.2,
+          "popisKlient": {
+            "cs": "Nastavení nástroje, ze kterého se oslovovací e-maily posílají."
+          }
         },
         {
           "kind": "hours",
@@ -1018,7 +1084,10 @@
           "maxHours": 5,
           "avgHours": 3,
           "role": "specialista",
-          "uspora": 0.2
+          "uspora": 0.2,
+          "popisKlient": {
+            "cs": "Samostatné odesílací schránky a doména, aby oslovování neohrozilo běžnou poštu firmy."
+          }
         },
         {
           "kind": "hours",
@@ -1037,7 +1106,10 @@
           "maxHours": 4,
           "avgHours": 2,
           "role": "specialista",
-          "uspora": 0.2
+          "uspora": 0.2,
+          "popisKlient": {
+            "cs": "Postupné zahřívání nových schránek, aby e-maily od začátku chodily do doručené pošty."
+          }
         },
         {
           "kind": "hours",
@@ -1056,7 +1128,10 @@
           "maxHours": 10,
           "avgHours": 5,
           "role": "specialista",
-          "uspora": 0.3
+          "uspora": 0.3,
+          "popisKlient": {
+            "cs": "Výběr firem a kontaktních osob, které má smysl oslovit."
+          }
         },
         {
           "kind": "units",
@@ -1103,7 +1178,10 @@
             }
           },
           "role": "specialista",
-          "uspora": 0.4
+          "uspora": 0.4,
+          "popisKlient": {
+            "cs": "Text prvního oslovení a jednoho navázání."
+          }
         }
       ]
     },
@@ -1167,7 +1245,10 @@
             }
           },
           "role": "specialista",
-          "uspora": 0.4
+          "uspora": 0.4,
+          "popisKlient": {
+            "cs": "Kompletní e-mail od zadání přes text a grafiku po odeslání správné skupině."
+          }
         },
         {
           "kind": "units",
@@ -1214,7 +1295,10 @@
             }
           },
           "role": "specialista",
-          "uspora": 0.4
+          "uspora": 0.4,
+          "popisKlient": {
+            "cs": "Porovnání dvou variant předmětu nebo obsahu a vyhodnocení, která funguje lépe."
+          }
         }
       ]
     },
@@ -1250,7 +1334,10 @@
           "maxHours": 3,
           "avgHours": 1,
           "role": "specialista",
-          "uspora": 0.3
+          "uspora": 0.3,
+          "popisKlient": {
+            "cs": "Pravidelné vyřazování neaktivních a nefunkčních adres, které zhoršují doručitelnost."
+          }
         },
         {
           "kind": "hours",
@@ -1269,7 +1356,10 @@
           "maxHours": 2,
           "avgHours": 1,
           "role": "specialista",
-          "uspora": 0.3
+          "uspora": 0.3,
+          "popisKlient": {
+            "cs": "Doplnění nových kontaktů, například z akcí nebo z provozovny."
+          }
         },
         {
           "kind": "hours",
@@ -1288,7 +1378,10 @@
           "maxHours": 2,
           "avgHours": 1,
           "role": "specialista",
-          "uspora": 0.3
+          "uspora": 0.3,
+          "popisKlient": {
+            "cs": "Úprava skupin kontaktů podle chování, aby e-maily šly tomu, koho zajímají."
+          }
         },
         {
           "kind": "hours",
@@ -1307,7 +1400,10 @@
           "maxHours": 2,
           "avgHours": 1,
           "role": "specialista",
-          "uspora": 0.3
+          "uspora": 0.3,
+          "popisKlient": {
+            "cs": "Údržba štítků a doplňujících údajů u kontaktů."
+          }
         }
       ]
     },
@@ -1371,7 +1467,10 @@
             }
           },
           "role": "specialista",
-          "uspora": 0.4
+          "uspora": 0.4,
+          "popisKlient": {
+            "cs": "Přehled výsledků za měsíc s komentářem a doporučením na další měsíc."
+          }
         },
         {
           "kind": "hours",
@@ -1390,7 +1489,10 @@
           "maxHours": 3,
           "avgHours": 2,
           "role": "specialista",
-          "uspora": 0.4
+          "uspora": 0.4,
+          "popisKlient": {
+            "cs": "Kontrola výkonu automatických e-mailů a návrh úprav."
+          }
         },
         {
           "kind": "hours",
@@ -1409,7 +1511,10 @@
           "maxHours": 6,
           "avgHours": 4,
           "role": "account",
-          "uspora": 0
+          "uspora": 0,
+          "popisKlient": {
+            "cs": "Čtvrtletní schůzka nad výsledky a plánem na další období."
+          }
         }
       ]
     },
@@ -1445,7 +1550,10 @@
           "maxHours": 2,
           "avgHours": 1,
           "role": "specialista",
-          "uspora": 0.2
+          "uspora": 0.2,
+          "popisKlient": {
+            "cs": "Hlídání, jestli e-maily dorážejí do doručené pošty a ne do spamu."
+          }
         },
         {
           "kind": "hours",
@@ -1464,7 +1572,10 @@
           "maxHours": 1,
           "avgHours": 0.5,
           "role": "specialista",
-          "uspora": 0.2
+          "uspora": 0.2,
+          "popisKlient": {
+            "cs": "Kontrola, že ověření domény zůstává platné."
+          }
         },
         {
           "kind": "hours",
@@ -1483,7 +1594,10 @@
           "maxHours": 1,
           "avgHours": 0.5,
           "role": "specialista",
-          "uspora": 0.2
+          "uspora": 0.2,
+          "popisKlient": {
+            "cs": "Správa adres, na které se nesmí posílat, například odhlášených."
+          }
         }
       ]
     },
@@ -1519,7 +1633,10 @@
           "maxHours": 4,
           "avgHours": 2,
           "role": "specialista",
-          "uspora": 0.3
+          "uspora": 0.3,
+          "popisKlient": {
+            "cs": "Doplnění dalších firem k oslovení a vyřazení těch, které už odpověděly."
+          }
         },
         {
           "kind": "hours",
@@ -1538,7 +1655,10 @@
           "maxHours": 3,
           "avgHours": 1.5,
           "role": "specialista",
-          "uspora": 0.3
+          "uspora": 0.3,
+          "popisKlient": {
+            "cs": "Kontrola personalizace před odesláním, aby žádný e-mail neodešel s prázdným polem."
+          }
         },
         {
           "kind": "hours",
@@ -1557,7 +1677,10 @@
           "maxHours": 4,
           "avgHours": 2,
           "role": "specialista",
-          "uspora": 0.3
+          "uspora": 0.3,
+          "popisKlient": {
+            "cs": "Spuštění měsíčního oslovování a hlídání, že běží bez potíží."
+          }
         },
         {
           "kind": "hours",
@@ -1576,7 +1699,10 @@
           "maxHours": 5,
           "avgHours": 2,
           "role": "account",
-          "uspora": 0
+          "uspora": 0,
+          "popisKlient": {
+            "cs": "Roztřídění odpovědí a předání zájemců obchodu."
+          }
         },
         {
           "kind": "hours",
@@ -1595,7 +1721,10 @@
           "maxHours": 5,
           "avgHours": 3,
           "role": "specialista",
-          "uspora": 0.4
+          "uspora": 0.4,
+          "popisKlient": {
+            "cs": "Přehled, kolik firem bylo osloveno, kolik odpovědělo a kolik schůzek vzniklo."
+          }
         }
       ]
     },
@@ -1631,7 +1760,10 @@
           "maxHours": 12,
           "avgHours": 7,
           "role": "specialista",
-          "uspora": 0.4
+          "uspora": 0.4,
+          "popisKlient": {
+            "cs": "Plán e-mailingu: komu, co a jak často posílat a jaké automatizace postavit."
+          }
         },
         {
           "kind": "hours",
@@ -1650,7 +1782,10 @@
           "maxHours": 10,
           "avgHours": 6,
           "role": "specialista",
-          "uspora": 0.4
+          "uspora": 0.4,
+          "popisKlient": {
+            "cs": "Hloubkový rozbor celého e-mailingu s prioritizovanými doporučeními."
+          }
         },
         {
           "kind": "hours",
@@ -1669,7 +1804,10 @@
           "maxHours": 3,
           "avgHours": 1.5,
           "role": "account",
-          "uspora": 0
+          "uspora": 0,
+          "popisKlient": {
+            "cs": "Konzultace k aktuální otázce mimo běžnou správu."
+          }
         },
         {
           "kind": "hours",
@@ -1688,7 +1826,10 @@
           "maxHours": 6,
           "avgHours": 3,
           "role": "account",
-          "uspora": 0
+          "uspora": 0,
+          "popisKlient": {
+            "cs": "Školení týmu, jak s e-mailingem pracovat."
+          }
         },
         {
           "kind": "hours",
@@ -1707,7 +1848,10 @@
           "maxHours": 12,
           "avgHours": 7,
           "role": "specialista",
-          "uspora": 0.4
+          "uspora": 0.4,
+          "popisKlient": {
+            "cs": "Nastavení pro víc jazyků nebo zemí, aby každý trh dostával vlastní obsah."
+          }
         }
       ]
     },
@@ -1743,7 +1887,10 @@
           "maxHours": 8,
           "avgHours": 4,
           "role": "specialista",
-          "uspora": 0.2
+          "uspora": 0.2,
+          "popisKlient": {
+            "cs": "Řešení situace, kdy se doména nebo IP adresa dostane na seznam spammerů."
+          }
         },
         {
           "kind": "hours",
@@ -1762,7 +1909,10 @@
           "maxHours": 4,
           "avgHours": 2,
           "role": "specialista",
-          "uspora": 0.2
+          "uspora": 0.2,
+          "popisKlient": {
+            "cs": "Zjištění, proč se e-maily vracejí jako nedoručitelné, a náprava."
+          }
         },
         {
           "kind": "hours",
@@ -1781,7 +1931,10 @@
           "maxHours": 6,
           "avgHours": 3,
           "role": "specialista",
-          "uspora": 0.2
+          "uspora": 0.2,
+          "popisKlient": {
+            "cs": "Technická pomoc při propojení nástroje s dalšími systémy."
+          }
         },
         {
           "kind": "hours",
@@ -1800,7 +1953,10 @@
           "maxHours": 20,
           "avgHours": 10,
           "role": "specialista",
-          "uspora": 0.2
+          "uspora": 0.2,
+          "popisKlient": {
+            "cs": "Převod e-mailingu do jiného nástroje jako samostatný projekt."
+          }
         }
       ]
     },
@@ -1836,7 +1992,10 @@
           "maxHours": 6,
           "avgHours": 3,
           "role": "account",
-          "uspora": 0
+          "uspora": 0,
+          "popisKlient": {
+            "cs": "Předávací dokument a schůzka se soupisem všeho, co v účtu běží."
+          }
         },
         {
           "kind": "hours",
@@ -1855,7 +2014,10 @@
           "maxHours": 3,
           "avgHours": 1.5,
           "role": "specialista",
-          "uspora": 0.2
+          "uspora": 0.2,
+          "popisKlient": {
+            "cs": "Předání vlastnictví účtu a odebrání přístupů agentury."
+          }
         },
         {
           "kind": "hours",
@@ -1874,7 +2036,10 @@
           "maxHours": 4,
           "avgHours": 2,
           "role": "specialista",
-          "uspora": 0.2
+          "uspora": 0.2,
+          "popisKlient": {
+            "cs": "Předání databáze, šablon a reportů, aby zůstaly k dispozici i po ukončení spolupráce."
+          }
         }
       ]
     }

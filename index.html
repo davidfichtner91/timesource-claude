@@ -28,9 +28,6 @@ header .wrap{padding-bottom:0;display:flex;align-items:center;justify-content:sp
 .home{background:none;border:0;color:#fff;font:inherit;font-size:22px;font-weight:700;cursor:pointer;padding:0;text-align:left}
 .home:hover{opacity:.85}
 header .sub{color:#fff;opacity:.9;font-size:13px}
-.langs{display:flex;gap:6px}
-.langs button{background:transparent;border:1px solid rgba(255,255,255,.55);color:#fff;border-radius:6px;padding:4px 9px;font:inherit;font-size:12px;cursor:pointer}
-.langs button.on{background:#fff;color:var(--pink);border-color:#fff;font-weight:600}
 
 .card{background:#fff;border:var(--line);border-radius:var(--radius);padding:20px;margin:18px 0}
 label.f{display:block;margin:12px 0 4px;font-size:13px;color:var(--gray)}
@@ -87,7 +84,6 @@ details.kat .kbody{padding:0 16px 10px}
 .act .head input[type=checkbox]{margin-top:5px;width:16px;height:16px;accent-color:var(--pink);flex:none}
 .act .name{flex:1}
 .act .name strong{font-weight:600}
-.act .tip{font-size:12.5px;color:var(--gray);margin:2px 0 0}
 .act .sum{text-align:right;white-space:nowrap;font-weight:600}
 .act .sum .int{display:block;font-weight:400;font-size:12px;color:var(--gray)}
 .act .ctl{margin:8px 0 0 26px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;font-size:13px}
@@ -111,10 +107,17 @@ aside .card{margin:0 0 14px}
 .prepinac input{accent-color:var(--pink);width:16px;height:16px}
 .interni{background:#fafafa;border:1px dashed #cfcfcf}
 .interni h3{font-size:14px}
-.interni table{width:100%;border-collapse:collapse;font-size:13px}
-.interni td,.interni th{padding:5px 4px;border-bottom:var(--line);text-align:right;white-space:nowrap}
-.interni th{font-size:11px;color:var(--gray);font-weight:600}
-.interni td:first-child,.interni th:first-child{text-align:left}
+.iblok{border-bottom:var(--line);padding:8px 0}
+.ihlava{display:flex;justify-content:space-between;font-weight:600;font-size:14px}
+.ipomer{color:var(--pink)}
+.iblok dl{display:grid;grid-template-columns:auto 1fr;gap:2px 12px;margin:4px 0 0;font-size:13px}
+.iblok dt{color:var(--gray)}
+.iblok dd{margin:0;text-align:right;white-space:nowrap}
+.info{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:50%;
+  border:1px solid #ccc;background:#fff;color:var(--gray);font:600 11px/1 Poppins,sans-serif;cursor:pointer;margin-left:6px;vertical-align:1px;padding:0}
+.info:hover,.info.on{border-color:var(--pink);color:var(--pink)}
+.vysvetlivka{font-size:12.5px;margin:4px 0 0;color:var(--dark)}
+.vysvetlivka .tech{display:block;color:var(--gray);margin-top:2px}
 .akce{display:grid;gap:8px}
 .akce .btn{width:100%}
 .mbar{display:none}
@@ -140,17 +143,35 @@ details.nast summary{cursor:pointer;font-weight:600}
   .wrap{padding-left:16px;padding-right:16px}
   .act .ctl{margin-left:0}
   .act .ctl select{min-width:0;max-width:100%}
-  .interni{overflow-x:auto}
 }
 @media print{
   body{background:#fff;font-size:12px}
   body > *:not(#tisk){display:none !important}
-  #tisk{display:block;padding:0 10px}
-  #tisk h1{font-size:20px;border-bottom:3px solid var(--pink);padding-bottom:6px}
-  #tisk table{width:100%;border-collapse:collapse;margin:6px 0 14px}
-  #tisk td,#tisk th{padding:5px 6px;border-bottom:1px solid #ddd;text-align:left}
-  #tisk td.num,#tisk th.num{text-align:right}
-  #tisk tr.total td{font-weight:700;border-top:2px solid var(--dark)}
+  @page{size:A4;margin:14mm 16mm}
+  #tisk{display:block;color:var(--dark);-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .tpruh{height:6px;border-radius:3px;background:linear-gradient(135deg,#FD5D47 0%,#EA406F 100%);margin-bottom:18px}
+  .thlava{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px}
+  .tlogo svg{height:34px;width:auto;display:block}
+  .tdatum{font-size:11px;color:var(--gray)}
+  #tisk h1{font-size:24px;color:var(--pink);margin:0}
+  .tklient{font-size:14px;font-weight:600;margin:2px 0 0}
+  .tcil{font-size:12px;margin:10px 0 0}
+  .tprehled{display:flex;gap:10px;margin:18px 0 8px}
+  .tdlazdice{flex:1;border:1px solid rgba(0,0,0,.18);border-radius:12px;padding:10px 12px}
+  .tdlazdice span{display:block;font-size:11px;color:var(--gray)}
+  .tdlazdice strong{display:block;font-size:17px;color:var(--pink)}
+  .tdlazdice small{font-size:10px;color:var(--gray)}
+  #tisk section{break-inside:auto;margin-top:16px}
+  .tfaze{display:flex;align-items:baseline;gap:8px;border-bottom:2px solid var(--lightpink);padding-bottom:3px;break-after:avoid;page-break-after:avoid}
+  #tisk table tr:first-child{break-before:avoid;page-break-before:avoid}
+  .tfaze h2{font-size:15px;margin:0}
+  .tfaze span{font-size:11px;color:var(--gray)}
+  #tisk table{width:100%;border-collapse:collapse;margin:4px 0 0}
+  #tisk td{padding:6px 4px;border-bottom:1px solid #eee;vertical-align:top;font-size:11.5px}
+  #tisk tr{break-inside:avoid}
+  #tisk td.num{text-align:right;white-space:nowrap;padding-left:16px}
+  .tpopis{display:block;color:var(--gray);font-size:10.5px;margin-top:1px}
+  #tisk tr.total td{font-weight:700;border-bottom:0;border-top:1.5px solid var(--dark)}
 }
 </style>
 </head>
@@ -162,7 +183,6 @@ details.nast summary{cursor:pointer;font-weight:600}
       <button class="home" id="b-home" title="Zpět na úvod">@ktivity</button>
       <div class="sub">Nacenění e-mailového projektu</div>
     </div>
-    <div class="langs" id="langs"></div>
   </div>
 </header>
 
@@ -555,7 +575,10 @@ const CATALOG = /*__CATALOG__*/{
           "maxHours": 5,
           "avgHours": 3,
           "role": "specialista",
-          "uspora": 0.2
+          "uspora": 0.2,
+          "popisKlient": {
+            "cs": "Doporučení nástroje, který bude odpovídat velikosti databáze, rozpočtu a plánům."
+          }
         },
         {
           "kind": "hours",
@@ -574,7 +597,10 @@ const CATALOG = /*__CATALOG__*/{
           "maxHours": 2,
           "avgHours": 1,
           "role": "specialista",
-          "uspora": 0.2
+          "uspora": 0.2,
+          "popisKlient": {
+            "cs": "Založení účtu a základní nastavení, aby se z něj dalo hned posílat."
+          }
         },
         {
           "kind": "hours",
@@ -593,7 +619,10 @@ const CATALOG = /*__CATALOG__*/{
           "maxHours": 3,
           "avgHours": 2,
           "role": "specialista",
-          "uspora": 0.2
+          "uspora": 0.2,
+          "popisKlient": {
+            "cs": "Ověření domény, aby e-maily nekončily ve spamu a nikdo je nemohl podvrhnout."
+          }
         },
         {
           "kind": "hours",
@@ -612,7 +641,10 @@ const CATALOG = /*__CATALOG__*/{
           "maxHours": 3,
           "avgHours": 2,
           "role": "specialista",
-          "uspora": 0.2
+          "uspora": 0.2,
+          "popisKlient": {
+            "cs": "E-maily odcházejí z vlastní domény, ne z obecné adresy nástroje."
+          }
         },
         {
           "kind": "hours",
@@ -631,7 +663,10 @@ const CATALOG = /*__CATALOG__*/{
           "maxHours": 6,
           "avgHours": 3,
           "role": "specialista",
-          "uspora": 0.2
+          "uspora": 0.2,
+          "popisKlient": {
+            "cs": "Propojení s e-shopem nebo rezervačním systémem, aby se kontakty a nákupy propisovaly samy."
+          }
         }
       ]
     },
@@ -667,7 +702,10 @@ const CATALOG = /*__CATALOG__*/{
           "maxHours": 3,
           "avgHours": 2,
           "role": "account",
-          "uspora": 0
+          "uspora": 0,
+          "popisKlient": {
+            "cs": "Úvodní schůzka o cílech, zákaznících a tom, kdo co schvaluje."
+          }
         },
         {
           "kind": "hours",
@@ -686,7 +724,10 @@ const CATALOG = /*__CATALOG__*/{
           "maxHours": 8,
           "avgHours": 5,
           "role": "specialista",
-          "uspora": 0.4
+          "uspora": 0.4,
+          "popisKlient": {
+            "cs": "Rozbor dosavadních kampaní a dat s tím, co funguje a co opravit."
+          }
         },
         {
           "kind": "hours",
@@ -705,7 +746,10 @@ const CATALOG = /*__CATALOG__*/{
           "maxHours": 8,
           "avgHours": 4,
           "role": "specialista",
-          "uspora": 0.3
+          "uspora": 0.3,
+          "popisKlient": {
+            "cs": "Převod kontaktů do nástroje a vyřazení neplatných nebo duplicitních adres."
+          }
         },
         {
           "kind": "hours",
@@ -724,7 +768,10 @@ const CATALOG = /*__CATALOG__*/{
           "maxHours": 4,
           "avgHours": 2,
           "role": "specialista",
-          "uspora": 0.3
+          "uspora": 0.3,
+          "popisKlient": {
+            "cs": "Rozdělení kontaktů do skupin, aby šlo psát každé skupině zvlášť."
+          }
         },
         {
           "kind": "hours",
@@ -743,7 +790,10 @@ const CATALOG = /*__CATALOG__*/{
           "maxHours": 10,
           "avgHours": 6,
           "role": "specialista",
-          "uspora": 0.4
+          "uspora": 0.4,
+          "popisKlient": {
+            "cs": "Grafická šablona e-mailu v barvách a stylu značky, správně zobrazená i na mobilu."
+          }
         },
         {
           "kind": "hours",
@@ -762,7 +812,10 @@ const CATALOG = /*__CATALOG__*/{
           "maxHours": 5,
           "avgHours": 3,
           "role": "specialista",
-          "uspora": 0.2
+          "uspora": 0.2,
+          "popisKlient": {
+            "cs": "Formuláře na webu, přes které se nové kontakty přihlašují k odběru."
+          }
         },
         {
           "kind": "hours",
@@ -781,7 +834,10 @@ const CATALOG = /*__CATALOG__*/{
           "maxHours": 3,
           "avgHours": 2,
           "role": "specialista",
-          "uspora": 0.2
+          "uspora": 0.2,
+          "popisKlient": {
+            "cs": "Potvrzení přihlášení e-mailem. Chrání databázi před falešnými adresami a splňuje GDPR."
+          }
         },
         {
           "kind": "hours",
@@ -800,7 +856,10 @@ const CATALOG = /*__CATALOG__*/{
           "maxHours": 3,
           "avgHours": 2,
           "role": "specialista",
-          "uspora": 0.2
+          "uspora": 0.2,
+          "popisKlient": {
+            "cs": "Označení odkazů, aby bylo v analytice vidět, kolik návštěv a tržeb přinesl e-mail."
+          }
         },
         {
           "kind": "hours",
@@ -819,7 +878,10 @@ const CATALOG = /*__CATALOG__*/{
           "maxHours": 20,
           "avgHours": 10,
           "role": "specialista",
-          "uspora": 0.2
+          "uspora": 0.2,
+          "popisKlient": {
+            "cs": "Převod kontaktů, šablon a automatizací z dosavadního nástroje bez ztráty dat."
+          }
         },
         {
           "kind": "hours",
@@ -838,7 +900,10 @@ const CATALOG = /*__CATALOG__*/{
           "maxHours": 6,
           "avgHours": 3,
           "role": "specialista",
-          "uspora": 0.2
+          "uspora": 0.2,
+          "popisKlient": {
+            "cs": "Postupné zvyšování objemu u nové domény, aby si ji schránky nezařadily mezi spam."
+          }
         }
       ]
     },
@@ -902,7 +967,10 @@ const CATALOG = /*__CATALOG__*/{
             }
           },
           "role": "specialista",
-          "uspora": 0.4
+          "uspora": 0.4,
+          "popisKlient": {
+            "cs": "E-maily, které nový odběratel dostane hned po přihlášení. Představí značku a nabídnou první důvod k nákupu nebo návštěvě."
+          }
         },
         {
           "kind": "units",
@@ -949,7 +1017,10 @@ const CATALOG = /*__CATALOG__*/{
             }
           },
           "role": "specialista",
-          "uspora": 0.4
+          "uspora": 0.4,
+          "popisKlient": {
+            "cs": "Připomenutí zboží, které zůstalo v košíku bez dokončené objednávky."
+          }
         },
         {
           "kind": "units",
@@ -996,7 +1067,10 @@ const CATALOG = /*__CATALOG__*/{
             }
           },
           "role": "specialista",
-          "uspora": 0.4
+          "uspora": 0.4,
+          "popisKlient": {
+            "cs": "E-maily po nákupu: poděkování, tipy k produktu a žádost o recenzi."
+          }
         },
         {
           "kind": "units",
@@ -1043,7 +1117,10 @@ const CATALOG = /*__CATALOG__*/{
             }
           },
           "role": "specialista",
-          "uspora": 0.4
+          "uspora": 0.4,
+          "popisKlient": {
+            "cs": "Série pro zákazníky, kteří delší dobu nenakoupili, s pozvánkou zpět."
+          }
         },
         {
           "kind": "units",
@@ -1090,7 +1167,10 @@ const CATALOG = /*__CATALOG__*/{
             }
           },
           "role": "specialista",
-          "uspora": 0.4
+          "uspora": 0.4,
+          "popisKlient": {
+            "cs": "Připomenutí produktů, které si někdo prohlížel a nekoupil."
+          }
         },
         {
           "kind": "units",
@@ -1137,7 +1217,10 @@ const CATALOG = /*__CATALOG__*/{
             }
           },
           "role": "specialista",
-          "uspora": 0.4
+          "uspora": 0.4,
+          "popisKlient": {
+            "cs": "Navazující e-maily po poptávce, aby obchodní příležitost nevychladla."
+          }
         }
       ]
     },
@@ -1173,7 +1256,10 @@ const CATALOG = /*__CATALOG__*/{
           "maxHours": 6,
           "avgHours": 3,
           "role": "specialista",
-          "uspora": 0.2
+          "uspora": 0.2,
+          "popisKlient": {
+            "cs": "Nastavení nástroje, ze kterého se oslovovací e-maily posílají."
+          }
         },
         {
           "kind": "hours",
@@ -1192,7 +1278,10 @@ const CATALOG = /*__CATALOG__*/{
           "maxHours": 5,
           "avgHours": 3,
           "role": "specialista",
-          "uspora": 0.2
+          "uspora": 0.2,
+          "popisKlient": {
+            "cs": "Samostatné odesílací schránky a doména, aby oslovování neohrozilo běžnou poštu firmy."
+          }
         },
         {
           "kind": "hours",
@@ -1211,7 +1300,10 @@ const CATALOG = /*__CATALOG__*/{
           "maxHours": 4,
           "avgHours": 2,
           "role": "specialista",
-          "uspora": 0.2
+          "uspora": 0.2,
+          "popisKlient": {
+            "cs": "Postupné zahřívání nových schránek, aby e-maily od začátku chodily do doručené pošty."
+          }
         },
         {
           "kind": "hours",
@@ -1230,7 +1322,10 @@ const CATALOG = /*__CATALOG__*/{
           "maxHours": 10,
           "avgHours": 5,
           "role": "specialista",
-          "uspora": 0.3
+          "uspora": 0.3,
+          "popisKlient": {
+            "cs": "Výběr firem a kontaktních osob, které má smysl oslovit."
+          }
         },
         {
           "kind": "units",
@@ -1277,7 +1372,10 @@ const CATALOG = /*__CATALOG__*/{
             }
           },
           "role": "specialista",
-          "uspora": 0.4
+          "uspora": 0.4,
+          "popisKlient": {
+            "cs": "Text prvního oslovení a jednoho navázání."
+          }
         }
       ]
     },
@@ -1341,7 +1439,10 @@ const CATALOG = /*__CATALOG__*/{
             }
           },
           "role": "specialista",
-          "uspora": 0.4
+          "uspora": 0.4,
+          "popisKlient": {
+            "cs": "Kompletní e-mail od zadání přes text a grafiku po odeslání správné skupině."
+          }
         },
         {
           "kind": "units",
@@ -1388,7 +1489,10 @@ const CATALOG = /*__CATALOG__*/{
             }
           },
           "role": "specialista",
-          "uspora": 0.4
+          "uspora": 0.4,
+          "popisKlient": {
+            "cs": "Porovnání dvou variant předmětu nebo obsahu a vyhodnocení, která funguje lépe."
+          }
         }
       ]
     },
@@ -1424,7 +1528,10 @@ const CATALOG = /*__CATALOG__*/{
           "maxHours": 3,
           "avgHours": 1,
           "role": "specialista",
-          "uspora": 0.3
+          "uspora": 0.3,
+          "popisKlient": {
+            "cs": "Pravidelné vyřazování neaktivních a nefunkčních adres, které zhoršují doručitelnost."
+          }
         },
         {
           "kind": "hours",
@@ -1443,7 +1550,10 @@ const CATALOG = /*__CATALOG__*/{
           "maxHours": 2,
           "avgHours": 1,
           "role": "specialista",
-          "uspora": 0.3
+          "uspora": 0.3,
+          "popisKlient": {
+            "cs": "Doplnění nových kontaktů, například z akcí nebo z provozovny."
+          }
         },
         {
           "kind": "hours",
@@ -1462,7 +1572,10 @@ const CATALOG = /*__CATALOG__*/{
           "maxHours": 2,
           "avgHours": 1,
           "role": "specialista",
-          "uspora": 0.3
+          "uspora": 0.3,
+          "popisKlient": {
+            "cs": "Úprava skupin kontaktů podle chování, aby e-maily šly tomu, koho zajímají."
+          }
         },
         {
           "kind": "hours",
@@ -1481,7 +1594,10 @@ const CATALOG = /*__CATALOG__*/{
           "maxHours": 2,
           "avgHours": 1,
           "role": "specialista",
-          "uspora": 0.3
+          "uspora": 0.3,
+          "popisKlient": {
+            "cs": "Údržba štítků a doplňujících údajů u kontaktů."
+          }
         }
       ]
     },
@@ -1545,7 +1661,10 @@ const CATALOG = /*__CATALOG__*/{
             }
           },
           "role": "specialista",
-          "uspora": 0.4
+          "uspora": 0.4,
+          "popisKlient": {
+            "cs": "Přehled výsledků za měsíc s komentářem a doporučením na další měsíc."
+          }
         },
         {
           "kind": "hours",
@@ -1564,7 +1683,10 @@ const CATALOG = /*__CATALOG__*/{
           "maxHours": 3,
           "avgHours": 2,
           "role": "specialista",
-          "uspora": 0.4
+          "uspora": 0.4,
+          "popisKlient": {
+            "cs": "Kontrola výkonu automatických e-mailů a návrh úprav."
+          }
         },
         {
           "kind": "hours",
@@ -1583,7 +1705,10 @@ const CATALOG = /*__CATALOG__*/{
           "maxHours": 6,
           "avgHours": 4,
           "role": "account",
-          "uspora": 0
+          "uspora": 0,
+          "popisKlient": {
+            "cs": "Čtvrtletní schůzka nad výsledky a plánem na další období."
+          }
         }
       ]
     },
@@ -1619,7 +1744,10 @@ const CATALOG = /*__CATALOG__*/{
           "maxHours": 2,
           "avgHours": 1,
           "role": "specialista",
-          "uspora": 0.2
+          "uspora": 0.2,
+          "popisKlient": {
+            "cs": "Hlídání, jestli e-maily dorážejí do doručené pošty a ne do spamu."
+          }
         },
         {
           "kind": "hours",
@@ -1638,7 +1766,10 @@ const CATALOG = /*__CATALOG__*/{
           "maxHours": 1,
           "avgHours": 0.5,
           "role": "specialista",
-          "uspora": 0.2
+          "uspora": 0.2,
+          "popisKlient": {
+            "cs": "Kontrola, že ověření domény zůstává platné."
+          }
         },
         {
           "kind": "hours",
@@ -1657,7 +1788,10 @@ const CATALOG = /*__CATALOG__*/{
           "maxHours": 1,
           "avgHours": 0.5,
           "role": "specialista",
-          "uspora": 0.2
+          "uspora": 0.2,
+          "popisKlient": {
+            "cs": "Správa adres, na které se nesmí posílat, například odhlášených."
+          }
         }
       ]
     },
@@ -1693,7 +1827,10 @@ const CATALOG = /*__CATALOG__*/{
           "maxHours": 4,
           "avgHours": 2,
           "role": "specialista",
-          "uspora": 0.3
+          "uspora": 0.3,
+          "popisKlient": {
+            "cs": "Doplnění dalších firem k oslovení a vyřazení těch, které už odpověděly."
+          }
         },
         {
           "kind": "hours",
@@ -1712,7 +1849,10 @@ const CATALOG = /*__CATALOG__*/{
           "maxHours": 3,
           "avgHours": 1.5,
           "role": "specialista",
-          "uspora": 0.3
+          "uspora": 0.3,
+          "popisKlient": {
+            "cs": "Kontrola personalizace před odesláním, aby žádný e-mail neodešel s prázdným polem."
+          }
         },
         {
           "kind": "hours",
@@ -1731,7 +1871,10 @@ const CATALOG = /*__CATALOG__*/{
           "maxHours": 4,
           "avgHours": 2,
           "role": "specialista",
-          "uspora": 0.3
+          "uspora": 0.3,
+          "popisKlient": {
+            "cs": "Spuštění měsíčního oslovování a hlídání, že běží bez potíží."
+          }
         },
         {
           "kind": "hours",
@@ -1750,7 +1893,10 @@ const CATALOG = /*__CATALOG__*/{
           "maxHours": 5,
           "avgHours": 2,
           "role": "account",
-          "uspora": 0
+          "uspora": 0,
+          "popisKlient": {
+            "cs": "Roztřídění odpovědí a předání zájemců obchodu."
+          }
         },
         {
           "kind": "hours",
@@ -1769,7 +1915,10 @@ const CATALOG = /*__CATALOG__*/{
           "maxHours": 5,
           "avgHours": 3,
           "role": "specialista",
-          "uspora": 0.4
+          "uspora": 0.4,
+          "popisKlient": {
+            "cs": "Přehled, kolik firem bylo osloveno, kolik odpovědělo a kolik schůzek vzniklo."
+          }
         }
       ]
     },
@@ -1805,7 +1954,10 @@ const CATALOG = /*__CATALOG__*/{
           "maxHours": 12,
           "avgHours": 7,
           "role": "specialista",
-          "uspora": 0.4
+          "uspora": 0.4,
+          "popisKlient": {
+            "cs": "Plán e-mailingu: komu, co a jak často posílat a jaké automatizace postavit."
+          }
         },
         {
           "kind": "hours",
@@ -1824,7 +1976,10 @@ const CATALOG = /*__CATALOG__*/{
           "maxHours": 10,
           "avgHours": 6,
           "role": "specialista",
-          "uspora": 0.4
+          "uspora": 0.4,
+          "popisKlient": {
+            "cs": "Hloubkový rozbor celého e-mailingu s prioritizovanými doporučeními."
+          }
         },
         {
           "kind": "hours",
@@ -1843,7 +1998,10 @@ const CATALOG = /*__CATALOG__*/{
           "maxHours": 3,
           "avgHours": 1.5,
           "role": "account",
-          "uspora": 0
+          "uspora": 0,
+          "popisKlient": {
+            "cs": "Konzultace k aktuální otázce mimo běžnou správu."
+          }
         },
         {
           "kind": "hours",
@@ -1862,7 +2020,10 @@ const CATALOG = /*__CATALOG__*/{
           "maxHours": 6,
           "avgHours": 3,
           "role": "account",
-          "uspora": 0
+          "uspora": 0,
+          "popisKlient": {
+            "cs": "Školení týmu, jak s e-mailingem pracovat."
+          }
         },
         {
           "kind": "hours",
@@ -1881,7 +2042,10 @@ const CATALOG = /*__CATALOG__*/{
           "maxHours": 12,
           "avgHours": 7,
           "role": "specialista",
-          "uspora": 0.4
+          "uspora": 0.4,
+          "popisKlient": {
+            "cs": "Nastavení pro víc jazyků nebo zemí, aby každý trh dostával vlastní obsah."
+          }
         }
       ]
     },
@@ -1917,7 +2081,10 @@ const CATALOG = /*__CATALOG__*/{
           "maxHours": 8,
           "avgHours": 4,
           "role": "specialista",
-          "uspora": 0.2
+          "uspora": 0.2,
+          "popisKlient": {
+            "cs": "Řešení situace, kdy se doména nebo IP adresa dostane na seznam spammerů."
+          }
         },
         {
           "kind": "hours",
@@ -1936,7 +2103,10 @@ const CATALOG = /*__CATALOG__*/{
           "maxHours": 4,
           "avgHours": 2,
           "role": "specialista",
-          "uspora": 0.2
+          "uspora": 0.2,
+          "popisKlient": {
+            "cs": "Zjištění, proč se e-maily vracejí jako nedoručitelné, a náprava."
+          }
         },
         {
           "kind": "hours",
@@ -1955,7 +2125,10 @@ const CATALOG = /*__CATALOG__*/{
           "maxHours": 6,
           "avgHours": 3,
           "role": "specialista",
-          "uspora": 0.2
+          "uspora": 0.2,
+          "popisKlient": {
+            "cs": "Technická pomoc při propojení nástroje s dalšími systémy."
+          }
         },
         {
           "kind": "hours",
@@ -1974,7 +2147,10 @@ const CATALOG = /*__CATALOG__*/{
           "maxHours": 20,
           "avgHours": 10,
           "role": "specialista",
-          "uspora": 0.2
+          "uspora": 0.2,
+          "popisKlient": {
+            "cs": "Převod e-mailingu do jiného nástroje jako samostatný projekt."
+          }
         }
       ]
     },
@@ -2010,7 +2186,10 @@ const CATALOG = /*__CATALOG__*/{
           "maxHours": 6,
           "avgHours": 3,
           "role": "account",
-          "uspora": 0
+          "uspora": 0,
+          "popisKlient": {
+            "cs": "Předávací dokument a schůzka se soupisem všeho, co v účtu běží."
+          }
         },
         {
           "kind": "hours",
@@ -2029,7 +2208,10 @@ const CATALOG = /*__CATALOG__*/{
           "maxHours": 3,
           "avgHours": 1.5,
           "role": "specialista",
-          "uspora": 0.2
+          "uspora": 0.2,
+          "popisKlient": {
+            "cs": "Předání vlastnictví účtu a odebrání přístupů agentury."
+          }
         },
         {
           "kind": "hours",
@@ -2048,7 +2230,10 @@ const CATALOG = /*__CATALOG__*/{
           "maxHours": 4,
           "avgHours": 2,
           "role": "specialista",
-          "uspora": 0.2
+          "uspora": 0.2,
+          "popisKlient": {
+            "cs": "Předání databáze, šablon a reportů, aby zůstaly k dispozici i po ukončení spolupráce."
+          }
         }
       ]
     }
@@ -2067,6 +2252,7 @@ const state = {
   acts:{},               // id -> {sel,hours,units,cx,skut}
   vlastni:{},            // katId -> [{name,hours,skut}]
   otevrene:{},           // katId -> true, rozbalené kategorie
+  info:{},               // id úkonu -> true, rozbalená vysvětlivka
 };
 
 function nacistNastaveni(){
@@ -2162,7 +2348,7 @@ function polozkyFaze(f){
       if(!h) return;
       const s = state.acts[a.id];
       out.push({kat:c, nazev:L(a.name), pocet: a.kind === "units" ? Number(s.units)||0 : null,
-        jednotka: L(a.unitLabel), h, skut: skutecneUkonu(a), cena: cena(h)});
+        jednotka: L(a.unitLabel), popis: L(a.popisKlient), h, skut: skutecneUkonu(a), cena: cena(h)});
     });
     vlastniKat(c.id).forEach(v => {
       const h = Number(v.hours)||0;
@@ -2170,7 +2356,8 @@ function polozkyFaze(f){
     });
   });
   const kh = hodinyKomunikace(f);
-  if(kh) out.push({kat:null, nazev:"Koordinace, komunikace a schvalování", komunikace:true, h:kh, skut:kh, cena: cena(kh)});
+  if(kh) out.push({kat:null, nazev:"Koordinace, komunikace a schvalování", komunikace:true,
+    popis:"Hovory, schvalovací kola a zápisy, které k práci v této fázi patří.", h:kh, skut:kh, cena: cena(kh)});
   return out;
 }
 function soucetFaze(f){
@@ -2185,16 +2372,9 @@ function pocetVybranych(c){
 
 /* ── vykreslení ────────────────────────────────────────────────────────────── */
 function render(){
-  renderLangs();
   if(state.view === "home") viewHome(); else viewEditor();
 }
 
-function renderLangs(){
-  $("#langs").innerHTML = ["cs","en","de"].map(l =>
-    `<button class="${l===state.lang?"on":""}" data-l="${l}">${l.toUpperCase()}</button>`).join("");
-  $("#langs").querySelectorAll("button").forEach(b =>
-    b.onclick = () => { state.lang = b.dataset.l; render(); });
-}
 
 /* úvod */
 function odhadTypu(typ){
@@ -2357,11 +2537,15 @@ function radekUkonu(a){
       placeholder="${fmtH(h*(1-(a.uspora||0)))}" data-skut="${a.id}"> h</label>`;
   }
   const int = on && state.interni ? `<span class="int">${fmtH(h)} h → ${fmtH(skutecneUkonu(a))} h</span>` : "";
+  // Odborný název působí odborně, proto zůstává. Lidské vysvětlení je pod „i“
+  // a stejnou větu dostane klient v nacenění pod názvem položky.
+  const otevreno = state.info[a.id];
   return `<div class="act ${on?"":"vypnuto"}">
     <div class="head">
       <input type="checkbox" data-s="${a.id}" ${on?"checked":""} aria-label="${esc(L(a.name))}">
-      <div class="name"><strong>${esc(L(a.name))}</strong>${a.role === "account" ? `<span class="role">account</span>` : ""}
-        <p class="tip">${esc(L(a.tooltip))}</p></div>
+      <div class="name"><strong>${esc(L(a.name))}</strong>${a.role === "account" ? `<span class="role">account</span>` : ""}<button
+        class="info ${otevreno?"on":""}" data-info="${a.id}" title="${esc(L(a.popisKlient))}" aria-label="Vysvětlivka" aria-expanded="${otevreno?"true":"false"}">i</button>
+        ${otevreno ? `<p class="vysvetlivka">${esc(L(a.popisKlient))}<span class="tech">${esc(L(a.tooltip))}</span></p>` : ""}</div>
       <div class="sum">${on ? fmtKc(cena(h)) : ""}${int}</div>
     </div>${ctl ? `<div class="ctl">${ctl}</div>` : ""}</div>`;
 }
@@ -2408,18 +2592,24 @@ function souhrnHtml(){
     </div>`;
 }
 
+// Bloky pod sebou místo tabulky: v úzkém sloupci souhrnu se pět sloupců nevejde.
 function interniHtml(r){
   const n = state.nastaveni;
-  const radky = [["Rozjezd", r.f.before], ["Měsíčně", r.f.during], ["Na vyžádání", r.f.adhoc], ["Ukončení", r.f.after]]
+  const bloky = [["Rozjezd", r.f.before], ["Měsíčně", r.f.during], ["Na vyžádání", r.f.adhoc], ["Ukončení", r.f.after]]
     .filter(([,s]) => s.cena).map(([nazev, s]) => {
       const nak = naklad(s.skut);
-      return `<tr><td>${nazev}</td><td>${fmtH(s.h)} → ${fmtH(s.skut)}</td><td>${fmtKc(nak)}</td><td>${fmtKc(s.cena - nak)}</td><td>${nak ? fmtH(s.cena / nak) + "×" : "–"}</td></tr>`;
+      return `<div class="iblok">
+        <div class="ihlava"><span>${nazev}</span><span class="ipomer">${nak ? fmtH(s.cena / nak) + "×" : "–"}</span></div>
+        <dl><dt>Hodiny</dt><dd>${fmtH(s.h)} → ${fmtH(s.skut)}</dd>
+          <dt>Cena</dt><dd>${fmtKc(s.cena)}</dd>
+          <dt>Náklad</dt><dd>${fmtKc(nak)}</dd>
+          <dt>Marže</dt><dd>${fmtKc(s.cena - nak)}</dd></dl>
+      </div>`;
     }).join("");
   return `<div class="card interni">
     <h3>Interní pohled</h3>
-    <table><thead><tr><th></th><th>hodiny</th><th>náklad</th><th>marže</th><th>cena / náklad</th></tr></thead>
-    <tbody>${radky || `<tr><td colspan="5" class="muted">Nic k výpočtu.</td></tr>`}</tbody></table>
-    <p class="hint">Hodiny „katalog → skutečně“. Skutečné hodiny počítá výchozí odhad úspory s Claudem
+    ${bloky || `<p class="muted" style="font-size:13px">Nic k výpočtu.</p>`}
+    <p class="hint">Číslo vpravo je poměr ceny a nákladu. Hodiny „katalog → skutečně“. Skutečné hodiny počítá výchozí odhad úspory s Claudem
       (texty 40 %, data 30 %, technika 20 %, schůzky 0 %), dokud se u úkonu nevyplní naměřené číslo.
       Sazby ${fmtKc(n.cenovaSazba)}/h cena a ${fmtKc(n.nakladovaSazba)}/h náklad se mění na úvodní stránce.</p>
   </div>`;
@@ -2441,6 +2631,7 @@ function vazbyEditoru(){
   v.querySelectorAll("[data-u]").forEach(i => i.onchange = () => { actState(i.dataset.u).units = Number(i.value)||0; prekreslit(); });
   v.querySelectorAll("[data-c]").forEach(sel => sel.onchange = () => { actState(sel.dataset.c).cx = sel.value; prekreslit(); });
   v.querySelectorAll("[data-p]").forEach(b => b.onclick = () => { actState(b.dataset.p).hours = Number(b.dataset.v); prekreslit(); });
+  v.querySelectorAll("[data-info]").forEach(b => b.onclick = () => { state.info[b.dataset.info] = !state.info[b.dataset.info]; prekreslit(); });
   v.querySelectorAll("[data-skut]").forEach(i => i.onchange = () => { actState(i.dataset.skut).skut = i.value === "" ? null : Number(i.value); prekreslit(); });
   v.querySelectorAll("[data-pridat]").forEach(b => b.onclick = () => {
     const n = prompt("Název úkonu");
@@ -2468,36 +2659,72 @@ function vazbyEditoru(){
 function nazevPolozky(p){
   return p.pocet != null && p.pocet !== 1 ? p.pocet + "× " + p.nazev : p.nazev;
 }
-function hlavickaNaceneni(){
-  return "Nacenění: " + (state.klient || "klient") + (state.projekt ? ", " + state.projekt : "");
-}
+const NADPIS_NACENENI = "Nacenění e-mail marketingu";
+const podnadpisNaceneni = () => [state.klient, state.projekt].filter(Boolean).join(", ");
 
 function exportMd(){
-  const l = ["# " + hlavickaNaceneni(), ""];
+  const l = ["# " + NADPIS_NACENENI + (podnadpisNaceneni() ? ": " + podnadpisNaceneni() : ""), ""];
   l.push("Datum: " + new Date().toLocaleDateString("cs-CZ"), "");
   if(state.cil) l.push("**Cíl spolupráce.** " + state.cil, "");
   FAZE.forEach(f => {
     const pol = polozkyFaze(f.id);
     if(!pol.length) return;
     l.push("## " + f.cs + " (" + f.fakturace.cs + ")", "", "| Položka | Cena |", "|---|---:|");
-    pol.forEach(p => l.push("| " + nazevPolozky(p) + " | " + fmtKc(p.cena) + " |"));
+    pol.forEach(p => l.push("| **" + nazevPolozky(p) + "**" + (p.popis ? "<br>" + p.popis : "") + " | " + fmtKc(p.cena) + " |"));
     l.push("| **Celkem** | **" + fmtKc(soucetFaze(f.id).cena) + "** |", "");
   });
   stahni(nazevSouboru("naceneni") + ".md", l.join("\n"), "text/markdown");
 }
 
+// Tisková verze je dokument CreatiComu pro klienta: bílá stránka, logo, růžové nadpisy,
+// přechod jen v tenkém pruhu nahoře. Vysvětlivka jde pod název, „i“ v PDF nefunguje.
 function tisk(){
   const sekce = FAZE.map(f => {
     const pol = polozkyFaze(f.id);
     if(!pol.length) return "";
-    return `<h2>${esc(f.cs)} <small>(${esc(f.fakturace.cs)})</small></h2>
-      <table><thead><tr><th>Položka</th><th class="num">Cena</th></tr></thead><tbody>
-      ${pol.map(p => `<tr><td>${esc(nazevPolozky(p))}</td><td class="num">${fmtKc(p.cena)}</td></tr>`).join("")}
-      <tr class="total"><td>Celkem</td><td class="num">${fmtKc(soucetFaze(f.id).cena)}</td></tr></tbody></table>`;
+    return `<section>
+      <div class="tfaze"><h2>${esc(f.cs)}</h2><span>${esc(f.fakturace.cs)}</span></div>
+      <table><tbody>
+      ${pol.map(p => `<tr><td><strong>${esc(nazevPolozky(p))}</strong>${p.popis ? `<span class="tpopis">${esc(p.popis)}</span>` : ""}</td>
+        <td class="num">${fmtKc(p.cena)}</td></tr>`).join("")}
+      <tr class="total"><td>Celkem ${esc(f.fakturace.cs)}</td><td class="num">${fmtKc(soucetFaze(f.id).cena)}</td></tr></tbody></table>
+    </section>`;
   }).join("");
-  $("#tisk").innerHTML = `<h1>${esc(hlavickaNaceneni())}</h1>
-    <p>Datum: ${new Date().toLocaleDateString("cs-CZ")}</p>
-    ${state.cil ? `<p><strong>Cíl spolupráce.</strong> ${esc(state.cil)}</p>` : ""}${sekce}`;
+  const r = rozpocet();
+  const prehled = [["Rozjezd", "jednorázově", r.start], ["Měsíční správa", "každý měsíc", r.mesic],
+                   ["Na vyžádání", "při objednání", r.adhoc], ["Ukončení spolupráce", "jednorázově na konci", r.konec]]
+    .filter(x => x[2]).map(([n, k, v]) => `<div class="tdlazdice"><span>${n}</span><strong>${fmtKc(v)}</strong><small>${k}</small></div>`).join("");
+  $("#tisk").innerHTML = `<div class="tpruh"></div>
+    <div class="thlava"><div class="tlogo"><svg width="1976" height="515" viewBox="0 0 1976 515" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<path d="M257.9 457.155C147.677 457.155 58 367.628 58 257.578C58 147.527 147.677 58 257.9 58C303.295 58 346.084 72.8116 381.661 100.842L329.763 166.484C309.115 150.206 284.266 141.612 257.9 141.612C193.856 141.612 141.781 193.63 141.781 257.552C141.781 321.475 193.881 373.492 257.9 373.492C284.292 373.492 309.14 364.899 329.788 348.621L381.686 414.262C346.615 441.914 302.662 457.13 257.9 457.13V457.155Z" fill="url(#paint0_linear_105_53)"/>
+<path d="M317.01 257.627C317.01 290.157 290.644 316.52 258.103 316.52C225.562 316.52 199.196 290.157 199.196 257.627C199.196 225.098 225.562 198.735 258.103 198.735C290.644 198.735 317.01 225.098 317.01 257.627Z" fill="#EB426B"/>
+<path d="M657.522 179.829C641.151 158.243 609.319 148.31 582.446 148.31C518.756 148.31 470.249 190.04 470.249 256.288C470.249 322.536 516.125 365.429 580.7 365.429C615.771 365.429 642.644 352.007 660.761 329.234L631.257 308.508C620.731 322.814 603.22 332.444 581.004 332.444C538.342 332.444 510.887 301.228 510.887 256.263C510.887 213.648 539.809 180.663 582.471 180.663C599.121 180.663 618.706 187.083 629.511 201.97L657.548 179.778L657.522 179.829Z" fill="#232323"/>
+<path d="M687.71 360.197H722.781V285.203C722.781 274.992 728.905 247.542 760.484 247.542C763.697 247.542 766.607 247.846 771.288 249.008V216.908C768.96 216.327 765.443 216.023 762.812 216.023C744.416 216.023 729.512 227.398 721.895 243.448H721.313V220.093H687.71V360.171V360.197Z" fill="#232323"/>
+<path d="M825.211 276.129C826.679 256.566 843.329 242.285 864.078 242.285C886.876 242.285 897.099 258.057 897.099 276.129H825.236H825.211ZM932.145 291.901C932.145 241.4 903.501 216.023 864.356 216.023C821.998 216.023 790.14 245.798 790.14 291.017C790.14 336.235 822.276 364.266 865.52 364.266C892.114 364.266 911.978 354.939 925.718 336.26L902.337 317.582C894.442 328.678 882.752 335.679 865.242 335.679C844.796 335.679 826.679 321.095 825.211 301.253H931.867C932.17 298.043 932.17 295.137 932.17 291.927L932.145 291.901Z" fill="#232323"/>
+<path d="M1055.91 360.197H1088.62V274.967C1088.62 246.961 1076.35 216.023 1026.1 216.023C1004.77 216.023 982.575 223.606 966.785 238.216L984.903 259.523C993.962 250.474 1008.28 243.473 1023.19 243.473C1040.72 243.473 1055.32 251.94 1055.32 269.153V272.666C1011.5 272.666 958.916 278.505 958.916 320.236C958.916 352.917 989.002 363.71 1011.5 363.71C1031.36 363.71 1048.01 354.661 1055.02 342.402H1055.91V360.197ZM1055.32 301.228C1055.32 323.42 1042.47 337.12 1018.51 337.12C1006.54 337.12 993.962 333.025 993.962 319.604C993.962 298.877 1025.21 296.249 1047.43 296.249H1055.32V301.203V301.228Z" fill="#232323"/>
+<path d="M1138.35 248.124V313.487C1138.35 340.33 1146.82 363.103 1183.92 363.103C1191.81 363.103 1201.15 361.637 1207.3 359.312L1206.13 331.888C1202.04 333.935 1195.91 334.794 1191.23 334.794C1175.74 334.794 1172.83 325.746 1172.83 313.209V248.124H1207.91V220.118H1172.83V179.551H1138.37V220.118H1113.83V248.124H1138.37H1138.35Z" fill="#232323"/>
+<path d="M1237.94 360.197H1273.01V220.119H1237.94V360.197ZM1232.98 172.524C1232.98 183.62 1242.32 193.528 1255.2 193.528C1268.08 193.528 1278 184.48 1278 172.524C1278 160.569 1268.05 151.52 1255.2 151.52C1242.34 151.52 1232.98 161.453 1232.98 172.524Z" fill="#232323"/>
+<path d="M1497.96 179.829C1481.59 158.243 1449.76 148.31 1422.89 148.31C1359.2 148.31 1310.69 190.04 1310.69 256.288C1310.69 322.536 1356.57 365.429 1421.14 365.429C1456.21 365.429 1483.08 352.007 1501.2 329.234L1471.7 308.508C1461.17 322.814 1443.66 332.444 1421.44 332.444C1378.78 332.444 1351.33 301.228 1351.33 256.263C1351.33 213.648 1380.25 180.663 1422.91 180.663C1439.56 180.663 1459.15 187.083 1469.95 201.97L1497.99 179.778L1497.96 179.829Z" fill="#232323"/>
+<path d="M1514.06 289.551C1514.06 333.632 1547.94 364.266 1590.32 364.266C1632.71 364.266 1666.59 333.632 1666.59 289.551C1666.59 245.47 1632.71 215.999 1590.32 215.999C1547.94 215.999 1514.06 245.47 1514.06 289.551ZM1549.68 289.551C1549.68 267.662 1562.54 244.611 1590.3 244.611C1618.05 244.611 1630.91 267.662 1630.91 289.551C1630.91 311.44 1618.05 335.073 1590.3 335.073C1562.54 335.073 1549.68 311.44 1549.68 289.551Z" fill="#232323"/>
+<path d="M1865.53 215.999C1844.5 215.999 1828.71 225.629 1819.37 242.563C1811.48 226.791 1797.15 215.999 1775.54 215.999C1753.94 215.999 1738.15 228.839 1732.02 242.563H1731.44V220.093H1698.14V360.172H1733.21V283.131C1733.21 264.452 1742.85 245.192 1763.88 245.192C1781.69 245.192 1789.89 258.335 1789.89 275.548V360.197H1824.96V283.738C1824.96 265.64 1834.02 245.217 1855.93 245.217C1877.85 245.217 1882.23 265.943 1882.23 282.575V360.197H1917.3V272.642C1917.3 244.029 1902.11 216.024 1865.58 216.024L1865.53 215.999Z" fill="#232323"/>
+<rect x="94.2354" y="314.018" width="131.782" height="144.982" fill="url(#pattern0_105_53)"/>
+<path d="M258.077 457.155C213.416 457.155 169.514 441.939 134.519 414.338L186.341 348.697C206.938 364.949 231.761 373.543 258.102 373.543C284.443 373.543 309.266 364.949 329.889 348.671L381.711 414.287C346.691 441.914 302.789 457.155 258.102 457.155H258.077Z" fill="#EB426B"/>
+<defs>
+<pattern id="pattern0_105_53" patternContentUnits="objectBoundingBox" width="1" height="1">
+<use xlink:href="#image0_105_53" transform="scale(0.00460829 0.00420168)"/>
+</pattern>
+<linearGradient id="paint0_linear_105_53" x1="58" y1="257.578" x2="381.686" y2="257.578" gradientUnits="userSpaceOnUse">
+<stop stop-color="#FA594A"/>
+<stop offset="1" stop-color="#EB426B"/>
+</linearGradient>
+<image id="image0_105_53" width="217" height="238" preserveAspectRatio="none" xlink:href="data:image/png;base64,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"/>
+</defs>
+</svg></div><div class="tdatum">${new Date().toLocaleDateString("cs-CZ")}</div></div>
+    <h1>${NADPIS_NACENENI}</h1>
+    ${podnadpisNaceneni() ? `<p class="tklient">${esc(podnadpisNaceneni())}</p>` : ""}
+    ${state.cil ? `<p class="tcil"><strong>Cíl spolupráce.</strong> ${esc(state.cil)}</p>` : ""}
+    <div class="tprehled">${prehled}</div>
+    ${sekce}`;
   window.print();
 }
 
