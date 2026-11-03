@@ -224,39 +224,83 @@ cats = [
   OFFBOARDING,
 ];
 
+// ── 4b. Odhad úspory času s Claudem ───────────────────────────────────────────
+// Podíl času, který na úkonu ušetří práce s Claudem. VÝCHOZÍ ODHAD z 3. 11. 2026,
+// ne měření. Přepsat podle odpracovaných hodin. Schůzky a práce accounta se
+// nezrychlují, texty a podklady nejvíc, technické nastavení nejméně.
+const USPORA_TEXTY = 0.4;     // copywriting, šablony, automatizace, reporty, strategie, audit
+const USPORA_DATA = 0.3;      // import, čištění, segmenty, seznamy firem
+const USPORA_TECHNIKA = 0.2;  // DNS, integrace, nastavení nástrojů, migrace, řešení potíží
+const TEXTOVE = /^(if-|ca-|re-monthly|re-flows|co-sequence|co-report|ob-template|ob-audit|st-strategy|st-fullaudit|st-multimarket)/;
+const DATOVE = /^(ob-import|ob-lists|lm-|co-list|co-snippets|co-wave)/;
+
 cats.forEach((cat) => {
   cat.activities.forEach((a) => {
     a.role = ACCOUNT.has(a.id) ? "account" : "specialista";
+    a.uspora = a.role === "account" ? 0
+      : TEXTOVE.test(a.id) ? USPORA_TEXTY
+      : DATOVE.test(a.id) ? USPORA_DATA
+      : USPORA_TECHNIKA;
   });
 });
 
-// ── 5. Typy projektu pro rychlý start ─────────────────────────────────────────
-// Předvybere kategorie a úkony, account pak jen ubírá a ladí hodiny. První tři
-// jsou převzaté z Macaly verze, aktivní oslovování přibylo 3. 11. 2026.
+// ── 5. Šablony nacenění ───────────────────────────────────────────────────────
+// Předvyberou úkony i s počty, account pak jen ubírá a ladí. Úkon se zapisuje jako
+// id (průměrné hodiny, jedna jednotka standardní složitosti), nebo jako objekt
+// s hodinami, počtem jednotek a složitostí. E-shop, správa a audit jsou převzaté
+// z Macaly verze, oslovování a gastro přibyly 3. 11. 2026.
 const TYPY_PROJEKTU = [
   {
     id: "eshop",
     name: { cs: "E-shop od nuly", en: "E-shop from scratch", de: "E-Shop von Grund auf" },
+    popis: { cs: "Nový e-shop bez e-mailingu. Nástroj, šablona, základní automatizace a první kampaně." },
     ukony: [
       "pl-eval", "pl-account", "pl-dns", "pl-senddomain", "pl-integration",
       "ob-briefing", "ob-audit", "ob-import", "ob-lists", "ob-template", "ob-optin", "ob-doubleoptin", "ob-utm",
       "if-welcome", "if-cart", "if-postpurchase", "if-winback",
-      "ca-campaign", "lm-cleaning", "lm-segment", "re-monthly", "tt-monitoring",
+      { id: "ca-campaign", units: 2 }, "lm-cleaning", "lm-segment", "re-monthly", "tt-monitoring",
     ],
   },
   {
     id: "sprava",
     name: { cs: "Měsíční správa stávajícího klienta", en: "Monthly management, existing client", de: "Monatliche Betreuung, Bestandskunde" },
-    ukony: ["ca-campaign", "ca-abtest", "lm-cleaning", "lm-import", "lm-segment", "re-monthly", "re-flows", "tt-monitoring", "tt-dns"],
+    popis: { cs: "Klient už e-mailing má. Kampaně, péče o databázi a report každý měsíc." },
+    ukony: [
+      { id: "ca-campaign", units: 2 }, "ca-abtest", "lm-cleaning", "lm-import", "lm-segment",
+      "re-monthly", "re-flows", "tt-monitoring", "tt-dns",
+    ],
   },
   {
     id: "audit",
     name: { cs: "Jednorázový audit", en: "One-off audit", de: "Einmaliger Audit" },
-    ukony: ["st-fullaudit", "st-strategy", "st-consult", "re-quarterly"],
+    popis: { cs: "Rozbor stávajícího e-mailingu s doporučeními, bez navazující správy." },
+    ukony: ["ob-briefing", "st-fullaudit", "st-strategy", "st-consult"],
+  },
+  {
+    id: "gastro-start",
+    name: { cs: "Gastro: rozjezd newsletteru", en: "Hospitality: newsletter launch", de: "Gastro: Newsletter-Start" },
+    popis: { cs: "Restaurace nebo bar bez e-mailingu. Nástroj, šablona v brandu, sběr kontaktů, uvítací e-mail a dva newslettery měsíčně." },
+    ukony: [
+      "pl-eval", "pl-account", "pl-dns", "ob-briefing", "ob-import", "ob-lists", "ob-template",
+      "ob-optin", "ob-doubleoptin", "ob-utm",
+      { id: "if-welcome", cx: "simple" },
+      { id: "ca-campaign", units: 2, cx: "simple" }, "lm-cleaning", { id: "re-monthly", cx: "simple" }, "tt-monitoring",
+    ],
+  },
+  {
+    id: "gastro-audit",
+    name: { cs: "Gastro: audit a převzetí newsletteru", en: "Hospitality: audit and takeover", de: "Gastro: Audit und Übernahme" },
+    popis: { cs: "Podnik newsletter posílá. Audit, nová šablona a měsíční správa dvou newsletterů." },
+    ukony: [
+      "ob-briefing", "ob-audit", "ob-template", "ob-lists",
+      { id: "if-welcome", cx: "simple" },
+      { id: "ca-campaign", units: 2, cx: "simple" }, "lm-cleaning", "lm-segment", { id: "re-monthly", cx: "simple" }, "tt-monitoring",
+    ],
   },
   {
     id: "osloveni",
     name: { cs: "Aktivní oslovování", en: "Cold outreach", de: "Cold Outreach" },
+    popis: { cs: "Oslovování firem dvěma automatickými e-maily. Rozjezd domény a schránek, pak měsíční vlny." },
     ukony: [
       "ob-briefing", "co-setup", "co-mailbox", "co-warmup", "co-list-setup", "co-sequence",
       "co-list-monthly", "co-snippets", "co-wave", "co-replies", "co-report",
@@ -265,22 +309,35 @@ const TYPY_PROJEKTU = [
 ];
 
 const vsechnyId = new Set(cats.flatMap((c) => c.activities.map((a) => a.id)));
-TYPY_PROJEKTU.forEach((typ) =>
-  typ.ukony.forEach((id) => {
-    if (!vsechnyId.has(id)) throw new Error("Typ projektu " + typ.id + " odkazuje na neexistující úkon " + id);
-  })
-);
+TYPY_PROJEKTU.forEach((typ) => {
+  typ.ukony = typ.ukony.map((u) => (typeof u === "string" ? { id: u } : u));
+  typ.ukony.forEach((u) => {
+    if (!vsechnyId.has(u.id)) throw new Error("Šablona " + typ.id + " odkazuje na neexistující úkon " + u.id);
+  });
+});
+
+// ── 6. Výchozí sazby ──────────────────────────────────────────────────────────
+// Klientovi se fakturují částky, hodiny jsou jen interní. VÝCHOZÍ HODNOTY, přepsat
+// skutečnými. Nákladová sazba je zvolená tak, aby poměr cena / náklad bez Clauda
+// vyšel kolem 1,7, což odpovídá ROI 1,66 hlášenému za CreatiCom v listopadu 2026.
+const NASTAVENI = {
+  cenovaSazba: 1200,
+  nakladovaSazba: 700,
+  komunikace: 20,
+  zaokrouhleni: 100,
+};
 
 const doc = {
-  verze: 10,
+  verze: 11,
   zdroj:
-    "Katalog vytažený z živé Macaly verze 23. 9. 2026, upravený podle poznámek z 22. 9. 2026 (ZADANI-v9.md). Typy projektu a copywriting sekvence doplněny 3. 11. 2026.",
+    "Katalog vytažený z živé Macaly verze 23. 9. 2026, upravený podle poznámek z 22. 9. 2026 (ZADANI-v9.md). Šablony, úspora s Claudem a sazby doplněny 3. 11. 2026.",
+  nastaveni: NASTAVENI,
   typyProjektu: TYPY_PROJEKTU,
   faze: [
-    { id: "before", cs: "Před začátkem", en: "Before start", de: "Vor dem Start" },
-    { id: "during", cs: "V průběhu", en: "Ongoing", de: "Laufend" },
-    { id: "adhoc", cs: "Ad hoc", en: "Ad hoc", de: "Ad hoc" },
-    { id: "after", cs: "Na konci", en: "At the end", de: "Zum Abschluss" },
+    { id: "before", cs: "Rozjezd", en: "Setup", de: "Start", fakturace: { cs: "jednorázově" } },
+    { id: "during", cs: "Měsíční správa", en: "Monthly management", de: "Monatliche Betreuung", fakturace: { cs: "měsíčně" } },
+    { id: "adhoc", cs: "Na vyžádání", en: "On request", de: "Auf Anfrage", fakturace: { cs: "při objednání" } },
+    { id: "after", cs: "Ukončení spolupráce", en: "Offboarding", de: "Offboarding", fakturace: { cs: "jednorázově na konci" } },
   ],
   kategorie: cats,
 };

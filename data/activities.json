@@ -1,6 +1,12 @@
 {
-  "verze": 10,
-  "zdroj": "Katalog vytažený z živé Macaly verze 23. 9. 2026, upravený podle poznámek z 22. 9. 2026 (ZADANI-v9.md). Typy projektu a copywriting sekvence doplněny 3. 11. 2026.",
+  "verze": 11,
+  "zdroj": "Katalog vytažený z živé Macaly verze 23. 9. 2026, upravený podle poznámek z 22. 9. 2026 (ZADANI-v9.md). Šablony, úspora s Claudem a sazby doplněny 3. 11. 2026.",
+  "nastaveni": {
+    "cenovaSazba": 1200,
+    "nakladovaSazba": 700,
+    "komunikace": 20,
+    "zaokrouhleni": 100
+  },
   "typyProjektu": [
     {
       "id": "eshop",
@@ -9,29 +15,77 @@
         "en": "E-shop from scratch",
         "de": "E-Shop von Grund auf"
       },
+      "popis": {
+        "cs": "Nový e-shop bez e-mailingu. Nástroj, šablona, základní automatizace a první kampaně."
+      },
       "ukony": [
-        "pl-eval",
-        "pl-account",
-        "pl-dns",
-        "pl-senddomain",
-        "pl-integration",
-        "ob-briefing",
-        "ob-audit",
-        "ob-import",
-        "ob-lists",
-        "ob-template",
-        "ob-optin",
-        "ob-doubleoptin",
-        "ob-utm",
-        "if-welcome",
-        "if-cart",
-        "if-postpurchase",
-        "if-winback",
-        "ca-campaign",
-        "lm-cleaning",
-        "lm-segment",
-        "re-monthly",
-        "tt-monitoring"
+        {
+          "id": "pl-eval"
+        },
+        {
+          "id": "pl-account"
+        },
+        {
+          "id": "pl-dns"
+        },
+        {
+          "id": "pl-senddomain"
+        },
+        {
+          "id": "pl-integration"
+        },
+        {
+          "id": "ob-briefing"
+        },
+        {
+          "id": "ob-audit"
+        },
+        {
+          "id": "ob-import"
+        },
+        {
+          "id": "ob-lists"
+        },
+        {
+          "id": "ob-template"
+        },
+        {
+          "id": "ob-optin"
+        },
+        {
+          "id": "ob-doubleoptin"
+        },
+        {
+          "id": "ob-utm"
+        },
+        {
+          "id": "if-welcome"
+        },
+        {
+          "id": "if-cart"
+        },
+        {
+          "id": "if-postpurchase"
+        },
+        {
+          "id": "if-winback"
+        },
+        {
+          "id": "ca-campaign",
+          "units": 2
+        },
+        {
+          "id": "lm-cleaning"
+        },
+        {
+          "id": "lm-segment"
+        },
+        {
+          "id": "re-monthly"
+        },
+        {
+          "id": "tt-monitoring"
+        }
       ]
     },
     {
@@ -41,16 +95,38 @@
         "en": "Monthly management, existing client",
         "de": "Monatliche Betreuung, Bestandskunde"
       },
+      "popis": {
+        "cs": "Klient už e-mailing má. Kampaně, péče o databázi a report každý měsíc."
+      },
       "ukony": [
-        "ca-campaign",
-        "ca-abtest",
-        "lm-cleaning",
-        "lm-import",
-        "lm-segment",
-        "re-monthly",
-        "re-flows",
-        "tt-monitoring",
-        "tt-dns"
+        {
+          "id": "ca-campaign",
+          "units": 2
+        },
+        {
+          "id": "ca-abtest"
+        },
+        {
+          "id": "lm-cleaning"
+        },
+        {
+          "id": "lm-import"
+        },
+        {
+          "id": "lm-segment"
+        },
+        {
+          "id": "re-monthly"
+        },
+        {
+          "id": "re-flows"
+        },
+        {
+          "id": "tt-monitoring"
+        },
+        {
+          "id": "tt-dns"
+        }
       ]
     },
     {
@@ -60,11 +136,131 @@
         "en": "One-off audit",
         "de": "Einmaliger Audit"
       },
+      "popis": {
+        "cs": "Rozbor stávajícího e-mailingu s doporučeními, bez navazující správy."
+      },
       "ukony": [
-        "st-fullaudit",
-        "st-strategy",
-        "st-consult",
-        "re-quarterly"
+        {
+          "id": "ob-briefing"
+        },
+        {
+          "id": "st-fullaudit"
+        },
+        {
+          "id": "st-strategy"
+        },
+        {
+          "id": "st-consult"
+        }
+      ]
+    },
+    {
+      "id": "gastro-start",
+      "name": {
+        "cs": "Gastro: rozjezd newsletteru",
+        "en": "Hospitality: newsletter launch",
+        "de": "Gastro: Newsletter-Start"
+      },
+      "popis": {
+        "cs": "Restaurace nebo bar bez e-mailingu. Nástroj, šablona v brandu, sběr kontaktů, uvítací e-mail a dva newslettery měsíčně."
+      },
+      "ukony": [
+        {
+          "id": "pl-eval"
+        },
+        {
+          "id": "pl-account"
+        },
+        {
+          "id": "pl-dns"
+        },
+        {
+          "id": "ob-briefing"
+        },
+        {
+          "id": "ob-import"
+        },
+        {
+          "id": "ob-lists"
+        },
+        {
+          "id": "ob-template"
+        },
+        {
+          "id": "ob-optin"
+        },
+        {
+          "id": "ob-doubleoptin"
+        },
+        {
+          "id": "ob-utm"
+        },
+        {
+          "id": "if-welcome",
+          "cx": "simple"
+        },
+        {
+          "id": "ca-campaign",
+          "units": 2,
+          "cx": "simple"
+        },
+        {
+          "id": "lm-cleaning"
+        },
+        {
+          "id": "re-monthly",
+          "cx": "simple"
+        },
+        {
+          "id": "tt-monitoring"
+        }
+      ]
+    },
+    {
+      "id": "gastro-audit",
+      "name": {
+        "cs": "Gastro: audit a převzetí newsletteru",
+        "en": "Hospitality: audit and takeover",
+        "de": "Gastro: Audit und Übernahme"
+      },
+      "popis": {
+        "cs": "Podnik newsletter posílá. Audit, nová šablona a měsíční správa dvou newsletterů."
+      },
+      "ukony": [
+        {
+          "id": "ob-briefing"
+        },
+        {
+          "id": "ob-audit"
+        },
+        {
+          "id": "ob-template"
+        },
+        {
+          "id": "ob-lists"
+        },
+        {
+          "id": "if-welcome",
+          "cx": "simple"
+        },
+        {
+          "id": "ca-campaign",
+          "units": 2,
+          "cx": "simple"
+        },
+        {
+          "id": "lm-cleaning"
+        },
+        {
+          "id": "lm-segment"
+        },
+        {
+          "id": "re-monthly",
+          "cx": "simple"
+        },
+        {
+          "id": "tt-monitoring"
+        }
       ]
     },
     {
@@ -74,45 +270,82 @@
         "en": "Cold outreach",
         "de": "Cold Outreach"
       },
+      "popis": {
+        "cs": "Oslovování firem dvěma automatickými e-maily. Rozjezd domény a schránek, pak měsíční vlny."
+      },
       "ukony": [
-        "ob-briefing",
-        "co-setup",
-        "co-mailbox",
-        "co-warmup",
-        "co-list-setup",
-        "co-sequence",
-        "co-list-monthly",
-        "co-snippets",
-        "co-wave",
-        "co-replies",
-        "co-report"
+        {
+          "id": "ob-briefing"
+        },
+        {
+          "id": "co-setup"
+        },
+        {
+          "id": "co-mailbox"
+        },
+        {
+          "id": "co-warmup"
+        },
+        {
+          "id": "co-list-setup"
+        },
+        {
+          "id": "co-sequence"
+        },
+        {
+          "id": "co-list-monthly"
+        },
+        {
+          "id": "co-snippets"
+        },
+        {
+          "id": "co-wave"
+        },
+        {
+          "id": "co-replies"
+        },
+        {
+          "id": "co-report"
+        }
       ]
     }
   ],
   "faze": [
     {
       "id": "before",
-      "cs": "Před začátkem",
-      "en": "Before start",
-      "de": "Vor dem Start"
+      "cs": "Rozjezd",
+      "en": "Setup",
+      "de": "Start",
+      "fakturace": {
+        "cs": "jednorázově"
+      }
     },
     {
       "id": "during",
-      "cs": "V průběhu",
-      "en": "Ongoing",
-      "de": "Laufend"
+      "cs": "Měsíční správa",
+      "en": "Monthly management",
+      "de": "Monatliche Betreuung",
+      "fakturace": {
+        "cs": "měsíčně"
+      }
     },
     {
       "id": "adhoc",
-      "cs": "Ad hoc",
-      "en": "Ad hoc",
-      "de": "Ad hoc"
+      "cs": "Na vyžádání",
+      "en": "On request",
+      "de": "Auf Anfrage",
+      "fakturace": {
+        "cs": "při objednání"
+      }
     },
     {
       "id": "after",
-      "cs": "Na konci",
-      "en": "At the end",
-      "de": "Zum Abschluss"
+      "cs": "Ukončení spolupráce",
+      "en": "Offboarding",
+      "de": "Offboarding",
+      "fakturace": {
+        "cs": "jednorázově na konci"
+      }
     }
   ],
   "kategorie": [
@@ -147,7 +380,8 @@
           "minHours": 2,
           "maxHours": 5,
           "avgHours": 3,
-          "role": "specialista"
+          "role": "specialista",
+          "uspora": 0.2
         },
         {
           "kind": "hours",
@@ -165,7 +399,8 @@
           "minHours": 0.5,
           "maxHours": 2,
           "avgHours": 1,
-          "role": "specialista"
+          "role": "specialista",
+          "uspora": 0.2
         },
         {
           "kind": "hours",
@@ -183,7 +418,8 @@
           "minHours": 1,
           "maxHours": 3,
           "avgHours": 2,
-          "role": "specialista"
+          "role": "specialista",
+          "uspora": 0.2
         },
         {
           "kind": "hours",
@@ -201,7 +437,8 @@
           "minHours": 1,
           "maxHours": 3,
           "avgHours": 2,
-          "role": "specialista"
+          "role": "specialista",
+          "uspora": 0.2
         },
         {
           "kind": "hours",
@@ -219,7 +456,8 @@
           "minHours": 2,
           "maxHours": 6,
           "avgHours": 3,
-          "role": "specialista"
+          "role": "specialista",
+          "uspora": 0.2
         }
       ]
     },
@@ -254,7 +492,8 @@
           "minHours": 1,
           "maxHours": 3,
           "avgHours": 2,
-          "role": "account"
+          "role": "account",
+          "uspora": 0
         },
         {
           "kind": "hours",
@@ -272,7 +511,8 @@
           "minHours": 3,
           "maxHours": 8,
           "avgHours": 5,
-          "role": "specialista"
+          "role": "specialista",
+          "uspora": 0.4
         },
         {
           "kind": "hours",
@@ -290,7 +530,8 @@
           "minHours": 2,
           "maxHours": 8,
           "avgHours": 4,
-          "role": "specialista"
+          "role": "specialista",
+          "uspora": 0.3
         },
         {
           "kind": "hours",
@@ -308,7 +549,8 @@
           "minHours": 1,
           "maxHours": 4,
           "avgHours": 2,
-          "role": "specialista"
+          "role": "specialista",
+          "uspora": 0.3
         },
         {
           "kind": "hours",
@@ -326,7 +568,8 @@
           "minHours": 3,
           "maxHours": 10,
           "avgHours": 6,
-          "role": "specialista"
+          "role": "specialista",
+          "uspora": 0.4
         },
         {
           "kind": "hours",
@@ -344,7 +587,8 @@
           "minHours": 2,
           "maxHours": 5,
           "avgHours": 3,
-          "role": "specialista"
+          "role": "specialista",
+          "uspora": 0.2
         },
         {
           "kind": "hours",
@@ -362,7 +606,8 @@
           "minHours": 1,
           "maxHours": 3,
           "avgHours": 2,
-          "role": "specialista"
+          "role": "specialista",
+          "uspora": 0.2
         },
         {
           "kind": "hours",
@@ -380,7 +625,8 @@
           "minHours": 1,
           "maxHours": 3,
           "avgHours": 2,
-          "role": "specialista"
+          "role": "specialista",
+          "uspora": 0.2
         },
         {
           "kind": "hours",
@@ -398,7 +644,8 @@
           "minHours": 5,
           "maxHours": 20,
           "avgHours": 10,
-          "role": "specialista"
+          "role": "specialista",
+          "uspora": 0.2
         },
         {
           "kind": "hours",
@@ -416,7 +663,8 @@
           "minHours": 2,
           "maxHours": 6,
           "avgHours": 3,
-          "role": "specialista"
+          "role": "specialista",
+          "uspora": 0.2
         }
       ]
     },
@@ -479,7 +727,8 @@
               "hoursPerUnit": 18
             }
           },
-          "role": "specialista"
+          "role": "specialista",
+          "uspora": 0.4
         },
         {
           "kind": "units",
@@ -525,7 +774,8 @@
               "hoursPerUnit": 15
             }
           },
-          "role": "specialista"
+          "role": "specialista",
+          "uspora": 0.4
         },
         {
           "kind": "units",
@@ -571,7 +821,8 @@
               "hoursPerUnit": 18
             }
           },
-          "role": "specialista"
+          "role": "specialista",
+          "uspora": 0.4
         },
         {
           "kind": "units",
@@ -617,7 +868,8 @@
               "hoursPerUnit": 14
             }
           },
-          "role": "specialista"
+          "role": "specialista",
+          "uspora": 0.4
         },
         {
           "kind": "units",
@@ -663,7 +915,8 @@
               "hoursPerUnit": 18
             }
           },
-          "role": "specialista"
+          "role": "specialista",
+          "uspora": 0.4
         },
         {
           "kind": "units",
@@ -709,7 +962,8 @@
               "hoursPerUnit": 22
             }
           },
-          "role": "specialista"
+          "role": "specialista",
+          "uspora": 0.4
         }
       ]
     },
@@ -744,7 +998,8 @@
           "minHours": 2,
           "maxHours": 6,
           "avgHours": 3,
-          "role": "specialista"
+          "role": "specialista",
+          "uspora": 0.2
         },
         {
           "kind": "hours",
@@ -762,7 +1017,8 @@
           "minHours": 2,
           "maxHours": 5,
           "avgHours": 3,
-          "role": "specialista"
+          "role": "specialista",
+          "uspora": 0.2
         },
         {
           "kind": "hours",
@@ -780,7 +1036,8 @@
           "minHours": 1,
           "maxHours": 4,
           "avgHours": 2,
-          "role": "specialista"
+          "role": "specialista",
+          "uspora": 0.2
         },
         {
           "kind": "hours",
@@ -798,7 +1055,8 @@
           "minHours": 3,
           "maxHours": 10,
           "avgHours": 5,
-          "role": "specialista"
+          "role": "specialista",
+          "uspora": 0.3
         },
         {
           "kind": "units",
@@ -844,7 +1102,8 @@
               "hoursPerUnit": 7
             }
           },
-          "role": "specialista"
+          "role": "specialista",
+          "uspora": 0.4
         }
       ]
     },
@@ -907,7 +1166,8 @@
               "hoursPerUnit": 9
             }
           },
-          "role": "specialista"
+          "role": "specialista",
+          "uspora": 0.4
         },
         {
           "kind": "units",
@@ -953,7 +1213,8 @@
               "hoursPerUnit": 4
             }
           },
-          "role": "specialista"
+          "role": "specialista",
+          "uspora": 0.4
         }
       ]
     },
@@ -988,7 +1249,8 @@
           "minHours": 0.5,
           "maxHours": 3,
           "avgHours": 1,
-          "role": "specialista"
+          "role": "specialista",
+          "uspora": 0.3
         },
         {
           "kind": "hours",
@@ -1006,7 +1268,8 @@
           "minHours": 0.5,
           "maxHours": 2,
           "avgHours": 1,
-          "role": "specialista"
+          "role": "specialista",
+          "uspora": 0.3
         },
         {
           "kind": "hours",
@@ -1024,7 +1287,8 @@
           "minHours": 0.5,
           "maxHours": 2,
           "avgHours": 1,
-          "role": "specialista"
+          "role": "specialista",
+          "uspora": 0.3
         },
         {
           "kind": "hours",
@@ -1042,7 +1306,8 @@
           "minHours": 0.5,
           "maxHours": 2,
           "avgHours": 1,
-          "role": "specialista"
+          "role": "specialista",
+          "uspora": 0.3
         }
       ]
     },
@@ -1105,7 +1370,8 @@
               "hoursPerUnit": 5
             }
           },
-          "role": "specialista"
+          "role": "specialista",
+          "uspora": 0.4
         },
         {
           "kind": "hours",
@@ -1123,7 +1389,8 @@
           "minHours": 1,
           "maxHours": 3,
           "avgHours": 2,
-          "role": "specialista"
+          "role": "specialista",
+          "uspora": 0.4
         },
         {
           "kind": "hours",
@@ -1141,7 +1408,8 @@
           "minHours": 3,
           "maxHours": 6,
           "avgHours": 4,
-          "role": "account"
+          "role": "account",
+          "uspora": 0
         }
       ]
     },
@@ -1176,7 +1444,8 @@
           "minHours": 0.5,
           "maxHours": 2,
           "avgHours": 1,
-          "role": "specialista"
+          "role": "specialista",
+          "uspora": 0.2
         },
         {
           "kind": "hours",
@@ -1194,7 +1463,8 @@
           "minHours": 0.5,
           "maxHours": 1,
           "avgHours": 0.5,
-          "role": "specialista"
+          "role": "specialista",
+          "uspora": 0.2
         },
         {
           "kind": "hours",
@@ -1212,7 +1482,8 @@
           "minHours": 0.5,
           "maxHours": 1,
           "avgHours": 0.5,
-          "role": "specialista"
+          "role": "specialista",
+          "uspora": 0.2
         }
       ]
     },
@@ -1247,7 +1518,8 @@
           "minHours": 1,
           "maxHours": 4,
           "avgHours": 2,
-          "role": "specialista"
+          "role": "specialista",
+          "uspora": 0.3
         },
         {
           "kind": "hours",
@@ -1265,7 +1537,8 @@
           "minHours": 1,
           "maxHours": 3,
           "avgHours": 1.5,
-          "role": "specialista"
+          "role": "specialista",
+          "uspora": 0.3
         },
         {
           "kind": "hours",
@@ -1283,7 +1556,8 @@
           "minHours": 1,
           "maxHours": 4,
           "avgHours": 2,
-          "role": "specialista"
+          "role": "specialista",
+          "uspora": 0.3
         },
         {
           "kind": "hours",
@@ -1301,7 +1575,8 @@
           "minHours": 1,
           "maxHours": 5,
           "avgHours": 2,
-          "role": "account"
+          "role": "account",
+          "uspora": 0
         },
         {
           "kind": "hours",
@@ -1319,7 +1594,8 @@
           "minHours": 2,
           "maxHours": 5,
           "avgHours": 3,
-          "role": "specialista"
+          "role": "specialista",
+          "uspora": 0.4
         }
       ]
     },
@@ -1354,7 +1630,8 @@
           "minHours": 4,
           "maxHours": 12,
           "avgHours": 7,
-          "role": "specialista"
+          "role": "specialista",
+          "uspora": 0.4
         },
         {
           "kind": "hours",
@@ -1372,7 +1649,8 @@
           "minHours": 4,
           "maxHours": 10,
           "avgHours": 6,
-          "role": "specialista"
+          "role": "specialista",
+          "uspora": 0.4
         },
         {
           "kind": "hours",
@@ -1390,7 +1668,8 @@
           "minHours": 1,
           "maxHours": 3,
           "avgHours": 1.5,
-          "role": "account"
+          "role": "account",
+          "uspora": 0
         },
         {
           "kind": "hours",
@@ -1408,7 +1687,8 @@
           "minHours": 2,
           "maxHours": 6,
           "avgHours": 3,
-          "role": "account"
+          "role": "account",
+          "uspora": 0
         },
         {
           "kind": "hours",
@@ -1426,7 +1706,8 @@
           "minHours": 4,
           "maxHours": 12,
           "avgHours": 7,
-          "role": "specialista"
+          "role": "specialista",
+          "uspora": 0.4
         }
       ]
     },
@@ -1461,7 +1742,8 @@
           "minHours": 2,
           "maxHours": 8,
           "avgHours": 4,
-          "role": "specialista"
+          "role": "specialista",
+          "uspora": 0.2
         },
         {
           "kind": "hours",
@@ -1479,7 +1761,8 @@
           "minHours": 1,
           "maxHours": 4,
           "avgHours": 2,
-          "role": "specialista"
+          "role": "specialista",
+          "uspora": 0.2
         },
         {
           "kind": "hours",
@@ -1497,7 +1780,8 @@
           "minHours": 1,
           "maxHours": 6,
           "avgHours": 3,
-          "role": "specialista"
+          "role": "specialista",
+          "uspora": 0.2
         },
         {
           "kind": "hours",
@@ -1515,7 +1799,8 @@
           "minHours": 5,
           "maxHours": 20,
           "avgHours": 10,
-          "role": "specialista"
+          "role": "specialista",
+          "uspora": 0.2
         }
       ]
     },
@@ -1550,7 +1835,8 @@
           "minHours": 2,
           "maxHours": 6,
           "avgHours": 3,
-          "role": "account"
+          "role": "account",
+          "uspora": 0
         },
         {
           "kind": "hours",
@@ -1568,7 +1854,8 @@
           "minHours": 1,
           "maxHours": 3,
           "avgHours": 1.5,
-          "role": "specialista"
+          "role": "specialista",
+          "uspora": 0.2
         },
         {
           "kind": "hours",
@@ -1586,7 +1873,8 @@
           "minHours": 1,
           "maxHours": 4,
           "avgHours": 2,
-          "role": "specialista"
+          "role": "specialista",
+          "uspora": 0.2
         }
       ]
     }

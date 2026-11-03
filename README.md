@@ -1,6 +1,6 @@
 # @ktivity (dřív Time Source)
 
-Průvodce odhadem času na e-mailový projekt. Vybere se, co se u klienta bude dělat, doplní hodiny a vypadne z toho nacenění ve struktuře fáze 04 playbooku.
+Nacenění e-mailového projektu. Na úvodní stránce se vybere šablona, na jedné stránce se upraví úkony a počty a vedle se průběžně počítá cena. Klientovi jdou jen částky (export do `.md` nebo tisk do PDF), hodiny, náklad a marže zůstávají v interním pohledu.
 
 Otevírá se `index.html`. Je to jeden soubor bez závislostí, takže se dá poslat kolegovi jako příloha a otevřít dvojklikem. Nepotřebuje server ani build.
 
@@ -23,7 +23,7 @@ Build zároveň hlídá dvě věci, na které se jinak zapomene. České texty n
 
 ## Jak přidat nebo změnit úkon
 
-Editovat `data/activities.json` a spustit `node build.js`. Do `index.html` se nikdy nesahá ručně, při dalším buildu by se změna tiše ztratila.
+Editovat `data/build-catalog.js`, pak `node data/build-catalog.js` a `node build.js`. Do `data/activities.json` ani do `index.html` se ručně nesahá, oba se generují a změna by se při dalším buildu tiše ztratila.
 
 Struktura úkonu:
 
@@ -53,9 +53,19 @@ Struktura úkonu:
 
 Rozdělení na rozjezd a provoz je podstatné. Bez něj vznikne jedna hromada hodin, ve které se jednorázová práce míchá s tou opakovanou a číslo nedává smysl ani nám, ani klientovi.
 
-## Typy projektu
+## Šablony
 
-Rychlý start na první obrazovce předvybere kategorie a úkony s průměrnými hodinami. Account pak jen ubírá a ladí. Seznam je v `data/build-catalog.js` v `TYPY_PROJEKTU` (e-shop od nuly, měsíční správa, jednorázový audit, aktivní oslovování). Build katalogu spadne, když typ odkazuje na úkon, který v katalogu není.
+Šablona předvybere úkony i s počty a složitostí, account pak jen ubírá a ladí. Seznam je v `data/build-catalog.js` v `TYPY_PROJEKTU`: e-shop od nuly, měsíční správa, jednorázový audit, gastro rozjezd newsletteru, gastro audit a převzetí, aktivní oslovování. Build katalogu spadne, když šablona odkazuje na úkon, který v katalogu není.
+
+## Cena, náklad a marže
+
+Klientovi se fakturují částky, hodiny jsou jen interní (rozhodnuto 3. 11. 2026, model balíček za pevnou cenu a ad hoc práce zvlášť).
+
+- **Cena** = hodiny podle katalogu × ceníková sazba, zaokrouhleno na stovky. Hodiny v katalogu jsou standardní náročnost, ne odhad toho, jak dlouho to dnes trvá.
+- **Náklad** = skutečné hodiny × nákladová sazba. Skutečné hodiny počítá odhad úspory s Claudem (`uspora` u úkonu: texty 40 %, data 30 %, technika 20 %, schůzky 0 %), dokud se v interním pohledu nevyplní naměřené číslo.
+- **Komunikace a schvalování** je procento z hodin specialisty v každé fázi a nezrychluje se.
+
+Sazby a procenta v `NASTAVENI` jsou výchozí odhad (1 200 Kč/h cena, 700 Kč/h náklad, 20 % komunikace). Na úvodní stránce se dají přepsat, pamatují se v prohlížeči a ukládají se do souboru projektu. Odhady úspory i sazby se mají nahradit naměřenými hodnotami.
 
 ## Jazyky
 

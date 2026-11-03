@@ -18,105 +18,139 @@
 html,body{margin:0;padding:0}
 body{font-family:'Poppins','Segoe UI Variant','Segoe UI',sans-serif;color:var(--dark);background:var(--bg);font-size:15px;line-height:1.55}
 h1,h2,h3{font-weight:700;margin:0 0 .4em}
-h1{font-size:26px}
 h2{font-size:20px}
 h3{font-size:16px;font-weight:600}
 a{color:var(--pink)}
-.wrap{max-width:900px;margin:0 auto;padding:0 20px 80px}
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px 80px}
 
-header{background:var(--grad);color:#fff;padding:22px 0}
+header{background:var(--grad);color:#fff;padding:16px 0}
 header .wrap{padding-bottom:0;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
-header h1{color:#fff;margin:0;font-size:22px;letter-spacing:.2px}
+.home{background:none;border:0;color:#fff;font:inherit;font-size:22px;font-weight:700;cursor:pointer;padding:0;text-align:left}
+.home:hover{opacity:.85}
 header .sub{color:#fff;opacity:.9;font-size:13px}
 .langs{display:flex;gap:6px}
 .langs button{background:transparent;border:1px solid rgba(255,255,255,.55);color:#fff;border-radius:6px;padding:4px 9px;font:inherit;font-size:12px;cursor:pointer}
 .langs button.on{background:#fff;color:var(--pink);border-color:#fff;font-weight:600}
 
 .card{background:#fff;border:var(--line);border-radius:var(--radius);padding:20px;margin:18px 0}
-.card.tight{padding:14px 18px}
 label.f{display:block;margin:12px 0 4px;font-size:13px;color:var(--gray)}
 input[type=text],input[type=number],textarea,select{
   width:100%;padding:9px 11px;border:1px solid #ddd;border-radius:8px;font:inherit;background:#fff;color:var(--dark)}
 input:focus,textarea:focus,select:focus{outline:2px solid var(--lightpink);border-color:var(--pink)}
-textarea{min-height:64px;resize:vertical}
+textarea{min-height:56px;resize:vertical}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:0 18px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:0 18px}
 .hint{font-size:12px;color:var(--gray);margin-top:4px}
+.muted{color:var(--gray)}
 
 .btn{background:var(--pink);color:#fff;border:0;border-radius:8px;padding:10px 18px;font:inherit;font-weight:600;cursor:pointer}
 .btn:hover{background:#D63A60}
 .btn.ghost{background:#fff;color:var(--dark);border:1px solid #ddd;font-weight:400}
-.btn.ghost:hover{border-color:var(--pink);color:var(--pink);background:#fff}
-.btn:disabled{opacity:.45;cursor:not-allowed}
-.bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:18px}
-.bar .spacer{flex:1}
+.btn.ghost:hover{border-color:var(--pink);color:var(--pink)}
+.btn.small{padding:6px 12px;font-size:13px}
+.bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
 
-.phase{display:inline-block;font-size:11px;font-weight:600;padding:2px 8px;border-radius:99px;border:1px solid}
-.ph-before{background:#FFF4E5;color:#8a5a00;border-color:#ffe0b2}
-.ph-during{background:#E8F1FF;color:#134a99;border-color:#c9ddff}
-.ph-adhoc{background:#EAF7EE;color:#1d6b38;border-color:#c9e9d4}
-.ph-after{background:#F0ECF9;color:#4a3a7a;border-color:#ddd4f0}
-.role{font-size:11px;color:var(--gray);border:1px solid #e6e6e6;border-radius:99px;padding:1px 7px}
+/* domů */
+.intro{margin:26px 0 6px}
+.intro p{margin:0;color:var(--gray)}
+.sablony{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;margin-top:14px}
+.sablona{display:flex;flex-direction:column;gap:6px;text-align:left;background:#fff;border:var(--line);border-radius:var(--radius);
+  padding:16px;font:inherit;color:inherit;cursor:pointer;transition:border-color .15s,box-shadow .15s}
+.sablona:hover{border-color:var(--pink);box-shadow:0 4px 14px rgba(234,64,111,.12)}
+.sablona .n{font-weight:700;font-size:16px}
+.sablona .d{font-size:13px;color:var(--gray);flex:1}
+.sablona .c{font-size:13px;border-top:var(--line);padding-top:8px;margin-top:4px}
+.sablona .c strong{color:var(--pink)}
+.sablona.prazdna{border-style:dashed;justify-content:center}
 
-.catlist{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.catpick{display:flex;gap:10px;align-items:flex-start;border:1px solid #e6e6e6;border-radius:var(--radius);padding:12px;cursor:pointer;background:#fff}
-.catpick.on{border-color:var(--pink);background:var(--bgpink)}
-.catpick input{margin-top:3px}
-.catpick .n{font-weight:600}
-.catpick .d{font-size:12px;color:var(--gray)}
+/* editor */
+.layout{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:24px;align-items:start}
+.faze{margin:26px 0 8px;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.faze h2{margin:0}
+.faze .fakt{font-size:13px;color:var(--gray)}
+.faze .cena{margin-left:auto;font-weight:700;font-size:18px}
+details.kat{background:#fff;border:var(--line);border-radius:var(--radius);margin:8px 0}
+details.kat[open]{border-color:#d6d6d6}
+details.kat > summary{list-style:none;display:flex;align-items:center;gap:10px;padding:13px 16px;cursor:pointer}
+details.kat > summary::-webkit-details-marker{display:none}
+details.kat > summary::before{content:"";width:8px;height:8px;border-right:2px solid var(--gray);border-bottom:2px solid var(--gray);
+  transform:rotate(-45deg);transition:transform .15s;flex:none}
+details.kat[open] > summary::before{transform:rotate(45deg)}
+details.kat .kn{font-weight:600}
+details.kat .kpocet{font-size:12px;color:var(--gray)}
+details.kat .kcena{margin-left:auto;font-weight:600;white-space:nowrap}
+details.kat .kbody{padding:0 16px 10px}
+.kpopis{font-size:13px;color:var(--gray);margin:0 0 4px}
 
-.act{border-top:var(--line);padding:14px 0}
-.act:first-child{border-top:0}
+.act{border-top:var(--line);padding:12px 0}
 .act .head{display:flex;gap:10px;align-items:flex-start}
-.act .head input[type=checkbox]{margin-top:5px;width:16px;height:16px;accent-color:var(--pink)}
-.act .name{font-weight:600;flex:1}
+.act .head input[type=checkbox]{margin-top:5px;width:16px;height:16px;accent-color:var(--pink);flex:none}
+.act .name{flex:1}
+.act .name strong{font-weight:600}
 .act .tip{font-size:12.5px;color:var(--gray);margin:2px 0 0}
-.act .ctl{margin:10px 0 0 26px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-.act .ctl input[type=number]{width:92px}
-.act .ctl select{width:auto;min-width:200px}
-.presets{display:flex;gap:6px}
-.presets button{border:1px solid #ddd;background:#fff;border-radius:6px;padding:4px 10px;font:inherit;font-size:12px;cursor:pointer}
-.presets button:hover{border-color:var(--pink);color:var(--pink)}
-.typy{display:flex;flex-wrap:wrap;gap:8px}
-.typy button{border:1px solid #ddd;background:#fff;border-radius:8px;padding:8px 14px;font:inherit;font-size:14px;cursor:pointer}
-.typy button:hover{border-color:var(--pink);color:var(--pink)}
-.typy button.on{background:var(--pink);border-color:var(--pink);color:#fff}
-.rng{font-size:12px;color:var(--gray)}
-.sum{margin-left:auto;font-weight:600;white-space:nowrap}
+.act .sum{text-align:right;white-space:nowrap;font-weight:600}
+.act .sum .int{display:block;font-weight:400;font-size:12px;color:var(--gray)}
+.act .ctl{margin:8px 0 0 26px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;font-size:13px}
+.act .ctl input[type=number]{width:80px;padding:6px 8px}
+.act .ctl select{width:auto;min-width:180px;padding:6px 8px}
+.act.vypnuto .name strong{font-weight:400}
+.role{font-size:11px;color:var(--gray);border:1px solid #e6e6e6;border-radius:99px;padding:1px 7px;margin-left:4px;white-space:nowrap}
+.presets{display:inline-flex;gap:4px}
+.presets button{border:1px solid #ddd;background:#fff;border-radius:6px;padding:3px 9px;font:inherit;font-size:12px;cursor:pointer}
+.presets button.on,.presets button:hover{border-color:var(--pink);color:var(--pink)}
+.komrow{display:flex;justify-content:space-between;font-size:14px;color:var(--gray);padding:8px 16px}
 
-table{width:100%;border-collapse:collapse;margin:10px 0}
-th,td{text-align:left;padding:8px 10px;border-bottom:var(--line);font-size:14px}
-th{font-size:12px;color:var(--gray);font-weight:600;text-transform:uppercase;letter-spacing:.03em}
-td.num,th.num{text-align:right;white-space:nowrap}
-tr.total td{font-weight:700;border-top:2px solid var(--dark);border-bottom:0}
-
-.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin:14px 0}
-.tile{border:var(--line);border-radius:var(--radius);padding:14px;background:#fff}
-.tile .k{font-size:12px;color:var(--gray)}
-.tile .v{font-size:22px;font-weight:700;margin-top:2px}
-.tile .m{font-size:12px;color:var(--gray)}
-
-.steps{display:flex;gap:6px;flex-wrap:wrap;margin:16px 0 0}
-.steps span{font-size:11px;padding:3px 9px;border-radius:99px;background:#ececec;color:var(--gray)}
-.steps span.on{background:var(--pink);color:#fff;font-weight:600}
-.steps span.done{background:var(--lightpink);color:#8A2344}
+aside{position:sticky;top:16px;margin-top:18px}
+aside .card{margin:0 0 14px}
+.souhrn-r{display:flex;justify-content:space-between;align-items:baseline;padding:8px 0;border-bottom:var(--line)}
+.souhrn-r:last-of-type{border-bottom:0}
+.souhrn-r .k{font-size:13px}
+.souhrn-r .k small{display:block;color:var(--gray);font-size:11.5px}
+.souhrn-r .v{font-weight:700;font-size:18px;white-space:nowrap}
+.prepinac{display:flex;align-items:center;gap:8px;font-size:13px;cursor:pointer;margin:4px 0 0}
+.prepinac input{accent-color:var(--pink);width:16px;height:16px}
+.interni{background:#fafafa;border:1px dashed #cfcfcf}
+.interni h3{font-size:14px}
+.interni table{width:100%;border-collapse:collapse;font-size:13px}
+.interni td,.interni th{padding:5px 4px;border-bottom:var(--line);text-align:right;white-space:nowrap}
+.interni th{font-size:11px;color:var(--gray);font-weight:600}
+.interni td:first-child,.interni th:first-child{text-align:left}
+.akce{display:grid;gap:8px}
+.akce .btn{width:100%}
+.mbar{display:none}
 
 .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);background:var(--dark);color:#fff;
   padding:10px 18px;border-radius:8px;opacity:0;pointer-events:none;transition:.25s;font-size:14px;z-index:50}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
-.muted{color:var(--gray)}
-.share{width:100%;font-size:12px;font-family:ui-monospace,Consolas,monospace}
-details summary{cursor:pointer;font-weight:600;font-size:14px}
+details.nast summary{cursor:pointer;font-weight:600}
+#tisk{display:none}
 
-@media (max-width:700px){
-  .grid2,.catlist{grid-template-columns:1fr}
-  .act .sum{margin-left:26px}
+@media (max-width:900px){
+  .layout{grid-template-columns:minmax(0,1fr)}
+  aside{position:static}
+  .mbar{display:flex;position:fixed;left:0;right:0;bottom:0;background:#fff;border-top:var(--line);
+    padding:10px 16px;gap:16px;align-items:center;z-index:20;box-shadow:0 -4px 12px rgba(0,0,0,.06)}
+  .mbar div{font-size:12px;color:var(--gray);line-height:1.2}
+  .mbar strong{display:block;color:var(--dark);font-size:16px}
+  .mbar a{margin-left:auto;font-size:13px;font-weight:600}
+  .wrap{padding-bottom:110px}
+}
+@media (max-width:640px){
+  .grid2,.grid3{grid-template-columns:1fr}
+  .wrap{padding-left:16px;padding-right:16px}
+  .act .ctl{margin-left:0}
+  .act .ctl select{min-width:0;max-width:100%}
+  .interni{overflow-x:auto}
 }
 @media print{
-  header{background:none;color:var(--dark);border-bottom:3px solid var(--pink)}
-  header h1,header .sub{color:var(--dark)}
-  .langs,.bar,.steps,.noprint{display:none !important}
   body{background:#fff;font-size:12px}
-  .card{break-inside:avoid;border-color:#ccc;margin:10px 0}
+  body > *:not(#tisk){display:none !important}
+  #tisk{display:block;padding:0 10px}
+  #tisk h1{font-size:20px;border-bottom:3px solid var(--pink);padding-bottom:6px}
+  #tisk table{width:100%;border-collapse:collapse;margin:6px 0 14px}
+  #tisk td,#tisk th{padding:5px 6px;border-bottom:1px solid #ddd;text-align:left}
+  #tisk td.num,#tisk th.num{text-align:right}
+  #tisk tr.total td{font-weight:700;border-top:2px solid var(--dark)}
 }
 </style>
 </head>
@@ -125,25 +159,28 @@ details summary{cursor:pointer;font-weight:600;font-size:14px}
 <header>
   <div class="wrap">
     <div>
-      <h1>@ktivity</h1>
-      <div class="sub" id="hsub"></div>
+      <button class="home" id="b-home" title="Zpět na úvod">@ktivity</button>
+      <div class="sub">Nacenění e-mailového projektu</div>
     </div>
     <div class="langs" id="langs"></div>
   </div>
 </header>
 
-<div class="wrap">
-  <div class="steps" id="steps"></div>
-  <div id="view"></div>
-</div>
-
+<div class="wrap" id="view"></div>
+<div class="mbar" id="mbar"></div>
+<div id="tisk"></div>
 <div class="toast" id="toast"></div>
 
 <script>
-/* Katalog se vkládá skriptem build.js z data/activities.json. Needitovat tady. */
 const CATALOG = /*__CATALOG__*/{
-  "verze": 10,
-  "zdroj": "Katalog vytažený z živé Macaly verze 23. 9. 2026, upravený podle poznámek z 22. 9. 2026 (ZADANI-v9.md). Typy projektu a copywriting sekvence doplněny 3. 11. 2026.",
+  "verze": 11,
+  "zdroj": "Katalog vytažený z živé Macaly verze 23. 9. 2026, upravený podle poznámek z 22. 9. 2026 (ZADANI-v9.md). Šablony, úspora s Claudem a sazby doplněny 3. 11. 2026.",
+  "nastaveni": {
+    "cenovaSazba": 1200,
+    "nakladovaSazba": 700,
+    "komunikace": 20,
+    "zaokrouhleni": 100
+  },
   "typyProjektu": [
     {
       "id": "eshop",
@@ -152,29 +189,77 @@ const CATALOG = /*__CATALOG__*/{
         "en": "E-shop from scratch",
         "de": "E-Shop von Grund auf"
       },
+      "popis": {
+        "cs": "Nový e-shop bez e-mailingu. Nástroj, šablona, základní automatizace a první kampaně."
+      },
       "ukony": [
-        "pl-eval",
-        "pl-account",
-        "pl-dns",
-        "pl-senddomain",
-        "pl-integration",
-        "ob-briefing",
-        "ob-audit",
-        "ob-import",
-        "ob-lists",
-        "ob-template",
-        "ob-optin",
-        "ob-doubleoptin",
-        "ob-utm",
-        "if-welcome",
-        "if-cart",
-        "if-postpurchase",
-        "if-winback",
-        "ca-campaign",
-        "lm-cleaning",
-        "lm-segment",
-        "re-monthly",
-        "tt-monitoring"
+        {
+          "id": "pl-eval"
+        },
+        {
+          "id": "pl-account"
+        },
+        {
+          "id": "pl-dns"
+        },
+        {
+          "id": "pl-senddomain"
+        },
+        {
+          "id": "pl-integration"
+        },
+        {
+          "id": "ob-briefing"
+        },
+        {
+          "id": "ob-audit"
+        },
+        {
+          "id": "ob-import"
+        },
+        {
+          "id": "ob-lists"
+        },
+        {
+          "id": "ob-template"
+        },
+        {
+          "id": "ob-optin"
+        },
+        {
+          "id": "ob-doubleoptin"
+        },
+        {
+          "id": "ob-utm"
+        },
+        {
+          "id": "if-welcome"
+        },
+        {
+          "id": "if-cart"
+        },
+        {
+          "id": "if-postpurchase"
+        },
+        {
+          "id": "if-winback"
+        },
+        {
+          "id": "ca-campaign",
+          "units": 2
+        },
+        {
+          "id": "lm-cleaning"
+        },
+        {
+          "id": "lm-segment"
+        },
+        {
+          "id": "re-monthly"
+        },
+        {
+          "id": "tt-monitoring"
+        }
       ]
     },
     {
@@ -184,16 +269,38 @@ const CATALOG = /*__CATALOG__*/{
         "en": "Monthly management, existing client",
         "de": "Monatliche Betreuung, Bestandskunde"
       },
+      "popis": {
+        "cs": "Klient už e-mailing má. Kampaně, péče o databázi a report každý měsíc."
+      },
       "ukony": [
-        "ca-campaign",
-        "ca-abtest",
-        "lm-cleaning",
-        "lm-import",
-        "lm-segment",
-        "re-monthly",
-        "re-flows",
-        "tt-monitoring",
-        "tt-dns"
+        {
+          "id": "ca-campaign",
+          "units": 2
+        },
+        {
+          "id": "ca-abtest"
+        },
+        {
+          "id": "lm-cleaning"
+        },
+        {
+          "id": "lm-import"
+        },
+        {
+          "id": "lm-segment"
+        },
+        {
+          "id": "re-monthly"
+        },
+        {
+          "id": "re-flows"
+        },
+        {
+          "id": "tt-monitoring"
+        },
+        {
+          "id": "tt-dns"
+        }
       ]
     },
     {
@@ -203,11 +310,131 @@ const CATALOG = /*__CATALOG__*/{
         "en": "One-off audit",
         "de": "Einmaliger Audit"
       },
+      "popis": {
+        "cs": "Rozbor stávajícího e-mailingu s doporučeními, bez navazující správy."
+      },
       "ukony": [
-        "st-fullaudit",
-        "st-strategy",
-        "st-consult",
-        "re-quarterly"
+        {
+          "id": "ob-briefing"
+        },
+        {
+          "id": "st-fullaudit"
+        },
+        {
+          "id": "st-strategy"
+        },
+        {
+          "id": "st-consult"
+        }
+      ]
+    },
+    {
+      "id": "gastro-start",
+      "name": {
+        "cs": "Gastro: rozjezd newsletteru",
+        "en": "Hospitality: newsletter launch",
+        "de": "Gastro: Newsletter-Start"
+      },
+      "popis": {
+        "cs": "Restaurace nebo bar bez e-mailingu. Nástroj, šablona v brandu, sběr kontaktů, uvítací e-mail a dva newslettery měsíčně."
+      },
+      "ukony": [
+        {
+          "id": "pl-eval"
+        },
+        {
+          "id": "pl-account"
+        },
+        {
+          "id": "pl-dns"
+        },
+        {
+          "id": "ob-briefing"
+        },
+        {
+          "id": "ob-import"
+        },
+        {
+          "id": "ob-lists"
+        },
+        {
+          "id": "ob-template"
+        },
+        {
+          "id": "ob-optin"
+        },
+        {
+          "id": "ob-doubleoptin"
+        },
+        {
+          "id": "ob-utm"
+        },
+        {
+          "id": "if-welcome",
+          "cx": "simple"
+        },
+        {
+          "id": "ca-campaign",
+          "units": 2,
+          "cx": "simple"
+        },
+        {
+          "id": "lm-cleaning"
+        },
+        {
+          "id": "re-monthly",
+          "cx": "simple"
+        },
+        {
+          "id": "tt-monitoring"
+        }
+      ]
+    },
+    {
+      "id": "gastro-audit",
+      "name": {
+        "cs": "Gastro: audit a převzetí newsletteru",
+        "en": "Hospitality: audit and takeover",
+        "de": "Gastro: Audit und Übernahme"
+      },
+      "popis": {
+        "cs": "Podnik newsletter posílá. Audit, nová šablona a měsíční správa dvou newsletterů."
+      },
+      "ukony": [
+        {
+          "id": "ob-briefing"
+        },
+        {
+          "id": "ob-audit"
+        },
+        {
+          "id": "ob-template"
+        },
+        {
+          "id": "ob-lists"
+        },
+        {
+          "id": "if-welcome",
+          "cx": "simple"
+        },
+        {
+          "id": "ca-campaign",
+          "units": 2,
+          "cx": "simple"
+        },
+        {
+          "id": "lm-cleaning"
+        },
+        {
+          "id": "lm-segment"
+        },
+        {
+          "id": "re-monthly",
+          "cx": "simple"
+        },
+        {
+          "id": "tt-monitoring"
+        }
       ]
     },
     {
@@ -217,45 +444,82 @@ const CATALOG = /*__CATALOG__*/{
         "en": "Cold outreach",
         "de": "Cold Outreach"
       },
+      "popis": {
+        "cs": "Oslovování firem dvěma automatickými e-maily. Rozjezd domény a schránek, pak měsíční vlny."
+      },
       "ukony": [
-        "ob-briefing",
-        "co-setup",
-        "co-mailbox",
-        "co-warmup",
-        "co-list-setup",
-        "co-sequence",
-        "co-list-monthly",
-        "co-snippets",
-        "co-wave",
-        "co-replies",
-        "co-report"
+        {
+          "id": "ob-briefing"
+        },
+        {
+          "id": "co-setup"
+        },
+        {
+          "id": "co-mailbox"
+        },
+        {
+          "id": "co-warmup"
+        },
+        {
+          "id": "co-list-setup"
+        },
+        {
+          "id": "co-sequence"
+        },
+        {
+          "id": "co-list-monthly"
+        },
+        {
+          "id": "co-snippets"
+        },
+        {
+          "id": "co-wave"
+        },
+        {
+          "id": "co-replies"
+        },
+        {
+          "id": "co-report"
+        }
       ]
     }
   ],
   "faze": [
     {
       "id": "before",
-      "cs": "Před začátkem",
-      "en": "Before start",
-      "de": "Vor dem Start"
+      "cs": "Rozjezd",
+      "en": "Setup",
+      "de": "Start",
+      "fakturace": {
+        "cs": "jednorázově"
+      }
     },
     {
       "id": "during",
-      "cs": "V průběhu",
-      "en": "Ongoing",
-      "de": "Laufend"
+      "cs": "Měsíční správa",
+      "en": "Monthly management",
+      "de": "Monatliche Betreuung",
+      "fakturace": {
+        "cs": "měsíčně"
+      }
     },
     {
       "id": "adhoc",
-      "cs": "Ad hoc",
-      "en": "Ad hoc",
-      "de": "Ad hoc"
+      "cs": "Na vyžádání",
+      "en": "On request",
+      "de": "Auf Anfrage",
+      "fakturace": {
+        "cs": "při objednání"
+      }
     },
     {
       "id": "after",
-      "cs": "Na konci",
-      "en": "At the end",
-      "de": "Zum Abschluss"
+      "cs": "Ukončení spolupráce",
+      "en": "Offboarding",
+      "de": "Offboarding",
+      "fakturace": {
+        "cs": "jednorázově na konci"
+      }
     }
   ],
   "kategorie": [
@@ -290,7 +554,8 @@ const CATALOG = /*__CATALOG__*/{
           "minHours": 2,
           "maxHours": 5,
           "avgHours": 3,
-          "role": "specialista"
+          "role": "specialista",
+          "uspora": 0.2
         },
         {
           "kind": "hours",
@@ -308,7 +573,8 @@ const CATALOG = /*__CATALOG__*/{
           "minHours": 0.5,
           "maxHours": 2,
           "avgHours": 1,
-          "role": "specialista"
+          "role": "specialista",
+          "uspora": 0.2
         },
         {
           "kind": "hours",
@@ -326,7 +592,8 @@ const CATALOG = /*__CATALOG__*/{
           "minHours": 1,
           "maxHours": 3,
           "avgHours": 2,
-          "role": "specialista"
+          "role": "specialista",
+          "uspora": 0.2
         },
         {
           "kind": "hours",
@@ -344,7 +611,8 @@ const CATALOG = /*__CATALOG__*/{
           "minHours": 1,
           "maxHours": 3,
           "avgHours": 2,
-          "role": "specialista"
+          "role": "specialista",
+          "uspora": 0.2
         },
         {
           "kind": "hours",
@@ -362,7 +630,8 @@ const CATALOG = /*__CATALOG__*/{
           "minHours": 2,
           "maxHours": 6,
           "avgHours": 3,
-          "role": "specialista"
+          "role": "specialista",
+          "uspora": 0.2
         }
       ]
     },
@@ -397,7 +666,8 @@ const CATALOG = /*__CATALOG__*/{
           "minHours": 1,
           "maxHours": 3,
           "avgHours": 2,
-          "role": "account"
+          "role": "account",
+          "uspora": 0
         },
         {
           "kind": "hours",
@@ -415,7 +685,8 @@ const CATALOG = /*__CATALOG__*/{
           "minHours": 3,
           "maxHours": 8,
           "avgHours": 5,
-          "role": "specialista"
+          "role": "specialista",
+          "uspora": 0.4
         },
         {
           "kind": "hours",
@@ -433,7 +704,8 @@ const CATALOG = /*__CATALOG__*/{
           "minHours": 2,
           "maxHours": 8,
           "avgHours": 4,
-          "role": "specialista"
+          "role": "specialista",
+          "uspora": 0.3
         },
         {
           "kind": "hours",
@@ -451,7 +723,8 @@ const CATALOG = /*__CATALOG__*/{
           "minHours": 1,
           "maxHours": 4,
           "avgHours": 2,
-          "role": "specialista"
+          "role": "specialista",
+          "uspora": 0.3
         },
         {
           "kind": "hours",
@@ -469,7 +742,8 @@ const CATALOG = /*__CATALOG__*/{
           "minHours": 3,
           "maxHours": 10,
           "avgHours": 6,
-          "role": "specialista"
+          "role": "specialista",
+          "uspora": 0.4
         },
         {
           "kind": "hours",
@@ -487,7 +761,8 @@ const CATALOG = /*__CATALOG__*/{
           "minHours": 2,
           "maxHours": 5,
           "avgHours": 3,
-          "role": "specialista"
+          "role": "specialista",
+          "uspora": 0.2
         },
         {
           "kind": "hours",
@@ -505,7 +780,8 @@ const CATALOG = /*__CATALOG__*/{
           "minHours": 1,
           "maxHours": 3,
           "avgHours": 2,
-          "role": "specialista"
+          "role": "specialista",
+          "uspora": 0.2
         },
         {
           "kind": "hours",
@@ -523,7 +799,8 @@ const CATALOG = /*__CATALOG__*/{
           "minHours": 1,
           "maxHours": 3,
           "avgHours": 2,
-          "role": "specialista"
+          "role": "specialista",
+          "uspora": 0.2
         },
         {
           "kind": "hours",
@@ -541,7 +818,8 @@ const CATALOG = /*__CATALOG__*/{
           "minHours": 5,
           "maxHours": 20,
           "avgHours": 10,
-          "role": "specialista"
+          "role": "specialista",
+          "uspora": 0.2
         },
         {
           "kind": "hours",
@@ -559,7 +837,8 @@ const CATALOG = /*__CATALOG__*/{
           "minHours": 2,
           "maxHours": 6,
           "avgHours": 3,
-          "role": "specialista"
+          "role": "specialista",
+          "uspora": 0.2
         }
       ]
     },
@@ -622,7 +901,8 @@ const CATALOG = /*__CATALOG__*/{
               "hoursPerUnit": 18
             }
           },
-          "role": "specialista"
+          "role": "specialista",
+          "uspora": 0.4
         },
         {
           "kind": "units",
@@ -668,7 +948,8 @@ const CATALOG = /*__CATALOG__*/{
               "hoursPerUnit": 15
             }
           },
-          "role": "specialista"
+          "role": "specialista",
+          "uspora": 0.4
         },
         {
           "kind": "units",
@@ -714,7 +995,8 @@ const CATALOG = /*__CATALOG__*/{
               "hoursPerUnit": 18
             }
           },
-          "role": "specialista"
+          "role": "specialista",
+          "uspora": 0.4
         },
         {
           "kind": "units",
@@ -760,7 +1042,8 @@ const CATALOG = /*__CATALOG__*/{
               "hoursPerUnit": 14
             }
           },
-          "role": "specialista"
+          "role": "specialista",
+          "uspora": 0.4
         },
         {
           "kind": "units",
@@ -806,7 +1089,8 @@ const CATALOG = /*__CATALOG__*/{
               "hoursPerUnit": 18
             }
           },
-          "role": "specialista"
+          "role": "specialista",
+          "uspora": 0.4
         },
         {
           "kind": "units",
@@ -852,7 +1136,8 @@ const CATALOG = /*__CATALOG__*/{
               "hoursPerUnit": 22
             }
           },
-          "role": "specialista"
+          "role": "specialista",
+          "uspora": 0.4
         }
       ]
     },
@@ -887,7 +1172,8 @@ const CATALOG = /*__CATALOG__*/{
           "minHours": 2,
           "maxHours": 6,
           "avgHours": 3,
-          "role": "specialista"
+          "role": "specialista",
+          "uspora": 0.2
         },
         {
           "kind": "hours",
@@ -905,7 +1191,8 @@ const CATALOG = /*__CATALOG__*/{
           "minHours": 2,
           "maxHours": 5,
           "avgHours": 3,
-          "role": "specialista"
+          "role": "specialista",
+          "uspora": 0.2
         },
         {
           "kind": "hours",
@@ -923,7 +1210,8 @@ const CATALOG = /*__CATALOG__*/{
           "minHours": 1,
           "maxHours": 4,
           "avgHours": 2,
-          "role": "specialista"
+          "role": "specialista",
+          "uspora": 0.2
         },
         {
           "kind": "hours",
@@ -941,7 +1229,8 @@ const CATALOG = /*__CATALOG__*/{
           "minHours": 3,
           "maxHours": 10,
           "avgHours": 5,
-          "role": "specialista"
+          "role": "specialista",
+          "uspora": 0.3
         },
         {
           "kind": "units",
@@ -987,7 +1276,8 @@ const CATALOG = /*__CATALOG__*/{
               "hoursPerUnit": 7
             }
           },
-          "role": "specialista"
+          "role": "specialista",
+          "uspora": 0.4
         }
       ]
     },
@@ -1050,7 +1340,8 @@ const CATALOG = /*__CATALOG__*/{
               "hoursPerUnit": 9
             }
           },
-          "role": "specialista"
+          "role": "specialista",
+          "uspora": 0.4
         },
         {
           "kind": "units",
@@ -1096,7 +1387,8 @@ const CATALOG = /*__CATALOG__*/{
               "hoursPerUnit": 4
             }
           },
-          "role": "specialista"
+          "role": "specialista",
+          "uspora": 0.4
         }
       ]
     },
@@ -1131,7 +1423,8 @@ const CATALOG = /*__CATALOG__*/{
           "minHours": 0.5,
           "maxHours": 3,
           "avgHours": 1,
-          "role": "specialista"
+          "role": "specialista",
+          "uspora": 0.3
         },
         {
           "kind": "hours",
@@ -1149,7 +1442,8 @@ const CATALOG = /*__CATALOG__*/{
           "minHours": 0.5,
           "maxHours": 2,
           "avgHours": 1,
-          "role": "specialista"
+          "role": "specialista",
+          "uspora": 0.3
         },
         {
           "kind": "hours",
@@ -1167,7 +1461,8 @@ const CATALOG = /*__CATALOG__*/{
           "minHours": 0.5,
           "maxHours": 2,
           "avgHours": 1,
-          "role": "specialista"
+          "role": "specialista",
+          "uspora": 0.3
         },
         {
           "kind": "hours",
@@ -1185,7 +1480,8 @@ const CATALOG = /*__CATALOG__*/{
           "minHours": 0.5,
           "maxHours": 2,
           "avgHours": 1,
-          "role": "specialista"
+          "role": "specialista",
+          "uspora": 0.3
         }
       ]
     },
@@ -1248,7 +1544,8 @@ const CATALOG = /*__CATALOG__*/{
               "hoursPerUnit": 5
             }
           },
-          "role": "specialista"
+          "role": "specialista",
+          "uspora": 0.4
         },
         {
           "kind": "hours",
@@ -1266,7 +1563,8 @@ const CATALOG = /*__CATALOG__*/{
           "minHours": 1,
           "maxHours": 3,
           "avgHours": 2,
-          "role": "specialista"
+          "role": "specialista",
+          "uspora": 0.4
         },
         {
           "kind": "hours",
@@ -1284,7 +1582,8 @@ const CATALOG = /*__CATALOG__*/{
           "minHours": 3,
           "maxHours": 6,
           "avgHours": 4,
-          "role": "account"
+          "role": "account",
+          "uspora": 0
         }
       ]
     },
@@ -1319,7 +1618,8 @@ const CATALOG = /*__CATALOG__*/{
           "minHours": 0.5,
           "maxHours": 2,
           "avgHours": 1,
-          "role": "specialista"
+          "role": "specialista",
+          "uspora": 0.2
         },
         {
           "kind": "hours",
@@ -1337,7 +1637,8 @@ const CATALOG = /*__CATALOG__*/{
           "minHours": 0.5,
           "maxHours": 1,
           "avgHours": 0.5,
-          "role": "specialista"
+          "role": "specialista",
+          "uspora": 0.2
         },
         {
           "kind": "hours",
@@ -1355,7 +1656,8 @@ const CATALOG = /*__CATALOG__*/{
           "minHours": 0.5,
           "maxHours": 1,
           "avgHours": 0.5,
-          "role": "specialista"
+          "role": "specialista",
+          "uspora": 0.2
         }
       ]
     },
@@ -1390,7 +1692,8 @@ const CATALOG = /*__CATALOG__*/{
           "minHours": 1,
           "maxHours": 4,
           "avgHours": 2,
-          "role": "specialista"
+          "role": "specialista",
+          "uspora": 0.3
         },
         {
           "kind": "hours",
@@ -1408,7 +1711,8 @@ const CATALOG = /*__CATALOG__*/{
           "minHours": 1,
           "maxHours": 3,
           "avgHours": 1.5,
-          "role": "specialista"
+          "role": "specialista",
+          "uspora": 0.3
         },
         {
           "kind": "hours",
@@ -1426,7 +1730,8 @@ const CATALOG = /*__CATALOG__*/{
           "minHours": 1,
           "maxHours": 4,
           "avgHours": 2,
-          "role": "specialista"
+          "role": "specialista",
+          "uspora": 0.3
         },
         {
           "kind": "hours",
@@ -1444,7 +1749,8 @@ const CATALOG = /*__CATALOG__*/{
           "minHours": 1,
           "maxHours": 5,
           "avgHours": 2,
-          "role": "account"
+          "role": "account",
+          "uspora": 0
         },
         {
           "kind": "hours",
@@ -1462,7 +1768,8 @@ const CATALOG = /*__CATALOG__*/{
           "minHours": 2,
           "maxHours": 5,
           "avgHours": 3,
-          "role": "specialista"
+          "role": "specialista",
+          "uspora": 0.4
         }
       ]
     },
@@ -1497,7 +1804,8 @@ const CATALOG = /*__CATALOG__*/{
           "minHours": 4,
           "maxHours": 12,
           "avgHours": 7,
-          "role": "specialista"
+          "role": "specialista",
+          "uspora": 0.4
         },
         {
           "kind": "hours",
@@ -1515,7 +1823,8 @@ const CATALOG = /*__CATALOG__*/{
           "minHours": 4,
           "maxHours": 10,
           "avgHours": 6,
-          "role": "specialista"
+          "role": "specialista",
+          "uspora": 0.4
         },
         {
           "kind": "hours",
@@ -1533,7 +1842,8 @@ const CATALOG = /*__CATALOG__*/{
           "minHours": 1,
           "maxHours": 3,
           "avgHours": 1.5,
-          "role": "account"
+          "role": "account",
+          "uspora": 0
         },
         {
           "kind": "hours",
@@ -1551,7 +1861,8 @@ const CATALOG = /*__CATALOG__*/{
           "minHours": 2,
           "maxHours": 6,
           "avgHours": 3,
-          "role": "account"
+          "role": "account",
+          "uspora": 0
         },
         {
           "kind": "hours",
@@ -1569,7 +1880,8 @@ const CATALOG = /*__CATALOG__*/{
           "minHours": 4,
           "maxHours": 12,
           "avgHours": 7,
-          "role": "specialista"
+          "role": "specialista",
+          "uspora": 0.4
         }
       ]
     },
@@ -1604,7 +1916,8 @@ const CATALOG = /*__CATALOG__*/{
           "minHours": 2,
           "maxHours": 8,
           "avgHours": 4,
-          "role": "specialista"
+          "role": "specialista",
+          "uspora": 0.2
         },
         {
           "kind": "hours",
@@ -1622,7 +1935,8 @@ const CATALOG = /*__CATALOG__*/{
           "minHours": 1,
           "maxHours": 4,
           "avgHours": 2,
-          "role": "specialista"
+          "role": "specialista",
+          "uspora": 0.2
         },
         {
           "kind": "hours",
@@ -1640,7 +1954,8 @@ const CATALOG = /*__CATALOG__*/{
           "minHours": 1,
           "maxHours": 6,
           "avgHours": 3,
-          "role": "specialista"
+          "role": "specialista",
+          "uspora": 0.2
         },
         {
           "kind": "hours",
@@ -1658,7 +1973,8 @@ const CATALOG = /*__CATALOG__*/{
           "minHours": 5,
           "maxHours": 20,
           "avgHours": 10,
-          "role": "specialista"
+          "role": "specialista",
+          "uspora": 0.2
         }
       ]
     },
@@ -1693,7 +2009,8 @@ const CATALOG = /*__CATALOG__*/{
           "minHours": 2,
           "maxHours": 6,
           "avgHours": 3,
-          "role": "account"
+          "role": "account",
+          "uspora": 0
         },
         {
           "kind": "hours",
@@ -1711,7 +2028,8 @@ const CATALOG = /*__CATALOG__*/{
           "minHours": 1,
           "maxHours": 3,
           "avgHours": 1.5,
-          "role": "specialista"
+          "role": "specialista",
+          "uspora": 0.2
         },
         {
           "kind": "hours",
@@ -1729,222 +2047,147 @@ const CATALOG = /*__CATALOG__*/{
           "minHours": 1,
           "maxHours": 4,
           "avgHours": 2,
-          "role": "specialista"
+          "role": "specialista",
+          "uspora": 0.2
         }
       ]
     }
   ]
 }/*__END__*/;
 
-/* ── slovník rozhraní ──────────────────────────────────────────────────────── */
-const T = {
-  cs:{
-    sub:"Odhad časové náročnosti e-mailového projektu",
-    zadani:"Zadání", klient:"Klient", projekt:"Název projektu", cil:"Cíl spolupráce",
-    sazba:"Hodinová sazba (Kč)", sazbaHint:"Nechat prázdné, pokud se má výstup odevzdat jen v hodinách.",
-    klientPh:"Firma, které se nacenuje", projektPh:"Co se nacenuje, třeba Rozjezd 2026",
-    projektHint:"Klient je firma, projekt je konkrétní nacenění. U jednoho klienta jich vznikne víc, proto se projekt propisuje do názvu souboru i do nacenění.",
-    cilPh:"Rozjet newsletter a uvítací sérii, do půl roku dostat e-mail na desetinu tržeb.",
-    komunikace:"Komunikace a schvalování", komunikaceIn:"Komunikace a schvalování (% z hodin specialisty)",
-    komunikaceHint:"Připočítá se automaticky. Nepatří mezi úkony, protože se na ni jinak zapomene.",
-    typ:"Rychlý start podle typu projektu",
-    typHint:"Předvybere kategorie a úkony s běžnými hodinami. Pak už se jen ubírá a ladí. Dosavadní výběr se přepíše.",
-    vyber:"Které kategorie se budou řešit",
-    vyberHint:"Průvodce projde jen zaškrtnuté kategorie.",
-    dal:"Pokračovat", zpet:"Zpět", souhrn:"Souhrn", start:"Začít",
-    hodin:"h", hodiny:"Hodiny", jednotek:"Počet", slozitost:"Složitost",
-    role:"Role", specialista:"specialista", account:"account",
-    soucetKat:"Součet kategorie", krok:"Krok", z:"z",
-    vlastni:"Přidat vlastní úkon", nazevUkonu:"Název úkonu",
-    prehled:"Přehled", rozpad:"Rozpad po kategoriích", poRolich:"Rozdělení podle rolí",
-    jednorazove:"Jednorázově", mesicne:"Měsíčně", celkemHod:"Rozjezd a první měsíc",
-    nicVybrano:"Zatím není vybraný žádný úkon.",
-    ulozit:"Uložit projekt", nacist:"Načíst projekt", tisk:"Tisk a PDF",
-    export:"Export do naceneni.md", odkaz:"Sdílecí odkaz", zkopirovano:"Zkopírováno",
-    nacteno:"Projekt načten", chybaSouboru:"Soubor se nepodařilo načíst",
-    odkazHint:"Odkaz nese jen vybrané úkony a hodiny, ne logo ani poznámky.",
-    pozn:"Poznámka", pracDen:"prac. dne", pracDnu:"prac. dnů",
-  },
-  en:{
-    sub:"Email project time estimate",
-    zadani:"Brief", klient:"Client", projekt:"Project name", cil:"Goal",
-    sazba:"Hourly rate (CZK)", sazbaHint:"Leave empty to hand over hours only.",
-    klientPh:"The company being quoted", projektPh:"What is being quoted, e.g. Setup 2026",
-    projektHint:"Client is the company, project is one estimate. One client usually has several.",
-    cilPh:"Launch the newsletter and a welcome series, get email to a tenth of revenue within six months.",
-    komunikace:"Communication and approvals", komunikaceIn:"Communication and approvals (% of specialist hours)",
-    komunikaceHint:"Added automatically.",
-    typ:"Quick start by project type",
-    typHint:"Preselects categories and activities with typical hours. Replaces the current selection.",
-    vyber:"Categories in scope", vyberHint:"The wizard only walks through ticked categories.",
-    dal:"Continue", zpet:"Back", souhrn:"Summary", start:"Start",
-    hodin:"h", hodiny:"Hours", jednotek:"Units", slozitost:"Complexity",
-    role:"Role", specialista:"specialist", account:"account",
-    soucetKat:"Category subtotal", krok:"Step", z:"of",
-    vlastni:"Add custom activity", nazevUkonu:"Activity name",
-    prehled:"Overview", rozpad:"By category", poRolich:"By role",
-    jednorazove:"One-off", mesicne:"Monthly", celkemHod:"Setup and first month",
-    nicVybrano:"Nothing selected yet.",
-    ulozit:"Save project", nacist:"Load project", tisk:"Print and PDF",
-    export:"Export to naceneni.md", odkaz:"Share link", zkopirovano:"Copied",
-    nacteno:"Project loaded", chybaSouboru:"Could not read the file",
-    odkazHint:"The link carries selected activities and hours only.",
-    pozn:"Note", pracDen:"work day", pracDnu:"work days",
-  },
-  de:{
-    sub:"Zeitschätzung für ein E-Mail-Projekt",
-    zadani:"Briefing", klient:"Kunde", projekt:"Projektname", cil:"Ziel",
-    sazba:"Stundensatz (CZK)", sazbaHint:"Leer lassen, um nur Stunden auszuweisen.",
-    klientPh:"Firma, für die kalkuliert wird", projektPh:"Was kalkuliert wird, z. B. Setup 2026",
-    projektHint:"Kunde ist die Firma, Projekt ist eine einzelne Kalkulation.",
-    cilPh:"Newsletter und Willkommensserie starten, in sechs Monaten ein Zehntel des Umsatzes über E-Mail.",
-    komunikace:"Kommunikation und Freigaben", komunikaceIn:"Kommunikation und Freigaben (% der Spezialistenstunden)",
-    komunikaceHint:"Wird automatisch addiert.",
-    typ:"Schnellstart nach Projekttyp",
-    typHint:"Wählt Kategorien und Tätigkeiten mit üblichen Stunden vor. Ersetzt die bisherige Auswahl.",
-    vyber:"Kategorien im Umfang", vyberHint:"Der Assistent zeigt nur gewählte Kategorien.",
-    dal:"Weiter", zpet:"Zurück", souhrn:"Zusammenfassung", start:"Starten",
-    hodin:"Std", hodiny:"Stunden", jednotek:"Anzahl", slozitost:"Komplexität",
-    role:"Rolle", specialista:"Spezialist", account:"Account",
-    soucetKat:"Zwischensumme", krok:"Schritt", z:"von",
-    vlastni:"Eigene Tätigkeit", nazevUkonu:"Bezeichnung",
-    prehled:"Überblick", rozpad:"Nach Kategorie", poRolich:"Nach Rolle",
-    jednorazove:"Einmalig", mesicne:"Monatlich", celkemHod:"Start und erster Monat",
-    nicVybrano:"Noch nichts ausgewählt.",
-    ulozit:"Projekt speichern", nacist:"Projekt laden", tisk:"Drucken und PDF",
-    export:"Export nach naceneni.md", odkaz:"Freigabelink", zkopirovano:"Kopiert",
-    nacteno:"Projekt geladen", chybaSouboru:"Datei konnte nicht gelesen werden",
-    odkazHint:"Der Link enthält nur gewählte Tätigkeiten und Stunden.",
-    pozn:"Hinweis", pracDen:"Arbeitstag", pracDnu:"Arbeitstage",
-  }
+/* ── stav ──────────────────────────────────────────────────────────────────── */
+// Sazby jsou firemní nastavení, ne vlastnost projektu. Pamatují se v prohlížeči
+// a ukládají se i do souboru projektu, aby nacenění šlo později přepočítat stejně.
+const NASTAVENI_KLIC = "aktivity-nastaveni";
+const state = {
+  lang:"cs", view:"home",
+  klient:"", projekt:"", cil:"", typ:null,
+  nastaveni: nacistNastaveni(),
+  interni:false,
+  acts:{},               // id -> {sel,hours,units,cx,skut}
+  vlastni:{},            // katId -> [{name,hours,skut}]
+  otevrene:{},           // katId -> true, rozbalené kategorie
 };
 
-/* ── stav ──────────────────────────────────────────────────────────────────── */
-const state = {
-  lang:"cs", step:0,
-  klient:"", projekt:"", cil:"",
-  sazba:"", komunikace:20,
-  typ:null,              // id použitého typu projektu, jen pro zvýraznění tlačítka
-  kategorie:{},          // id -> true/false
-  acts:{},               // id -> {sel,hours,units,cx}
-  vlastni:{},            // katId -> [{id,name,hours,role}]
-};
+function nacistNastaveni(){
+  const vychozi = Object.assign({}, CATALOG.nastaveni);
+  try {
+    const ulozene = JSON.parse(localStorage.getItem(NASTAVENI_KLIC) || "null");
+    return ulozene ? Object.assign(vychozi, ulozene) : vychozi;
+  } catch(e){ return vychozi; }
+}
+function ulozitNastaveni(){
+  try { localStorage.setItem(NASTAVENI_KLIC, JSON.stringify(state.nastaveni)); } catch(e){ /* bez úložiště platí jen do zavření */ }
+}
 
 const $ = s => document.querySelector(s);
-const t = k => (T[state.lang] && T[state.lang][k]) || T.cs[k] || k;
 const L = o => (o && (o[state.lang] || o.cs)) || "";
-const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 
 function fmtH(h){
-  if(!h) return "0";
-  const v = Math.round(h*10)/10;
-  const s = v % 1 === 0 ? String(v) : v.toFixed(1);
-  return state.lang === "cs" ? s.replace(".", ",") : s;
+  const v = Math.round((Number(h)||0)*10)/10;
+  return (v % 1 === 0 ? String(v) : v.toFixed(1)).replace(".", ",");
 }
-function fmtKc(n){
-  return Math.round(n).toLocaleString("cs-CZ") + " Kč";
-}
-function dny(h){
-  const d = h/8;
-  const s = fmtH(d);
-  return s + " " + (Math.abs(d-1) < 0.05 ? t("pracDen") : t("pracDnu"));
-}
+function fmtKc(n){ return Math.round(n).toLocaleString("cs-CZ") + " Kč"; }
 
-/* ── katalog: pomocné ──────────────────────────────────────────────────────── */
+/* ── katalog ───────────────────────────────────────────────────────────────── */
 const KATEGORIE = CATALOG.kategorie;
 const FAZE = CATALOG.faze;
-const fazeNazev = id => { const f = FAZE.find(x=>x.id===id); return f ? (f[state.lang]||f.cs) : id; };
-const katById = id => KATEGORIE.find(c=>c.id===id);
-
-function aktivniKategorie(){
-  const vybrano = KATEGORIE.filter(c => state.kategorie[c.id]);
-  return vybrano.length ? vybrano : [];
-}
+const TYPY = CATALOG.typyProjektu;
+const katFaze = f => KATEGORIE.filter(c => c.phase === f);
 
 function actState(id){
   if(!state.acts[id]) state.acts[id] = {sel:false};
   return state.acts[id];
 }
-
-function vyberUkon(a){
+function vyberUkon(a, vychozi){
   const s = actState(a.id);
   s.sel = true;
-  if(a.kind === "hours" && s.hours == null) s.hours = a.avgHours ?? 1;
-  if(a.kind === "units"){ if(s.units == null) s.units = 1; if(!s.cx) s.cx = "standard"; }
+  if(a.kind === "hours" && s.hours == null) s.hours = vychozi?.hours ?? a.avgHours ?? 1;
+  if(a.kind === "units"){
+    if(s.units == null) s.units = vychozi?.units ?? 1;
+    if(!s.cx) s.cx = vychozi?.cx ?? "standard";
+  }
 }
-
-function pouzijTyp(typ){
-  const ids = new Set(typ.ukony);
-  state.typ = typ.id;
-  state.acts = {};
-  state.kategorie = {};
+function novyProjekt(typ){
+  Object.assign(state, {klient:"", projekt:"", cil:"", typ: typ ? typ.id : null, acts:{}, vlastni:{}, otevrene:{}});
+  if(!typ) return;
+  const podleId = Object.fromEntries(typ.ukony.map(u => [u.id, u]));
   KATEGORIE.forEach(c => c.activities.forEach(a => {
-    if(!ids.has(a.id)) return;
-    vyberUkon(a);
-    state.kategorie[c.id] = true;
+    if(podleId[a.id]){ vyberUkon(a, podleId[a.id]); state.otevrene[c.id] = true; }
   }));
 }
 
-function hodinyUkonu(act){
-  const s = state.acts[act.id];
+/* ── výpočet ───────────────────────────────────────────────────────────────── */
+// Hodiny podle katalogu jsou standardní náročnost a základ ceny. Skutečné hodiny
+// s Claudem jsou náklad. Klient vidí jen cenu, hodiny zůstávají interní.
+function hodinyUkonu(a){
+  const s = state.acts[a.id];
   if(!s || !s.sel) return 0;
-  if(act.kind === "hours") return Number(s.hours) || 0;
-  const cx = act.complexity && act.complexity[s.cx || "standard"];
-  const per = cx ? cx.hoursPerUnit : 0;
-  return (Number(s.units) || 0) * per;
+  if(a.kind === "hours") return Number(s.hours) || 0;
+  const cx = a.complexity && a.complexity[s.cx || "standard"];
+  return (Number(s.units) || 0) * (cx ? cx.hoursPerUnit : 0);
 }
-function hodinyVlastnich(katId){
-  return (state.vlastni[katId] || []).reduce((a,v)=>a + (Number(v.hours)||0), 0);
+function skutecneUkonu(a){
+  const s = state.acts[a.id];
+  if(!s || !s.sel) return 0;
+  if(s.skut != null && s.skut !== "") return Number(s.skut) || 0;
+  return hodinyUkonu(a) * (1 - (a.uspora || 0));
 }
-function hodinyKategorie(kat){
-  return kat.activities.reduce((a,x)=>a+hodinyUkonu(x),0) + hodinyVlastnich(kat.id);
+const vlastniKat = id => state.vlastni[id] || [];
+const skutecneVlastni = v => (v.skut != null && v.skut !== "") ? Number(v.skut)||0 : Number(v.hours)||0;
+
+function cena(h){
+  const z = Number(state.nastaveni.zaokrouhleni) || 1;
+  return Math.round(h * (Number(state.nastaveni.cenovaSazba)||0) / z) * z;
 }
-function hodinyFaze(faze){
-  return KATEGORIE.filter(c=>c.phase===faze).reduce((a,c)=>a+hodinyKategorie(c),0);
-}
-// Bez fáze sčítá přes všechny fáze.
-function hodinyRole(role, faze){
-  let sum = 0;
-  KATEGORIE.filter(c => !faze || c.phase === faze).forEach(c => {
-    c.activities.forEach(a => { if(a.role===role) sum += hodinyUkonu(a); });
-    (state.vlastni[c.id]||[]).forEach(v => { if((v.role||"specialista")===role) sum += Number(v.hours)||0; });
+const naklad = h => h * (Number(state.nastaveni.nakladovaSazba)||0);
+
+// Komunikace a schvalování se počítá z hodin specialisty ve fázi, ze které vzniká.
+// Nezrychluje se, hovory a schvalovací kola trvají stejně dlouho.
+function hodinyKomunikace(f){
+  let spec = 0;
+  katFaze(f).forEach(c => {
+    c.activities.forEach(a => { if(a.role === "specialista") spec += hodinyUkonu(a); });
+    vlastniKat(c.id).forEach(v => spec += Number(v.hours)||0);
   });
-  return sum;
+  return spec * (Number(state.nastaveni.komunikace)||0) / 100;
 }
-// Komunikace patří do té fáze, ze které vznikla. Jinak by se měsíční schvalování
-// přičetlo k rozjezdu a jedno číslo za celou spolupráci by nešlo nacenit.
-function hodinyKomunikace(faze){
-  const pct = Number(state.komunikace) || 0;
-  return hodinyRole("specialista", faze) * pct / 100;
+
+function polozkyFaze(f){
+  const out = [];
+  katFaze(f).forEach(c => {
+    c.activities.forEach(a => {
+      const h = hodinyUkonu(a);
+      if(!h) return;
+      const s = state.acts[a.id];
+      out.push({kat:c, nazev:L(a.name), pocet: a.kind === "units" ? Number(s.units)||0 : null,
+        jednotka: L(a.unitLabel), h, skut: skutecneUkonu(a), cena: cena(h)});
+    });
+    vlastniKat(c.id).forEach(v => {
+      const h = Number(v.hours)||0;
+      if(h) out.push({kat:c, nazev:v.name, pocet:null, h, skut: skutecneVlastni(v), cena: cena(h)});
+    });
+  });
+  const kh = hodinyKomunikace(f);
+  if(kh) out.push({kat:null, nazev:"Koordinace, komunikace a schvalování", komunikace:true, h:kh, skut:kh, cena: cena(kh)});
+  return out;
 }
-const JEDNORAZOVE_FAZE = ["before","adhoc","after"];
-function hodinyFazeSKomunikaci(faze){
-  return hodinyFaze(faze) + hodinyKomunikace(faze);
+function soucetFaze(f){
+  return polozkyFaze(f).reduce((a,p) => ({cena:a.cena+p.cena, h:a.h+p.h, skut:a.skut+p.skut}), {cena:0,h:0,skut:0});
 }
-function hodinyJednorazove(){
-  return JEDNORAZOVE_FAZE.reduce((a,f)=>a+hodinyFazeSKomunikaci(f),0);
+function cenaKategorie(c){
+  return c.activities.reduce((a,x)=>a+cena(hodinyUkonu(x)),0) + vlastniKat(c.id).reduce((a,v)=>a+cena(Number(v.hours)||0),0);
 }
-function hodinyMesicne(){
-  return hodinyFazeSKomunikaci("during");
-}
-function celkem(){
-  return hodinyJednorazove() + hodinyMesicne();
+function pocetVybranych(c){
+  return c.activities.filter(a => state.acts[a.id]?.sel).length + vlastniKat(c.id).length;
 }
 
 /* ── vykreslení ────────────────────────────────────────────────────────────── */
 function render(){
-  $("#hsub").textContent = t("sub");
   renderLangs();
-  renderSteps();
-  const kats = aktivniKategorie();
-  if(state.step === 0) viewZadani();
-  else if(state.step <= kats.length) viewKategorie(kats[state.step-1]);
-  else viewSouhrn();
-  // Nahoru se skáče jen při změně kroku. Zaškrtnutí úkonu překresluje stránku taky,
-  // a bez téhle podmínky by uprostřed dlouhé kategorie odhodilo čtenáře na začátek.
-  if(posledniKrok !== state.step){ window.scrollTo({top:0,behavior:"instant"}); posledniKrok = state.step; }
+  if(state.view === "home") viewHome(); else viewEditor();
 }
-let posledniKrok = null;
 
 function renderLangs(){
   $("#langs").innerHTML = ["cs","en","de"].map(l =>
@@ -1953,310 +2196,336 @@ function renderLangs(){
     b.onclick = () => { state.lang = b.dataset.l; render(); });
 }
 
-function renderSteps(){
-  const kats = aktivniKategorie();
-  if(!kats.length){ $("#steps").innerHTML = ""; return; }
-  const items = [t("zadani"), ...kats.map(c=>L(c.name)), t("souhrn")];
-  $("#steps").innerHTML = items.map((n,i) =>
-    `<span class="${i===state.step?"on":i<state.step?"done":""}" data-i="${i}">${esc(n)}</span>`).join("");
-  $("#steps").querySelectorAll("span").forEach(s =>
-    s.onclick = () => { state.step = Number(s.dataset.i); render(); });
+/* úvod */
+function odhadTypu(typ){
+  const zaloha = {acts:state.acts, vlastni:state.vlastni, otevrene:state.otevrene, typ:state.typ,
+    klient:state.klient, projekt:state.projekt, cil:state.cil};
+  novyProjekt(typ);
+  // Audit má hlavní práci ve fázi na vyžádání, proto se jednorázové sčítá ze všech fází mimo měsíční.
+  const r = {jednoraz: ["before","adhoc","after"].reduce((a,f)=>a+soucetFaze(f).cena,0), mesic: soucetFaze("during").cena};
+  Object.assign(state, zaloha);
+  return r;
 }
 
-/* krok 0 */
-function viewZadani(){
-  const kats = KATEGORIE.map(c => `
-    <label class="catpick ${state.kategorie[c.id]?"on":""}">
-      <input type="checkbox" data-kat="${c.id}" ${state.kategorie[c.id]?"checked":""}>
-      <span>
-        <span class="n">${esc(L(c.name))}</span>
-        <span class="phase ph-${c.phase}" style="margin-left:6px">${esc(fazeNazev(c.phase))}</span>
-        <div class="d">${esc(L(c.description))}</div>
-      </span>
-    </label>`).join("");
+function viewHome(){
+  $("#mbar").innerHTML = "";
+  const n = state.nastaveni;
+  const karty = TYPY.map(p => {
+    const o = odhadTypu(p);
+    const ceny = [o.jednoraz ? `jednorázově <strong>${fmtKc(o.jednoraz)}</strong>` : "",
+                  o.mesic ? `měsíčně <strong>${fmtKc(o.mesic)}</strong>` : ""].filter(Boolean).join(" · ");
+    return `<button class="sablona" data-typ="${p.id}">
+      <span class="n">${esc(L(p.name))}</span>
+      <span class="d">${esc(L(p.popis))}</span>
+      <span class="c">${ceny}</span>
+    </button>`;
+  }).join("");
 
+  const rozpracovano = Object.values(state.acts).some(s => s.sel);
   $("#view").innerHTML = `
-    <div class="card">
-      <h2>${t("zadani")}</h2>
-      <div class="grid2">
-        <div>
-          <label class="f">${t("klient")}</label>
-          <input type="text" id="i-klient" placeholder="${esc(t("klientPh"))}" value="${esc(state.klient)}">
-        </div>
-        <div>
-          <label class="f">${t("projekt")}</label>
-          <input type="text" id="i-projekt" placeholder="${esc(t("projektPh"))}" value="${esc(state.projekt)}">
-        </div>
-      </div>
-      <div class="hint">${t("projektHint")}</div>
-      <label class="f">${t("cil")}</label>
-      <textarea id="i-cil" placeholder="${esc(t("cilPh"))}">${esc(state.cil)}</textarea>
-      <div class="grid2">
-        <div>
-          <label class="f">${t("sazba")}</label>
-          <input type="number" id="i-sazba" min="0" step="50" value="${state.sazba}">
-          <div class="hint">${t("sazbaHint")}</div>
-        </div>
-        <div>
-          <label class="f">${t("komunikaceIn")}</label>
-          <input type="number" id="i-kom" min="0" max="50" step="5" value="${state.komunikace}">
-          <div class="hint">${t("komunikaceHint")}</div>
-        </div>
-      </div>
+    <div class="intro">
+      <h2>Nové nacenění</h2>
+      <p>Vyber šablonu, která je projektu nejblíž. Úkony a počty pak upravíš na jedné stránce a cenu vidíš průběžně.</p>
+    </div>
+    <div class="sablony">
+      ${karty}
+      <button class="sablona prazdna" data-typ="">
+        <span class="n">Prázdné nacenění</span>
+        <span class="d">Bez předvybraných úkonů.</span>
+      </button>
+    </div>
+
+    <div class="bar" style="margin-top:18px">
+      ${rozpracovano ? `<button class="btn" id="b-pokracovat">Pokračovat v rozpracovaném${state.klient ? ": " + esc(state.klient) : ""}</button>` : ""}
+      <button class="btn ghost" id="b-nacist">Načíst uložený projekt</button>
     </div>
 
     <div class="card">
-      <h2>${t("typ")}</h2>
-      <div class="hint" style="margin-bottom:12px">${t("typHint")}</div>
-      <div class="typy">${(CATALOG.typyProjektu||[]).map(p =>
-        `<button class="${state.typ===p.id?"on":""}" data-typ="${p.id}">${esc(L(p.name))}</button>`).join("")}</div>
-    </div>
-
-    <div class="card">
-      <h2>${t("vyber")}</h2>
-      <div class="hint" style="margin-bottom:12px">${t("vyberHint")}</div>
-      <div class="catlist">${kats}</div>
-    </div>
-
-    <div class="bar">
-      <button class="btn ghost" id="b-nacist">${t("nacist")}</button>
-      <div class="spacer"></div>
-      <button class="btn" id="b-dal">${t("start")}</button>
+      <details class="nast">
+        <summary>Sazby a výchozí hodnoty</summary>
+        <div class="grid3">
+          <div><label class="f">Ceníková sazba (Kč/h)</label>
+            <input type="number" min="0" step="50" data-n="cenovaSazba" value="${esc(n.cenovaSazba)}">
+            <div class="hint">Z ní se počítá cena pro klienta.</div></div>
+          <div><label class="f">Nákladová sazba (Kč/h)</label>
+            <input type="number" min="0" step="50" data-n="nakladovaSazba" value="${esc(n.nakladovaSazba)}">
+            <div class="hint">Interní. Klient ji nevidí.</div></div>
+          <div><label class="f">Komunikace a schvalování (%)</label>
+            <input type="number" min="0" max="50" step="5" data-n="komunikace" value="${esc(n.komunikace)}">
+            <div class="hint">Z hodin specialisty v každé fázi.</div></div>
+        </div>
+        <p class="hint" style="margin-top:12px">Výchozí hodnoty jsou odhad a mají se nahradit skutečnými.
+          Pamatují se v tomhle prohlížeči a ukládají se i do souboru projektu.
+          <button class="btn ghost small" id="b-vychozi" style="margin-left:6px">Vrátit výchozí</button></p>
+      </details>
     </div>`;
 
-  $("#i-klient").oninput = e => state.klient = e.target.value;
-  $("#i-projekt").oninput = e => state.projekt = e.target.value;
-  $("#i-cil").oninput = e => state.cil = e.target.value;
-  $("#i-sazba").oninput = e => state.sazba = e.target.value;
-  $("#i-kom").oninput = e => state.komunikace = e.target.value;
-  $("#view").querySelectorAll("[data-kat]").forEach(cb =>
-    cb.onchange = () => { state.kategorie[cb.dataset.kat] = cb.checked; render(); });
-  $("#view").querySelectorAll("[data-typ]").forEach(b =>
-    b.onclick = () => { pouzijTyp(CATALOG.typyProjektu.find(p=>p.id===b.dataset.typ)); render(); });
-  $("#b-nacist").onclick = nacistSoubor;
-  $("#b-dal").onclick = () => { if(aktivniKategorie().length){ state.step = 1; render(); } };
-}
-
-/* kroky kategorií */
-function viewKategorie(kat){
-  const kats = aktivniKategorie();
-  const idx = kats.indexOf(kat) + 1;
-  const akt = kat.activities.map(a => radekUkonu(a)).join("");
-  const vl = (state.vlastni[kat.id]||[]).map((v,i) => `
-    <div class="act">
-      <div class="head">
-        <input type="checkbox" checked disabled>
-        <div class="name">${esc(v.name)} <span class="role">${esc(t(v.role||"specialista"))}</span></div>
-        <div class="sum">${fmtH(v.hours)} ${t("hodin")}</div>
-      </div>
-      <div class="ctl">
-        <input type="number" min="0" step="0.5" value="${v.hours}" data-vl="${kat.id}" data-i="${i}">
-        <button class="btn ghost" data-vldel="${kat.id}" data-i="${i}">×</button>
-      </div>
-    </div>`).join("");
-
-  $("#view").innerHTML = `
-    <div class="card">
-      <div style="display:flex;align-items:baseline;gap:10px;flex-wrap:wrap">
-        <h2 style="margin:0">${esc(L(kat.name))}</h2>
-        <span class="phase ph-${kat.phase}">${esc(fazeNazev(kat.phase))}</span>
-        <span class="muted" style="font-size:13px">${t("krok")} ${idx} ${t("z")} ${kats.length}</span>
-      </div>
-      <p class="muted" style="font-size:13.5px;margin:6px 0 4px">${esc(L(kat.description))}</p>
-    </div>
-    <div class="card">${akt}${vl}
-      <div style="border-top:var(--line);padding-top:12px;margin-top:6px;display:flex;justify-content:space-between;align-items:center">
-        <button class="btn ghost" id="b-vlastni">+ ${t("vlastni")}</button>
-        <div><span class="muted">${t("soucetKat")}</span> <strong>${fmtH(hodinyKategorie(kat))} ${t("hodin")}</strong></div>
-      </div>
-    </div>
-    <div class="bar">
-      <button class="btn ghost" id="b-zpet">${t("zpet")}</button>
-      <div class="spacer"></div>
-      <button class="btn" id="b-dal">${idx===kats.length ? t("souhrn") : t("dal")}</button>
-    </div>`;
-
-  vazbyUkonu(kat);
-  $("#b-zpet").onclick = () => { state.step--; render(); };
-  $("#b-dal").onclick = () => { state.step++; render(); };
-  $("#b-vlastni").onclick = () => {
-    const n = prompt(t("nazevUkonu"));
-    if(!n) return;
-    (state.vlastni[kat.id] = state.vlastni[kat.id] || []).push({name:n, hours:1, role:"specialista"});
+  $("#view").querySelectorAll("[data-typ]").forEach(b => b.onclick = () => {
+    novyProjekt(TYPY.find(p => p.id === b.dataset.typ));
+    state.view = "edit"; render(); window.scrollTo(0,0);
+  });
+  $("#view").querySelectorAll("[data-n]").forEach(i => i.onchange = () => {
+    state.nastaveni[i.dataset.n] = Number(i.value) || 0; ulozitNastaveni(); render();
+  });
+  $("#b-vychozi").onclick = () => {
+    state.nastaveni = Object.assign({}, CATALOG.nastaveni);
+    try { localStorage.removeItem(NASTAVENI_KLIC); } catch(e){ /* nic k mazání */ }
     render();
   };
+  $("#b-nacist").onclick = nacistSoubor;
+  if(rozpracovano) $("#b-pokracovat").onclick = () => { state.view = "edit"; render(); };
+}
+
+/* editor */
+function viewEditor(){
+  const sablona = TYPY.find(p => p.id === state.typ);
+  const sekce = FAZE.map(f => {
+    const s = soucetFaze(f.id);
+    const kats = katFaze(f.id).map(c => blokKategorie(c)).join("");
+    const kh = hodinyKomunikace(f.id);
+    return `<div class="faze" id="faze-${f.id}">
+        <h2>${esc(L(f))}</h2><span class="fakt">${esc(L(f.fakturace))}</span>
+        <span class="cena">${s.cena ? fmtKc(s.cena) : ""}</span>
+      </div>
+      ${kats}
+      ${kh ? `<div class="komrow"><span>Koordinace, komunikace a schvalování (${esc(state.nastaveni.komunikace)} %)</span>
+        <span>${fmtKc(cena(kh))}${state.interni ? ` <span class="muted">· ${fmtH(kh)} h</span>` : ""}</span></div>` : ""}`;
+  }).join("");
+
+  $("#view").innerHTML = `
+    <div class="layout">
+      <main>
+        <div class="card">
+          <div class="bar" style="justify-content:space-between">
+            <h2 style="margin:0">Zadání</h2>
+            ${sablona ? `<span class="muted" style="font-size:13px">Šablona: ${esc(L(sablona.name))}</span>` : ""}
+          </div>
+          <div class="grid2">
+            <div><label class="f">Klient</label>
+              <input type="text" id="i-klient" placeholder="Firma, které se nacenuje" value="${esc(state.klient)}"></div>
+            <div><label class="f">Název nacenění</label>
+              <input type="text" id="i-projekt" placeholder="Například Rozjezd newsletteru 2027" value="${esc(state.projekt)}"></div>
+          </div>
+          <label class="f">Cíl spolupráce</label>
+          <textarea id="i-cil" placeholder="Co má e-mailing klientovi přinést. Objeví se v nacenění.">${esc(state.cil)}</textarea>
+        </div>
+        ${sekce}
+      </main>
+      <aside id="souhrn">${souhrnHtml()}</aside>
+    </div>`;
+
+  const r = rozpocet();
+  $("#mbar").innerHTML = `<div>Rozjezd<strong>${fmtKc(r.start)}</strong></div>
+    <div>Měsíčně<strong>${fmtKc(r.mesic)}</strong></div><a href="#souhrn">Souhrn a export</a>`;
+
+  vazbyEditoru();
+}
+
+function blokKategorie(c){
+  const n = pocetVybranych(c);
+  const open = state.otevrene[c.id] ? "open" : "";
+  const radky = c.activities.map(a => radekUkonu(a)).join("") + vlastniKat(c.id).map((v,i) => radekVlastni(c,v,i)).join("");
+  return `<details class="kat" data-kat="${c.id}" ${open}>
+    <summary><span class="kn">${esc(L(c.name))}</span>
+      <span class="kpocet">${n ? n + " vybráno" : ""}</span>
+      <span class="kcena">${n ? fmtKc(cenaKategorie(c)) : ""}</span></summary>
+    <div class="kbody">
+      <p class="kpopis">${esc(L(c.description))}</p>
+      ${radky}
+      <div style="padding-top:10px"><button class="btn ghost small" data-pridat="${c.id}">+ Vlastní úkon</button></div>
+    </div>
+  </details>`;
 }
 
 function radekUkonu(a){
   const s = actState(a.id);
   const on = s.sel;
+  const h = hodinyUkonu(a);
   let ctl = "";
   if(on && a.kind === "hours"){
     const p = [a.minHours, a.avgHours, a.maxHours].filter((v,i,arr)=>v!=null && arr.indexOf(v)===i);
-    ctl = `<div class="ctl">
-      <input type="number" min="0" step="0.5" value="${s.hours ?? a.avgHours ?? 1}" data-h="${a.id}">
-      <span class="muted">${t("hodin")}</span>
-      <span class="presets">${p.map(v=>`<button data-p="${a.id}" data-v="${v}">${fmtH(v)}</button>`).join("")}</span>
-      <span class="rng">${fmtH(a.minHours)} ${String.fromCharCode(8211)} ${fmtH(a.maxHours)} ${t("hodin")}</span>
-    </div>`;
+    ctl = `<input type="number" min="0" step="0.5" value="${esc(s.hours)}" data-h="${a.id}"> h
+      <span class="presets">${p.map(v=>`<button class="${Number(s.hours)===v?"on":""}" data-p="${a.id}" data-v="${v}">${fmtH(v)}</button>`).join("")}</span>`;
   } else if(on && a.kind === "units"){
     const opts = Object.keys(a.complexity||{}).map(k =>
-      `<option value="${k}" ${(s.cx||"standard")===k?"selected":""}>${esc(L(a.complexity[k].label))} (${fmtH(a.complexity[k].hoursPerUnit)} ${t("hodin")})</option>`).join("");
-    ctl = `<div class="ctl">
-      <input type="number" min="0" step="1" value="${s.units ?? 1}" data-u="${a.id}">
-      <span class="muted">${esc(L(a.unitLabel)||t("jednotek"))}</span>
-      <select data-c="${a.id}">${opts}</select>
-    </div>`;
+      `<option value="${k}" ${(s.cx||"standard")===k?"selected":""}>${esc(L(a.complexity[k].label))} (${fmtH(a.complexity[k].hoursPerUnit)} h)</option>`).join("");
+    ctl = `<input type="number" min="0" step="1" value="${esc(s.units)}" data-u="${a.id}"> ${esc(L(a.unitLabel))}
+      <select data-c="${a.id}">${opts}</select>`;
   }
+  if(on && state.interni){
+    ctl += `<label class="muted">skutečně <input type="number" min="0" step="0.5" value="${esc(s.skut ?? "")}"
+      placeholder="${fmtH(h*(1-(a.uspora||0)))}" data-skut="${a.id}"> h</label>`;
+  }
+  const int = on && state.interni ? `<span class="int">${fmtH(h)} h → ${fmtH(skutecneUkonu(a))} h</span>` : "";
+  return `<div class="act ${on?"":"vypnuto"}">
+    <div class="head">
+      <input type="checkbox" data-s="${a.id}" ${on?"checked":""} aria-label="${esc(L(a.name))}">
+      <div class="name"><strong>${esc(L(a.name))}</strong>${a.role === "account" ? `<span class="role">account</span>` : ""}
+        <p class="tip">${esc(L(a.tooltip))}</p></div>
+      <div class="sum">${on ? fmtKc(cena(h)) : ""}${int}</div>
+    </div>${ctl ? `<div class="ctl">${ctl}</div>` : ""}</div>`;
+}
+
+function radekVlastni(c, v, i){
+  const int = state.interni ? `<span class="int">${fmtH(v.hours)} h → ${fmtH(skutecneVlastni(v))} h</span>` : "";
   return `<div class="act">
     <div class="head">
-      <input type="checkbox" data-s="${a.id}" ${on?"checked":""}>
-      <div class="name">${esc(L(a.name))} <span class="role">${esc(t(a.role))}</span>
-        <p class="tip">${esc(L(a.tooltip))}</p>
-      </div>
-      <div class="sum">${on ? fmtH(hodinyUkonu(a)) + " " + t("hodin") : ""}</div>
-    </div>${ctl}</div>`;
+      <input type="checkbox" checked data-vldel="${c.id}" data-i="${i}" title="Odebrat">
+      <div class="name"><strong>${esc(v.name)}</strong></div>
+      <div class="sum">${fmtKc(cena(Number(v.hours)||0))}${int}</div>
+    </div>
+    <div class="ctl"><input type="number" min="0" step="0.5" value="${esc(v.hours)}" data-vl="${c.id}" data-i="${i}"> h
+      ${state.interni ? `<label class="muted">skutečně <input type="number" min="0" step="0.5" value="${esc(v.skut ?? "")}"
+        placeholder="${fmtH(v.hours)}" data-vlskut="${c.id}" data-i="${i}"> h</label>` : ""}</div>
+  </div>`;
 }
 
-function vazbyUkonu(kat){
-  const v = $("#view");
-  v.querySelectorAll("[data-s]").forEach(cb => cb.onchange = () => {
-    const a = kat.activities.find(x=>x.id===cb.dataset.s);
-    const s = actState(a.id);
-    if(cb.checked) vyberUkon(a); else s.sel = false;
-    render();
-  });
-  v.querySelectorAll("[data-h]").forEach(i => i.onchange = () => { actState(i.dataset.h).hours = Number(i.value)||0; render(); });
-  v.querySelectorAll("[data-u]").forEach(i => i.onchange = () => { actState(i.dataset.u).units = Number(i.value)||0; render(); });
-  v.querySelectorAll("[data-c]").forEach(sel => sel.onchange = () => { actState(sel.dataset.c).cx = sel.value; render(); });
-  v.querySelectorAll("[data-p]").forEach(b => b.onclick = () => { actState(b.dataset.p).hours = Number(b.dataset.v); render(); });
-  v.querySelectorAll("[data-vl]").forEach(i => i.onchange = () => {
-    state.vlastni[i.dataset.vl][Number(i.dataset.i)].hours = Number(i.value)||0; render(); });
-  v.querySelectorAll("[data-vldel]").forEach(b => b.onclick = () => {
-    state.vlastni[b.dataset.vldel].splice(Number(b.dataset.i),1); render(); });
+function rozpocet(){
+  const f = Object.fromEntries(FAZE.map(x => [x.id, soucetFaze(x.id)]));
+  return {f, start:f.before.cena, mesic:f.during.cena, adhoc:f.adhoc.cena, konec:f.after.cena};
 }
 
-/* souhrn */
-function viewSouhrn(){
-  const sazba = Number(state.sazba) || 0;
-  const kc = h => sazba ? `<div class="m">${fmtKc(h*sazba)}</div>` : "";
-
-  const jednoraz = hodinyJednorazove();
-  const mesicne = hodinyMesicne();
-  const kom = hodinyKomunikace();
-  const tot = celkem();
-
-  if(tot === 0){
-    $("#view").innerHTML = `<div class="card"><p class="muted">${t("nicVybrano")}</p></div>
-      <div class="bar"><button class="btn ghost" id="b-zpet">${t("zpet")}</button></div>`;
-    $("#b-zpet").onclick = () => { state.step--; render(); };
-    return;
-  }
-
-  const radek = (nazev, h) => `<tr><td>${esc(nazev)}</td>
-          <td class="num">${fmtH(h)} ${t("hodin")}</td>
-          <td class="num muted">${dny(h)}</td>
-          ${sazba?`<td class="num">${fmtKc(h*sazba)}</td>`:""}</tr>`;
-  const radky = FAZE.map(f => {
-    const kats = KATEGORIE.filter(c => c.phase === f.id && hodinyKategorie(c) > 0);
-    if(!kats.length) return "";
-    const komF = hodinyKomunikace(f.id);
-    return `<tr><td colspan="${sazba?4:3}" style="padding-top:16px">
-        <span class="phase ph-${f.id}">${esc(f[state.lang]||f.cs)}</span></td></tr>` +
-      kats.map(c => radek(L(c.name), hodinyKategorie(c))).join("") +
-      (komF ? radek(t("komunikace"), komF) : "");
-  }).join("");
-
-  const spec = hodinyRole("specialista"), acc = hodinyRole("account");
-
-  $("#view").innerHTML = `
-    <div class="card">
-      <h2>${t("prehled")}</h2>
-      <div class="muted" style="font-size:13.5px">
-        ${esc(state.klient || "")}${state.klient && state.projekt ? ", " : ""}${esc(state.projekt || "")}
-      </div>
-      <div class="tiles">
-        <div class="tile"><div class="k">${t("jednorazove")}</div><div class="v">${fmtH(jednoraz)} ${t("hodin")}</div>
-          <div class="m">${dny(jednoraz)}</div>${kc(jednoraz)}</div>
-        <div class="tile"><div class="k">${t("mesicne")}</div><div class="v">${fmtH(mesicne)} ${t("hodin")}</div>
-          <div class="m">${dny(mesicne)}</div>${kc(mesicne)}</div>
-        <div class="tile"><div class="k">${t("celkemHod")}</div><div class="v">${fmtH(tot)} ${t("hodin")}</div>
-          <div class="m">${dny(tot)}</div>${kc(tot)}</div>
-      </div>
-      ${state.cil ? `<p style="font-size:13.5px"><strong>${t("cil")}:</strong> ${esc(state.cil)}</p>` : ""}
+function souhrnHtml(){
+  const r = rozpocet();
+  const radek = (k, pozn, v) => v ? `<div class="souhrn-r"><span class="k">${k}<small>${pozn}</small></span><span class="v">${fmtKc(v)}</span></div>` : "";
+  const nic = !r.start && !r.mesic && !r.adhoc && !r.konec;
+  const interni = state.interni ? interniHtml(r) : "";
+  return `<div class="card">
+      <h3>Cena pro klienta</h3>
+      ${nic ? `<p class="muted" style="font-size:13px">Zatím není vybraný žádný úkon.</p>` : ""}
+      ${radek("Rozjezd", "jednorázově", r.start)}
+      ${radek("Měsíční správa", "každý měsíc", r.mesic)}
+      ${radek("Na vyžádání", "vybrané položky, při objednání", r.adhoc)}
+      ${radek("Ukončení spolupráce", "jednorázově na konci", r.konec)}
+      <label class="prepinac"><input type="checkbox" id="i-interni" ${state.interni?"checked":""}> Interní pohled: hodiny, náklad a marže</label>
     </div>
-
-    <div class="card">
-      <h2>${t("rozpad")}</h2>
-      <table>
-        <thead><tr><th></th><th class="num">${t("hodiny")}</th><th class="num"></th>${sazba?"<th class='num'></th>":""}</tr></thead>
-        <tbody>
-          ${radky}
-          <tr class="total"><td>${t("celkemHod")}</td><td class="num">${fmtH(tot)} ${t("hodin")}</td>
-            <td class="num">${dny(tot)}</td>${sazba?`<td class="num">${fmtKc(tot*sazba)}</td>`:""}</tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="card tight">
-      <h3>${t("poRolich")}</h3>
-      <table>
-        <tbody>
-          <tr><td>${t("specialista")}</td><td class="num">${fmtH(spec)} ${t("hodin")}</td>${sazba?`<td class="num">${fmtKc(spec*sazba)}</td>`:""}</tr>
-          <tr><td>${t("account")}</td><td class="num">${fmtH(acc)} ${t("hodin")}</td>${sazba?`<td class="num">${fmtKc(acc*sazba)}</td>`:""}</tr>
-          <tr><td>${t("komunikace")}</td><td class="num">${fmtH(kom)} ${t("hodin")}</td>${sazba?`<td class="num">${fmtKc(kom*sazba)}</td>`:""}</tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="card noprint">
-      <details>
-        <summary>${t("odkaz")}</summary>
-        <div class="hint" style="margin:8px 0">${t("odkazHint")}</div>
-        <input class="share" id="i-share" readonly value="">
-        <div class="bar"><button class="btn ghost" id="b-copy">${t("odkaz")}</button></div>
-      </details>
-    </div>
-
-    <div class="bar noprint">
-      <button class="btn ghost" id="b-zpet">${t("zpet")}</button>
-      <div class="spacer"></div>
-      <button class="btn ghost" id="b-ulozit">${t("ulozit")}</button>
-      <button class="btn ghost" id="b-md">${t("export")}</button>
-      <button class="btn ghost" id="b-tisk">${t("tisk")}</button>
+    ${interni}
+    <div class="card akce">
+      <button class="btn" id="b-md">Nacenění pro klienta (.md)</button>
+      <button class="btn ghost" id="b-tisk">Tisk a PDF pro klienta</button>
+      <button class="btn ghost" id="b-ulozit">Uložit projekt</button>
+      <button class="btn ghost" id="b-odkaz">Zkopírovat odkaz</button>
     </div>`;
+}
 
-  $("#b-zpet").onclick = () => { state.step--; render(); };
-  $("#b-ulozit").onclick = ulozitSoubor;
+function interniHtml(r){
+  const n = state.nastaveni;
+  const radky = [["Rozjezd", r.f.before], ["Měsíčně", r.f.during], ["Na vyžádání", r.f.adhoc], ["Ukončení", r.f.after]]
+    .filter(([,s]) => s.cena).map(([nazev, s]) => {
+      const nak = naklad(s.skut);
+      return `<tr><td>${nazev}</td><td>${fmtH(s.h)} → ${fmtH(s.skut)}</td><td>${fmtKc(nak)}</td><td>${fmtKc(s.cena - nak)}</td><td>${nak ? fmtH(s.cena / nak) + "×" : "–"}</td></tr>`;
+    }).join("");
+  return `<div class="card interni">
+    <h3>Interní pohled</h3>
+    <table><thead><tr><th></th><th>hodiny</th><th>náklad</th><th>marže</th><th>cena / náklad</th></tr></thead>
+    <tbody>${radky || `<tr><td colspan="5" class="muted">Nic k výpočtu.</td></tr>`}</tbody></table>
+    <p class="hint">Hodiny „katalog → skutečně“. Skutečné hodiny počítá výchozí odhad úspory s Claudem
+      (texty 40 %, data 30 %, technika 20 %, schůzky 0 %), dokud se u úkonu nevyplní naměřené číslo.
+      Sazby ${fmtKc(n.cenovaSazba)}/h cena a ${fmtKc(n.nakladovaSazba)}/h náklad se mění na úvodní stránce.</p>
+  </div>`;
+}
+
+function vazbyEditoru(){
+  const v = $("#view");
+  const prekreslit = () => { const y = window.scrollY; render(); window.scrollTo(0, y); };
+  $("#i-klient").oninput = e => state.klient = e.target.value;
+  $("#i-projekt").oninput = e => state.projekt = e.target.value;
+  $("#i-cil").oninput = e => state.cil = e.target.value;
+  v.querySelectorAll("details.kat").forEach(d => d.ontoggle = () => { state.otevrene[d.dataset.kat] = d.open; });
+  v.querySelectorAll("[data-s]").forEach(cb => cb.onchange = () => {
+    const a = KATEGORIE.flatMap(c=>c.activities).find(x=>x.id===cb.dataset.s);
+    if(cb.checked) vyberUkon(a); else actState(a.id).sel = false;
+    prekreslit();
+  });
+  v.querySelectorAll("[data-h]").forEach(i => i.onchange = () => { actState(i.dataset.h).hours = Number(i.value)||0; prekreslit(); });
+  v.querySelectorAll("[data-u]").forEach(i => i.onchange = () => { actState(i.dataset.u).units = Number(i.value)||0; prekreslit(); });
+  v.querySelectorAll("[data-c]").forEach(sel => sel.onchange = () => { actState(sel.dataset.c).cx = sel.value; prekreslit(); });
+  v.querySelectorAll("[data-p]").forEach(b => b.onclick = () => { actState(b.dataset.p).hours = Number(b.dataset.v); prekreslit(); });
+  v.querySelectorAll("[data-skut]").forEach(i => i.onchange = () => { actState(i.dataset.skut).skut = i.value === "" ? null : Number(i.value); prekreslit(); });
+  v.querySelectorAll("[data-pridat]").forEach(b => b.onclick = () => {
+    const n = prompt("Název úkonu");
+    if(!n) return;
+    (state.vlastni[b.dataset.pridat] = state.vlastni[b.dataset.pridat] || []).push({name:n, hours:1});
+    state.otevrene[b.dataset.pridat] = true;
+    prekreslit();
+  });
+  v.querySelectorAll("[data-vl]").forEach(i => i.onchange = () => {
+    state.vlastni[i.dataset.vl][Number(i.dataset.i)].hours = Number(i.value)||0; prekreslit(); });
+  v.querySelectorAll("[data-vlskut]").forEach(i => i.onchange = () => {
+    state.vlastni[i.dataset.vlskut][Number(i.dataset.i)].skut = i.value === "" ? null : Number(i.value); prekreslit(); });
+  v.querySelectorAll("[data-vldel]").forEach(cb => cb.onchange = () => {
+    state.vlastni[cb.dataset.vldel].splice(Number(cb.dataset.i),1); prekreslit(); });
+  $("#i-interni").onchange = e => { state.interni = e.target.checked; prekreslit(); };
   $("#b-md").onclick = exportMd;
-  $("#b-tisk").onclick = () => window.print();
-  $("#i-share").value = shareUrl();
-  $("#b-copy").onclick = () => {
-    $("#i-share").select();
-    navigator.clipboard.writeText(shareUrl()).then(()=>toast(t("zkopirovano")));
-  };
+  $("#b-tisk").onclick = tisk;
+  $("#b-ulozit").onclick = ulozitSoubor;
+  $("#b-odkaz").onclick = () => navigator.clipboard.writeText(shareUrl())
+    .then(() => toast("Odkaz zkopírován"), () => toast("Odkaz se nepodařilo zkopírovat"));
+}
+
+/* ── výstup pro klienta ────────────────────────────────────────────────────── */
+// Klient dostává jen položky a částky. Hodiny, role a marže zůstávají v appce.
+function nazevPolozky(p){
+  return p.pocet != null && p.pocet !== 1 ? p.pocet + "× " + p.nazev : p.nazev;
+}
+function hlavickaNaceneni(){
+  return "Nacenění: " + (state.klient || "klient") + (state.projekt ? ", " + state.projekt : "");
+}
+
+function exportMd(){
+  const l = ["# " + hlavickaNaceneni(), ""];
+  l.push("Datum: " + new Date().toLocaleDateString("cs-CZ"), "");
+  if(state.cil) l.push("**Cíl spolupráce.** " + state.cil, "");
+  FAZE.forEach(f => {
+    const pol = polozkyFaze(f.id);
+    if(!pol.length) return;
+    l.push("## " + f.cs + " (" + f.fakturace.cs + ")", "", "| Položka | Cena |", "|---|---:|");
+    pol.forEach(p => l.push("| " + nazevPolozky(p) + " | " + fmtKc(p.cena) + " |"));
+    l.push("| **Celkem** | **" + fmtKc(soucetFaze(f.id).cena) + "** |", "");
+  });
+  stahni(nazevSouboru("naceneni") + ".md", l.join("\n"), "text/markdown");
+}
+
+function tisk(){
+  const sekce = FAZE.map(f => {
+    const pol = polozkyFaze(f.id);
+    if(!pol.length) return "";
+    return `<h2>${esc(f.cs)} <small>(${esc(f.fakturace.cs)})</small></h2>
+      <table><thead><tr><th>Položka</th><th class="num">Cena</th></tr></thead><tbody>
+      ${pol.map(p => `<tr><td>${esc(nazevPolozky(p))}</td><td class="num">${fmtKc(p.cena)}</td></tr>`).join("")}
+      <tr class="total"><td>Celkem</td><td class="num">${fmtKc(soucetFaze(f.id).cena)}</td></tr></tbody></table>`;
+  }).join("");
+  $("#tisk").innerHTML = `<h1>${esc(hlavickaNaceneni())}</h1>
+    <p>Datum: ${new Date().toLocaleDateString("cs-CZ")}</p>
+    ${state.cil ? `<p><strong>Cíl spolupráce.</strong> ${esc(state.cil)}</p>` : ""}${sekce}`;
+  window.print();
 }
 
 /* ── ukládání a sdílení ────────────────────────────────────────────────────── */
+function nazevSouboru(predpona){
+  const jmeno = (state.projekt || state.klient || "projekt").toLowerCase()
+    .normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
+  return predpona + "-" + jmeno;
+}
 function projektData(){
   return {
-    verze:9, lang:state.lang, klient:state.klient, projekt:state.projekt, cil:state.cil,
-    sazba:state.sazba, komunikace:state.komunikace,
-    kategorie:state.kategorie, acts:state.acts, vlastni:state.vlastni,
+    verze:11, klient:state.klient, projekt:state.projekt, cil:state.cil, typ:state.typ,
+    nastaveni:state.nastaveni, acts:state.acts, vlastni:state.vlastni,
   };
 }
 function nacistData(d){
+  const nast = Object.assign({}, CATALOG.nastaveni, d.nastaveni || {});
+  // Soubory do verze 10 nesly jednu sazbu a komunikaci přímo v projektu.
+  if(d.sazba) nast.cenovaSazba = Number(d.sazba);
+  if(d.komunikace != null && !d.nastaveni) nast.komunikace = Number(d.komunikace);
   Object.assign(state, {
-    lang:d.lang||"cs", klient:d.klient||"", projekt:d.projekt||"", cil:d.cil||"",
-    sazba:d.sazba??"", komunikace:d.komunikace??20,
-    kategorie:d.kategorie||{}, acts:d.acts||{}, vlastni:d.vlastni||{},
+    klient:d.klient||"", projekt:d.projekt||"", cil:d.cil||"", typ:d.typ||null,
+    nastaveni:nast, acts:d.acts||{}, vlastni:d.vlastni||{}, otevrene:{},
   });
+  KATEGORIE.forEach(c => { if(pocetVybranych(c)) state.otevrene[c.id] = true; });
 }
-
 function ulozitSoubor(){
-  const jmeno = (state.projekt || state.klient || "time-source").toLowerCase()
-    .normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
-  stahni("time-source-" + jmeno + ".json", JSON.stringify(projektData(), null, 2), "application/json");
+  stahni(nazevSouboru("aktivity") + ".json", JSON.stringify(projektData(), null, 2), "application/json");
 }
 function nacistSoubor(){
   const inp = document.createElement("input");
@@ -2265,8 +2534,8 @@ function nacistSoubor(){
     const f = e.target.files[0]; if(!f) return;
     const r = new FileReader();
     r.onload = ev => {
-      try { nacistData(JSON.parse(ev.target.result)); state.step = 0; render(); toast(t("nacteno")); }
-      catch(err){ toast(t("chybaSouboru")); }
+      try { nacistData(JSON.parse(ev.target.result)); state.view = "edit"; render(); toast("Projekt načten"); }
+      catch(err){ toast("Soubor se nepodařilo načíst"); }
     };
     r.readAsText(f);
   };
@@ -2279,8 +2548,8 @@ function stahni(name, text, mime){
   setTimeout(()=>URL.revokeObjectURL(url), 2000);
 }
 
-/* Krátký odkaz: jen vybrané úkony, bez loga a bez poznámek.
-   Formát: id:hodiny nebo id*počet~složitost, oddělené tečkou a čárkou. */
+/* Odkaz nese jen vybrané úkony, jméno klienta, ceníkovou sazbu a komunikaci.
+   Formát: id:hodiny nebo id*počet~složitost, oddělené čárkou. */
 function shareUrl(){
   const parts = [];
   KATEGORIE.forEach(c => c.activities.forEach(a => {
@@ -2289,10 +2558,9 @@ function shareUrl(){
     if(a.kind === "hours") parts.push(a.id + ":" + (Number(s.hours)||0));
     else parts.push(a.id + "*" + (Number(s.units)||0) + "~" + (s.cx||"standard").charAt(0));
   }));
-  const meta = [state.klient, state.sazba, state.komunikace].join("|");
   const q = new URLSearchParams();
   q.set("a", parts.join(","));
-  if(meta.replace(/\|/g,"")) q.set("m", meta);
+  q.set("m", [state.klient, state.nastaveni.cenovaSazba, state.nastaveni.komunikace].join("|"));
   return location.origin + location.pathname + "#" + q.toString();
 }
 function nacistZOdkazu(){
@@ -2312,68 +2580,13 @@ function nacistZOdkazu(){
       }
     });
     const m = (q.get("m")||"").split("|");
-    state.klient = m[0]||""; state.sazba = m[1]||""; state.komunikace = m[2]||20;
-    KATEGORIE.forEach(c => {
-      if(c.activities.some(x => state.acts[x.id] && state.acts[x.id].sel)) state.kategorie[c.id] = true;
-    });
-    state.step = KATEGORIE.filter(c=>state.kategorie[c.id]).length + 1;
+    state.klient = m[0] || "";
+    if(m[1]) state.nastaveni.cenovaSazba = Number(m[1]);
+    if(m[2]) state.nastaveni.komunikace = Number(m[2]);
+    KATEGORIE.forEach(c => { if(pocetVybranych(c)) state.otevrene[c.id] = true; });
+    state.view = "edit";
     return true;
   } catch(e){ return false; }
-}
-
-/* ── export do naceneni.md ─────────────────────────────────────────────────── */
-function exportMd(){
-  const sazba = Number(state.sazba) || 0;
-  const dnes = new Date().toISOString().slice(0,10);
-  const l = [];
-  l.push("# Nacenění: " + (state.klient || "klient") + (state.projekt ? ", " + state.projekt : ""));
-  l.push("");
-  l.push("Odhad vznikl v @ktivity " + dnes + ". Hodiny jsou odhad, ne závazek.");
-  l.push("");
-  if(state.cil){ l.push("**Cíl spolupráce.** " + state.cil); l.push(""); }
-
-  FAZE.forEach(f => {
-    const kats = KATEGORIE.filter(c => c.phase === f.id && hodinyKategorie(c) > 0);
-    if(!kats.length) return;
-    l.push("## " + (f.cs));
-    l.push("");
-    l.push(sazba ? "| Úkon | Role | Hodiny | Cena |" : "| Úkon | Role | Hodiny |");
-    l.push(sazba ? "|---|---|---:|---:|" : "|---|---|---:|");
-    kats.forEach(c => {
-      c.activities.forEach(a => {
-        const h = hodinyUkonu(a);
-        if(!h) return;
-        const r = a.role === "account" ? "account" : "specialista";
-        l.push("| " + a.name.cs + " | " + r + " | " + fmtH(h) + " | " + (sazba ? fmtKc(h*sazba) + " |" : ""));
-      });
-      (state.vlastni[c.id]||[]).forEach(v => {
-        l.push("| " + v.name + " | " + (v.role||"specialista") + " | " + fmtH(v.hours) + " | " + (sazba ? fmtKc(v.hours*sazba) + " |" : ""));
-      });
-    });
-    const komF = hodinyKomunikace(f.id);
-    if(komF) l.push("| Komunikace a schvalování (" + state.komunikace + " % z hodin specialisty) | specialista | " + fmtH(komF) + " | " + (sazba ? fmtKc(komF*sazba) + " |" : ""));
-    const sum = hodinyFazeSKomunikaci(f.id);
-    l.push(sazba
-      ? "| **" + f.cs + " celkem** | | **" + fmtH(sum) + "** | **" + fmtKc(sum*sazba) + "** |"
-      : "| **" + f.cs + " celkem** | | **" + fmtH(sum) + "** |");
-    l.push("");
-  });
-
-  l.push("## Celkem");
-  l.push("");
-  if(hodinyKomunikace()) {
-    l.push("Komunikace a schvalování (hovory, schvalovací kola, zápisy) je v každé fázi připočtená jako " + state.komunikace + " % z hodin specialisty.");
-    l.push("");
-  }
-  l.push("| | Hodiny | Pracovních dnů |" + (sazba ? " Cena |" : ""));
-  l.push("|---|---:|---:|" + (sazba ? "---:|" : ""));
-  const rows = [["Jednorázově", hodinyJednorazove()], ["Měsíčně", hodinyMesicne()], ["Rozjezd a první měsíc", celkem()]];
-  rows.forEach(([n,h]) => l.push("| " + n + " | " + fmtH(h) + " | " + fmtH(h/8) + " |" + (sazba ? " " + fmtKc(h*sazba) + " |" : "")));
-  l.push("");
-  l.push("Sazba " + (sazba ? sazba.toLocaleString("cs-CZ") + " Kč/hod" : "není v dokumentu uvedená") + ".");
-  l.push("");
-
-  stahni("naceneni.md", l.join("\n"), "text/markdown");
 }
 
 /* ── drobnosti ─────────────────────────────────────────────────────────────── */
@@ -2385,6 +2598,7 @@ function toast(msg){
   toastTimer = setTimeout(()=>el.classList.remove("show"), 2200);
 }
 
+$("#b-home").onclick = () => { state.view = "home"; render(); window.scrollTo(0,0); };
 nacistZOdkazu();
 render();
 </script>
