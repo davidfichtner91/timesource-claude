@@ -6,7 +6,7 @@
 <title>@ktivity</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Funnel+Display:wght@500;700&family=Funnel+Sans:wght@400;600&display=swap" rel="stylesheet">
 <style>
 :root{
   --pink:#EA406F; --orange:#FD5D47; --dark:#232323; --gray:#686868;
@@ -78,6 +78,11 @@ details.kat .kpocet{font-size:12px;color:var(--gray)}
 details.kat .kcena{margin-left:auto;font-weight:600;white-space:nowrap}
 details.kat .kbody{padding:0 16px 10px}
 .kpopis{font-size:13px;color:var(--gray);margin:0 0 4px}
+/* GetLeads: navy linka vlevo a logo, aby bylo vidět, kterou část dodává B2B divize */
+details.kat-gl{border-left:4px solid #042150}
+.gl-logo{display:inline-flex;align-items:center;gap:5px;font-family:'Funnel Display','Segoe UI',sans-serif;font-weight:700;
+  font-size:13px;letter-spacing:-.02em;color:#042150;white-space:nowrap}
+.gl-logo svg{width:13px;height:13px;flex:none}
 
 .act{border-top:var(--line);padding:12px 0}
 .act .head{display:flex;gap:10px;align-items:flex-start}
@@ -147,8 +152,26 @@ details.nast summary{cursor:pointer;font-weight:600}
 @media print{
   body{background:#fff;font-size:12px}
   body > *:not(#tisk){display:none !important}
-  @page{size:A4;margin:14mm 16mm}
-  #tisk{display:block;color:var(--dark);-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  @page{size:A4;margin:0}
+  #tisk{display:block;color:var(--dark);padding:0 16mm;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  #tisk table.tobal{margin:0}
+  #tisk table.tobal > * > tr > td{padding:0;border:0}
+  #tisk table.tobal > tbody > tr{break-inside:auto;page-break-inside:auto}
+  .tokraj{height:14mm}
+  .tgl{margin-top:26px;border-top:2px solid #042150;padding-top:12px}
+  .tglhlava{display:flex;align-items:center;gap:12px;font-weight:700;font-size:15px}
+  .tglhlava .gl-logo{font-size:18px}
+  .tglhlava .gl-logo svg{width:18px;height:18px}
+  .tglpozn{font-size:11px;color:var(--gray);margin:4px 0 0}
+  .tgl .tfaze{border-bottom-color:#C9DEFF}
+  .tlogo .gl-logo{font-size:24px}
+  .tlogo .gl-logo svg{width:24px;height:24px}
+  /* čistě oslovovací nacenění v brandu GetLeads: navy místo růžové, bez přechodu, písmo Funnel */
+  #tisk.brand-gl{font-family:'Funnel Sans','Segoe UI',sans-serif}
+  #tisk.brand-gl h1,#tisk.brand-gl h2{font-family:'Funnel Display','Segoe UI',sans-serif;font-weight:500;letter-spacing:-.02em;color:#042150}
+  #tisk.brand-gl .tpruh{background:#042150}
+  #tisk.brand-gl .tdlazdice strong{color:#042150}
+  #tisk.brand-gl .tfaze{border-bottom-color:#C9DEFF}
   .tpruh{height:6px;border-radius:3px;background:linear-gradient(135deg,#FD5D47 0%,#EA406F 100%);margin-bottom:18px}
   .thlava{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px}
   .tlogo svg{height:34px;width:auto;display:block}
@@ -279,6 +302,12 @@ const CATALOG = /*__CATALOG__*/{
         },
         {
           "id": "tt-monitoring"
+        },
+        {
+          "id": "au-qa"
+        },
+        {
+          "id": "au-tuning"
         }
       ]
     },
@@ -320,6 +349,12 @@ const CATALOG = /*__CATALOG__*/{
         },
         {
           "id": "tt-dns"
+        },
+        {
+          "id": "au-qa"
+        },
+        {
+          "id": "au-tuning"
         }
       ]
     },
@@ -407,6 +442,13 @@ const CATALOG = /*__CATALOG__*/{
         },
         {
           "id": "tt-monitoring"
+        },
+        {
+          "id": "au-qa",
+          "hours": 0.5
+        },
+        {
+          "id": "au-seasonal"
         }
       ]
     },
@@ -454,6 +496,16 @@ const CATALOG = /*__CATALOG__*/{
         },
         {
           "id": "tt-monitoring"
+        },
+        {
+          "id": "au-qa",
+          "hours": 0.5
+        },
+        {
+          "id": "au-tuning"
+        },
+        {
+          "id": "au-seasonal"
         }
       ]
     },
@@ -469,7 +521,7 @@ const CATALOG = /*__CATALOG__*/{
       },
       "ukony": [
         {
-          "id": "ob-briefing"
+          "id": "co-briefing"
         },
         {
           "id": "co-setup"
@@ -1241,6 +1293,28 @@ const CATALOG = /*__CATALOG__*/{
       "activities": [
         {
           "kind": "hours",
+          "id": "co-briefing",
+          "name": {
+            "cs": "Úvodní schůzka a zadání oslovování",
+            "en": "Úvodní schůzka a zadání oslovování",
+            "de": "Úvodní schůzka a zadání oslovování"
+          },
+          "tooltip": {
+            "cs": "Cílová skupina, nabídka, kdo odpovědi převezme a co se počítá jako úspěch.",
+            "en": "Cílová skupina, nabídka, kdo odpovědi převezme a co se počítá jako úspěch.",
+            "de": "Cílová skupina, nabídka, kdo odpovědi převezme a co se počítá jako úspěch."
+          },
+          "minHours": 1,
+          "maxHours": 3,
+          "avgHours": 2,
+          "role": "account",
+          "uspora": 0,
+          "popisKlient": {
+            "cs": "Úvodní schůzka o cílové skupině, nabídce a předávání zájemců obchodu."
+          }
+        },
+        {
+          "kind": "hours",
           "id": "co-setup",
           "name": {
             "cs": "Nastavení nástroje pro oslovování",
@@ -1377,7 +1451,8 @@ const CATALOG = /*__CATALOG__*/{
             "cs": "Text prvního oslovení a jednoho navázání."
           }
         }
-      ]
+      ],
+      "divize": "getleads"
     },
     {
       "id": "campaigns",
@@ -1796,6 +1871,89 @@ const CATALOG = /*__CATALOG__*/{
       ]
     },
     {
+      "id": "automation-care",
+      "phase": "during",
+      "icon": "🔁",
+      "name": {
+        "cs": "Péče o automatizace",
+        "en": "Automation care",
+        "de": "Pflege der Automationen"
+      },
+      "description": {
+        "cs": "Automatizace po spuštění nežijí samy. Kontrola, ladění podle výsledků a obměna obsahu.",
+        "en": "Automations need checking, tuning and fresh content after launch.",
+        "de": "Automationen brauchen nach dem Start Kontrolle, Optimierung und neue Inhalte."
+      },
+      "activities": [
+        {
+          "kind": "hours",
+          "id": "au-qa",
+          "name": {
+            "cs": "Kontrola funkčnosti automatizací",
+            "en": "Kontrola funkčnosti automatizací",
+            "de": "Kontrola funkčnosti automatizací"
+          },
+          "tooltip": {
+            "cs": "Spouštěče, podmínky, odkazy, slevové kódy a prázdné větve. Rozbitá automatizace mlčí, nikdo si toho nevšimne.",
+            "en": "Spouštěče, podmínky, odkazy, slevové kódy a prázdné větve. Rozbitá automatizace mlčí, nikdo si toho nevšimne.",
+            "de": "Spouštěče, podmínky, odkazy, slevové kódy a prázdné větve. Rozbitá automatizace mlčí, nikdo si toho nevšimne."
+          },
+          "minHours": 0.5,
+          "maxHours": 2,
+          "avgHours": 1,
+          "role": "specialista",
+          "uspora": 0.2,
+          "popisKlient": {
+            "cs": "Pravidelná kontrola, že automatické e-maily chodí, odkazy fungují a kódy platí."
+          }
+        },
+        {
+          "kind": "hours",
+          "id": "au-tuning",
+          "name": {
+            "cs": "Ladění automatizací podle výsledků",
+            "en": "Ladění automatizací podle výsledků",
+            "de": "Ladění automatizací podle výsledků"
+          },
+          "tooltip": {
+            "cs": "Úprava textů, předmětů, časování a podmínek podle open rate, prokliků a tržeb. Navazuje na analýzu výkonu.",
+            "en": "Úprava textů, předmětů, časování a podmínek podle open rate, prokliků a tržeb. Navazuje na analýzu výkonu.",
+            "de": "Úprava textů, předmětů, časování a podmínek podle open rate, prokliků a tržeb. Navazuje na analýzu výkonu."
+          },
+          "minHours": 1,
+          "maxHours": 4,
+          "avgHours": 2,
+          "role": "specialista",
+          "uspora": 0.4,
+          "popisKlient": {
+            "cs": "Úpravy textů, časování a podmínek podle toho, co přináší nejlepší výsledky."
+          }
+        },
+        {
+          "kind": "hours",
+          "id": "au-seasonal",
+          "name": {
+            "cs": "Obměna obsahu automatizací",
+            "en": "Obměna obsahu automatizací",
+            "de": "Obměna obsahu automatizací"
+          },
+          "tooltip": {
+            "cs": "Sezónní a akční úpravy, nové produkty, menu nebo ceny. U gastra a sezónního zboží každý měsíc.",
+            "en": "Sezónní a akční úpravy, nové produkty, menu nebo ceny. U gastra a sezónního zboží každý měsíc.",
+            "de": "Sezónní a akční úpravy, nové produkty, menu nebo ceny. U gastra a sezónního zboží každý měsíc."
+          },
+          "minHours": 0.5,
+          "maxHours": 3,
+          "avgHours": 1,
+          "role": "specialista",
+          "uspora": 0.4,
+          "popisKlient": {
+            "cs": "Aktualizace obsahu automatických e-mailů podle sezóny, akcí a nabídky."
+          }
+        }
+      ]
+    },
+    {
       "id": "cold-outreach-run",
       "phase": "during",
       "icon": "📨",
@@ -1920,7 +2078,8 @@ const CATALOG = /*__CATALOG__*/{
             "cs": "Přehled, kolik firem bylo osloveno, kolik odpovědělo a kolik schůzek vzniklo."
           }
         }
-      ]
+      ],
+      "divize": "getleads"
     },
     {
       "id": "strategy",
@@ -2155,6 +2314,95 @@ const CATALOG = /*__CATALOG__*/{
       ]
     },
     {
+      "id": "automation-extend",
+      "phase": "adhoc",
+      "icon": "➕",
+      "name": {
+        "cs": "Rozšíření automatizací",
+        "en": "Extending automations",
+        "de": "Erweiterung der Automationen"
+      },
+      "description": {
+        "cs": "Nové automatizace a úklid starých během spolupráce, mimo rozjezd.",
+        "en": "New automations and retiring old ones during the engagement.",
+        "de": "Neue Automationen und Abbau alter während der Zusammenarbeit."
+      },
+      "activities": [
+        {
+          "kind": "units",
+          "id": "au-new",
+          "name": {
+            "cs": "Nová automatizace",
+            "en": "New automation",
+            "de": "Neue Automation"
+          },
+          "tooltip": {
+            "cs": "Automatizace přidaná během spolupráce, například narozeninová, po rezervaci nebo pro věrnostní program.",
+            "en": "An automation added during the engagement.",
+            "de": "Eine während der Zusammenarbeit hinzugefügte Automation."
+          },
+          "unitLabel": {
+            "cs": "automatizace",
+            "en": "automation",
+            "de": "Automation"
+          },
+          "complexity": {
+            "simple": {
+              "label": {
+                "cs": "Jeden e-mail",
+                "en": "One email",
+                "de": "Eine E-Mail"
+              },
+              "hoursPerUnit": 4
+            },
+            "standard": {
+              "label": {
+                "cs": "Série 2 až 4 e-mailů",
+                "en": "Series of 2 to 4 emails",
+                "de": "Serie mit 2 bis 4 E-Mails"
+              },
+              "hoursPerUnit": 8
+            },
+            "complex": {
+              "label": {
+                "cs": "Větvená série",
+                "en": "Branched series",
+                "de": "Verzweigte Serie"
+              },
+              "hoursPerUnit": 14
+            }
+          },
+          "role": "specialista",
+          "uspora": 0.4,
+          "popisKlient": {
+            "cs": "Nová automatická série přidaná během spolupráce, třeba k narozeninám nebo po rezervaci."
+          }
+        },
+        {
+          "kind": "hours",
+          "id": "au-retire",
+          "name": {
+            "cs": "Vypnutí nebo sloučení automatizace",
+            "en": "Vypnutí nebo sloučení automatizace",
+            "de": "Vypnutí nebo sloučení automatizace"
+          },
+          "tooltip": {
+            "cs": "Zrušení automatizace, která nefunguje nebo se překrývá s jinou, bez výpadku pro odběratele, kteří jsou zrovna uvnitř.",
+            "en": "Zrušení automatizace, která nefunguje nebo se překrývá s jinou, bez výpadku pro odběratele, kteří jsou zrovna uvnitř.",
+            "de": "Zrušení automatizace, která nefunguje nebo se překrývá s jinou, bez výpadku pro odběratele, kteří jsou zrovna uvnitř."
+          },
+          "minHours": 0.5,
+          "maxHours": 2,
+          "avgHours": 1,
+          "role": "specialista",
+          "uspora": 0.2,
+          "popisKlient": {
+            "cs": "Vypnutí nebo sloučení automatizace, která už neplní svůj účel."
+          }
+        }
+      ]
+    },
+    {
       "id": "offboarding",
       "phase": "after",
       "icon": "📦",
@@ -2280,7 +2528,11 @@ function fmtKc(n){ return Math.round(n).toLocaleString("cs-CZ") + " Kč"; }
 const KATEGORIE = CATALOG.kategorie;
 const FAZE = CATALOG.faze;
 const TYPY = CATALOG.typyProjektu;
-const katFaze = f => KATEGORIE.filter(c => c.phase === f);
+// Aktivní oslovování dodává GetLeads, zbytek CreatiCom. Bez divize = obě.
+const DIVIZE = ["creaticom", "getleads"];
+const divizeKat = c => c.divize || "creaticom";
+const katFaze = (f, div) => KATEGORIE.filter(c => c.phase === f && (!div || divizeKat(c) === div));
+const LOGO_GL = `<span class="gl-logo"><svg viewBox="0 0 100 100" aria-hidden="true"><rect x="0" y="13" width="44" height="44" fill="#042150"/><rect x="56" y="0" width="44" height="44" fill="#EA406F"/><rect x="43" y="56" width="44" height="44" fill="#042150"/></svg>GetLeads</span>`;
 
 function actState(id){
   if(!state.acts[id]) state.acts[id] = {sel:false};
@@ -2331,18 +2583,22 @@ const naklad = h => h * (Number(state.nastaveni.nakladovaSazba)||0);
 
 // Komunikace a schvalování se počítá z hodin specialisty ve fázi, ze které vzniká.
 // Nezrychluje se, hovory a schvalovací kola trvají stejně dlouho.
-function hodinyKomunikace(f){
+// Komunikace se počítá zvlášť za CreatiCom a za GetLeads, aby šly obě části nacenění
+// vytisknout odděleně a jejich součet seděl s celkem do koruny.
+function hodinyKomunikace(f, div){
   let spec = 0;
-  katFaze(f).forEach(c => {
+  katFaze(f, div).forEach(c => {
     c.activities.forEach(a => { if(a.role === "specialista") spec += hodinyUkonu(a); });
     vlastniKat(c.id).forEach(v => spec += Number(v.hours)||0);
   });
   return spec * (Number(state.nastaveni.komunikace)||0) / 100;
 }
+const cenaKomunikace = f => DIVIZE.reduce((a,d) => a + cena(hodinyKomunikace(f, d)), 0);
 
-function polozkyFaze(f){
+function polozkyFaze(f, div){
+  if(!div) return DIVIZE.flatMap(d => polozkyFaze(f, d));
   const out = [];
-  katFaze(f).forEach(c => {
+  katFaze(f, div).forEach(c => {
     c.activities.forEach(a => {
       const h = hodinyUkonu(a);
       if(!h) return;
@@ -2355,13 +2611,13 @@ function polozkyFaze(f){
       if(h) out.push({kat:c, nazev:v.name, pocet:null, h, skut: skutecneVlastni(v), cena: cena(h)});
     });
   });
-  const kh = hodinyKomunikace(f);
+  const kh = hodinyKomunikace(f, div);
   if(kh) out.push({kat:null, nazev:"Koordinace, komunikace a schvalování", komunikace:true,
     popis:"Hovory, schvalovací kola a zápisy, které k práci v této fázi patří.", h:kh, skut:kh, cena: cena(kh)});
   return out;
 }
-function soucetFaze(f){
-  return polozkyFaze(f).reduce((a,p) => ({cena:a.cena+p.cena, h:a.h+p.h, skut:a.skut+p.skut}), {cena:0,h:0,skut:0});
+function soucetFaze(f, div){
+  return polozkyFaze(f, div).reduce((a,p) => ({cena:a.cena+p.cena, h:a.h+p.h, skut:a.skut+p.skut}), {cena:0,h:0,skut:0});
 }
 function cenaKategorie(c){
   return c.activities.reduce((a,x)=>a+cena(hodinyUkonu(x)),0) + vlastniKat(c.id).reduce((a,v)=>a+cena(Number(v.hours)||0),0);
@@ -2462,14 +2718,14 @@ function viewEditor(){
   const sekce = FAZE.map(f => {
     const s = soucetFaze(f.id);
     const kats = katFaze(f.id).map(c => blokKategorie(c)).join("");
-    const kh = hodinyKomunikace(f.id);
+    const kh = DIVIZE.reduce((a,d) => a + hodinyKomunikace(f.id, d), 0);
     return `<div class="faze" id="faze-${f.id}">
         <h2>${esc(L(f))}</h2><span class="fakt">${esc(L(f.fakturace))}</span>
         <span class="cena">${s.cena ? fmtKc(s.cena) : ""}</span>
       </div>
       ${kats}
       ${kh ? `<div class="komrow"><span>Koordinace, komunikace a schvalování (${esc(state.nastaveni.komunikace)} %)</span>
-        <span>${fmtKc(cena(kh))}${state.interni ? ` <span class="muted">· ${fmtH(kh)} h</span>` : ""}</span></div>` : ""}`;
+        <span>${fmtKc(cenaKomunikace(f.id))}${state.interni ? ` <span class="muted">· ${fmtH(kh)} h</span>` : ""}</span></div>` : ""}`;
   }).join("");
 
   $("#view").innerHTML = `
@@ -2505,8 +2761,9 @@ function blokKategorie(c){
   const n = pocetVybranych(c);
   const open = state.otevrene[c.id] ? "open" : "";
   const radky = c.activities.map(a => radekUkonu(a)).join("") + vlastniKat(c.id).map((v,i) => radekVlastni(c,v,i)).join("");
-  return `<details class="kat" data-kat="${c.id}" ${open}>
-    <summary><span class="kn">${esc(L(c.name))}</span>
+  const gl = divizeKat(c) === "getleads";
+  return `<details class="kat ${gl ? "kat-gl" : ""}" data-kat="${c.id}" ${open}>
+    <summary><span class="kn">${esc(L(c.name))}</span>${gl ? LOGO_GL : ""}
       <span class="kpocet">${n ? n + " vybráno" : ""}</span>
       <span class="kcena">${n ? fmtKc(cenaKategorie(c)) : ""}</span></summary>
     <div class="kbody">
@@ -2598,18 +2855,20 @@ function interniHtml(r){
   const bloky = [["Rozjezd", r.f.before], ["Měsíčně", r.f.during], ["Na vyžádání", r.f.adhoc], ["Ukončení", r.f.after]]
     .filter(([,s]) => s.cena).map(([nazev, s]) => {
       const nak = naklad(s.skut);
+      const marzePct = Math.round((s.cena - nak) / s.cena * 100);
       return `<div class="iblok">
-        <div class="ihlava"><span>${nazev}</span><span class="ipomer">${nak ? fmtH(s.cena / nak) + "×" : "–"}</span></div>
+        <div class="ihlava"><span>${nazev}</span><span class="ipomer">marže ${marzePct} %</span></div>
         <dl><dt>Hodiny</dt><dd>${fmtH(s.h)} → ${fmtH(s.skut)}</dd>
           <dt>Cena</dt><dd>${fmtKc(s.cena)}</dd>
           <dt>Náklad</dt><dd>${fmtKc(nak)}</dd>
-          <dt>Marže</dt><dd>${fmtKc(s.cena - nak)}</dd></dl>
+          <dt>Marže</dt><dd>${fmtKc(s.cena - nak)}</dd>
+          <dt>Cena / náklad</dt><dd>${nak ? fmtH(s.cena / nak) + "×" : "–"}</dd></dl>
       </div>`;
     }).join("");
   return `<div class="card interni">
     <h3>Interní pohled</h3>
     ${bloky || `<p class="muted" style="font-size:13px">Nic k výpočtu.</p>`}
-    <p class="hint">Číslo vpravo je poměr ceny a nákladu. Hodiny „katalog → skutečně“. Skutečné hodiny počítá výchozí odhad úspory s Claudem
+    <p class="hint">Marže v procentech je podíl z ceny. Hodiny „katalog → skutečně“. Skutečné hodiny počítá výchozí odhad úspory s Claudem
       (texty 40 %, data 30 %, technika 20 %, schůzky 0 %), dokud se u úkonu nevyplní naměřené číslo.
       Sazby ${fmtKc(n.cenovaSazba)}/h cena a ${fmtKc(n.nakladovaSazba)}/h náklad se mění na úvodní stránce.</p>
   </div>`;
@@ -2659,43 +2918,8 @@ function vazbyEditoru(){
 function nazevPolozky(p){
   return p.pocet != null && p.pocet !== 1 ? p.pocet + "× " + p.nazev : p.nazev;
 }
-const NADPIS_NACENENI = "Nacenění e-mail marketingu";
 const podnadpisNaceneni = () => [state.klient, state.projekt].filter(Boolean).join(", ");
-
-function exportMd(){
-  const l = ["# " + NADPIS_NACENENI + (podnadpisNaceneni() ? ": " + podnadpisNaceneni() : ""), ""];
-  l.push("Datum: " + new Date().toLocaleDateString("cs-CZ"), "");
-  if(state.cil) l.push("**Cíl spolupráce.** " + state.cil, "");
-  FAZE.forEach(f => {
-    const pol = polozkyFaze(f.id);
-    if(!pol.length) return;
-    l.push("## " + f.cs + " (" + f.fakturace.cs + ")", "", "| Položka | Cena |", "|---|---:|");
-    pol.forEach(p => l.push("| **" + nazevPolozky(p) + "**" + (p.popis ? "<br>" + p.popis : "") + " | " + fmtKc(p.cena) + " |"));
-    l.push("| **Celkem** | **" + fmtKc(soucetFaze(f.id).cena) + "** |", "");
-  });
-  stahni(nazevSouboru("naceneni") + ".md", l.join("\n"), "text/markdown");
-}
-
-// Tisková verze je dokument CreatiComu pro klienta: bílá stránka, logo, růžové nadpisy,
-// přechod jen v tenkém pruhu nahoře. Vysvětlivka jde pod název, „i“ v PDF nefunguje.
-function tisk(){
-  const sekce = FAZE.map(f => {
-    const pol = polozkyFaze(f.id);
-    if(!pol.length) return "";
-    return `<section>
-      <div class="tfaze"><h2>${esc(f.cs)}</h2><span>${esc(f.fakturace.cs)}</span></div>
-      <table><tbody>
-      ${pol.map(p => `<tr><td><strong>${esc(nazevPolozky(p))}</strong>${p.popis ? `<span class="tpopis">${esc(p.popis)}</span>` : ""}</td>
-        <td class="num">${fmtKc(p.cena)}</td></tr>`).join("")}
-      <tr class="total"><td>Celkem ${esc(f.fakturace.cs)}</td><td class="num">${fmtKc(soucetFaze(f.id).cena)}</td></tr></tbody></table>
-    </section>`;
-  }).join("");
-  const r = rozpocet();
-  const prehled = [["Rozjezd", "jednorázově", r.start], ["Měsíční správa", "každý měsíc", r.mesic],
-                   ["Na vyžádání", "při objednání", r.adhoc], ["Ukončení spolupráce", "jednorázově na konci", r.konec]]
-    .filter(x => x[2]).map(([n, k, v]) => `<div class="tdlazdice"><span>${n}</span><strong>${fmtKc(v)}</strong><small>${k}</small></div>`).join("");
-  $("#tisk").innerHTML = `<div class="tpruh"></div>
-    <div class="thlava"><div class="tlogo"><svg width="1976" height="515" viewBox="0 0 1976 515" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+const LOGO_CC = `<svg width="1976" height="515" viewBox="0 0 1976 515" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 <path d="M257.9 457.155C147.677 457.155 58 367.628 58 257.578C58 147.527 147.677 58 257.9 58C303.295 58 346.084 72.8116 381.661 100.842L329.763 166.484C309.115 150.206 284.266 141.612 257.9 141.612C193.856 141.612 141.781 193.63 141.781 257.552C141.781 321.475 193.881 373.492 257.9 373.492C284.292 373.492 309.14 364.899 329.788 348.621L381.686 414.262C346.615 441.914 302.662 457.13 257.9 457.13V457.155Z" fill="url(#paint0_linear_105_53)"/>
 <path d="M317.01 257.627C317.01 290.157 290.644 316.52 258.103 316.52C225.562 316.52 199.196 290.157 199.196 257.627C199.196 225.098 225.562 198.735 258.103 198.735C290.644 198.735 317.01 225.098 317.01 257.627Z" fill="#EB426B"/>
 <path d="M657.522 179.829C641.151 158.243 609.319 148.31 582.446 148.31C518.756 148.31 470.249 190.04 470.249 256.288C470.249 322.536 516.125 365.429 580.7 365.429C615.771 365.429 642.644 352.007 660.761 329.234L631.257 308.508C620.731 322.814 603.22 332.444 581.004 332.444C538.342 332.444 510.887 301.228 510.887 256.263C510.887 213.648 539.809 180.663 582.471 180.663C599.121 180.663 618.706 187.083 629.511 201.97L657.548 179.778L657.522 179.829Z" fill="#232323"/>
@@ -2719,12 +2943,81 @@ function tisk(){
 </linearGradient>
 <image id="image0_105_53" width="217" height="238" preserveAspectRatio="none" xlink:href="data:image/png;base64,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"/>
 </defs>
-</svg></div><div class="tdatum">${new Date().toLocaleDateString("cs-CZ")}</div></div>
-    <h1>${NADPIS_NACENENI}</h1>
+</svg>`;
+const GL_POZNAMKA = "Aktivní oslovování zajišťuje GetLeads, B2B divize CreatiComu.";
+
+// Která divize v nacenění je. Čistě oslovovací nacenění jde celé pod GetLeads,
+// smíšené pod CreatiComem s oddělenou částí GetLeads.
+function divizeVNaceneni(){
+  return DIVIZE.filter(d => FAZE.some(f => polozkyFaze(f.id, d).length));
+}
+function nadpisNaceneni(){
+  const d = divizeVNaceneni();
+  return d.length === 1 && d[0] === "getleads" ? "Nacenění aktivního oslovování" : "Nacenění e-mail marketingu";
+}
+
+function exportMd(){
+  const l = ["# " + nadpisNaceneni() + (podnadpisNaceneni() ? ": " + podnadpisNaceneni() : ""), ""];
+  l.push("Datum: " + new Date().toLocaleDateString("cs-CZ"), "");
+  if(state.cil) l.push("**Cíl spolupráce.** " + state.cil, "");
+  const divize = divizeVNaceneni();
+  divize.forEach(d => {
+    if(d === "getleads" && divize.length > 1) l.push("## Aktivní oslovování (GetLeads)", "", GL_POZNAMKA, "");
+    const uroven = d === "getleads" && divize.length > 1 ? "### " : "## ";
+    FAZE.forEach(f => {
+      const pol = polozkyFaze(f.id, d);
+      if(!pol.length) return;
+      l.push(uroven + f.cs + " (" + f.fakturace.cs + ")", "", "| Položka | Cena |", "|---|---:|");
+      pol.forEach(p => l.push("| **" + nazevPolozky(p) + "**" + (p.popis ? "<br>" + p.popis : "") + " | " + fmtKc(p.cena) + " |"));
+      l.push("| **Celkem** | **" + fmtKc(soucetFaze(f.id, d).cena) + "** |", "");
+    });
+  });
+  stahni(nazevSouboru("naceneni") + ".md", l.join("\n"), "text/markdown");
+}
+
+function tiskSekce(d){
+  return FAZE.map(f => {
+    const pol = polozkyFaze(f.id, d);
+    if(!pol.length) return "";
+    return `<section>
+      <div class="tfaze"><h2>${esc(f.cs)}</h2><span>${esc(f.fakturace.cs)}</span></div>
+      <table><tbody>
+      ${pol.map(p => `<tr><td><strong>${esc(nazevPolozky(p))}</strong>${p.popis ? `<span class="tpopis">${esc(p.popis)}</span>` : ""}</td>
+        <td class="num">${fmtKc(p.cena)}</td></tr>`).join("")}
+      <tr class="total"><td>Celkem ${esc(f.fakturace.cs)}</td><td class="num">${fmtKc(soucetFaze(f.id, d).cena)}</td></tr></tbody></table>
+    </section>`;
+  }).join("");
+}
+
+// Tisková verze je dokument pro klienta: bílá stránka, logo, nadpis, přehled a položky.
+// Vysvětlivka jde pod název, protože „i“ v PDF nefunguje. Okraje stránky drží
+// opakované záhlaví a zápatí tabulky, @page má nulový okraj, aby prohlížeč
+// nepřidával vlastní hlavičku s adresou a patičku s datem.
+function tisk(){
+  const divize = divizeVNaceneni();
+  const jenGl = divize.length === 1 && divize[0] === "getleads";
+  const obsah = divize.map(d => {
+    const sekce = tiskSekce(d);
+    if(d === "getleads" && !jenGl) return `<div class="tgl"><div class="tglhlava">${LOGO_GL}<span>Aktivní oslovování</span></div>
+      <p class="tglpozn">${GL_POZNAMKA}</p>${sekce}</div>`;
+    return sekce;
+  }).join("");
+  const r = rozpocet();
+  const prehled = [["Rozjezd", "jednorázově", r.start], ["Měsíční správa", "každý měsíc", r.mesic],
+                   ["Na vyžádání", "při objednání", r.adhoc], ["Ukončení spolupráce", "jednorázově na konci", r.konec]]
+    .filter(x => x[2]).map(([n, k, v]) => `<div class="tdlazdice"><span>${n}</span><strong>${fmtKc(v)}</strong><small>${k}</small></div>`).join("");
+  const okraj = `<tr><td><div class="tokraj"></div></td></tr>`;
+  $("#tisk").className = jenGl ? "brand-gl" : "";
+  $("#tisk").innerHTML = `<table class="tobal"><thead>${okraj}</thead><tfoot>${okraj}</tfoot><tbody><tr><td>
+    <div class="tpruh"></div>
+    <div class="thlava"><div class="tlogo">${jenGl ? LOGO_GL : LOGO_CC}</div><div class="tdatum">${new Date().toLocaleDateString("cs-CZ")}</div></div>
+    <h1>${nadpisNaceneni()}</h1>
     ${podnadpisNaceneni() ? `<p class="tklient">${esc(podnadpisNaceneni())}</p>` : ""}
     ${state.cil ? `<p class="tcil"><strong>Cíl spolupráce.</strong> ${esc(state.cil)}</p>` : ""}
+    ${jenGl ? `<p class="tglpozn">${GL_POZNAMKA}</p>` : ""}
     <div class="tprehled">${prehled}</div>
-    ${sekce}`;
+    ${obsah}
+  </td></tr></tbody></table>`;
   window.print();
 }
 

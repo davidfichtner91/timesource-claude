@@ -85,6 +85,12 @@
         },
         {
           "id": "tt-monitoring"
+        },
+        {
+          "id": "au-qa"
+        },
+        {
+          "id": "au-tuning"
         }
       ]
     },
@@ -126,6 +132,12 @@
         },
         {
           "id": "tt-dns"
+        },
+        {
+          "id": "au-qa"
+        },
+        {
+          "id": "au-tuning"
         }
       ]
     },
@@ -213,6 +225,13 @@
         },
         {
           "id": "tt-monitoring"
+        },
+        {
+          "id": "au-qa",
+          "hours": 0.5
+        },
+        {
+          "id": "au-seasonal"
         }
       ]
     },
@@ -260,6 +279,16 @@
         },
         {
           "id": "tt-monitoring"
+        },
+        {
+          "id": "au-qa",
+          "hours": 0.5
+        },
+        {
+          "id": "au-tuning"
+        },
+        {
+          "id": "au-seasonal"
         }
       ]
     },
@@ -275,7 +304,7 @@
       },
       "ukony": [
         {
-          "id": "ob-briefing"
+          "id": "co-briefing"
         },
         {
           "id": "co-setup"
@@ -1047,6 +1076,28 @@
       "activities": [
         {
           "kind": "hours",
+          "id": "co-briefing",
+          "name": {
+            "cs": "Úvodní schůzka a zadání oslovování",
+            "en": "Úvodní schůzka a zadání oslovování",
+            "de": "Úvodní schůzka a zadání oslovování"
+          },
+          "tooltip": {
+            "cs": "Cílová skupina, nabídka, kdo odpovědi převezme a co se počítá jako úspěch.",
+            "en": "Cílová skupina, nabídka, kdo odpovědi převezme a co se počítá jako úspěch.",
+            "de": "Cílová skupina, nabídka, kdo odpovědi převezme a co se počítá jako úspěch."
+          },
+          "minHours": 1,
+          "maxHours": 3,
+          "avgHours": 2,
+          "role": "account",
+          "uspora": 0,
+          "popisKlient": {
+            "cs": "Úvodní schůzka o cílové skupině, nabídce a předávání zájemců obchodu."
+          }
+        },
+        {
+          "kind": "hours",
           "id": "co-setup",
           "name": {
             "cs": "Nastavení nástroje pro oslovování",
@@ -1183,7 +1234,8 @@
             "cs": "Text prvního oslovení a jednoho navázání."
           }
         }
-      ]
+      ],
+      "divize": "getleads"
     },
     {
       "id": "campaigns",
@@ -1602,6 +1654,89 @@
       ]
     },
     {
+      "id": "automation-care",
+      "phase": "during",
+      "icon": "🔁",
+      "name": {
+        "cs": "Péče o automatizace",
+        "en": "Automation care",
+        "de": "Pflege der Automationen"
+      },
+      "description": {
+        "cs": "Automatizace po spuštění nežijí samy. Kontrola, ladění podle výsledků a obměna obsahu.",
+        "en": "Automations need checking, tuning and fresh content after launch.",
+        "de": "Automationen brauchen nach dem Start Kontrolle, Optimierung und neue Inhalte."
+      },
+      "activities": [
+        {
+          "kind": "hours",
+          "id": "au-qa",
+          "name": {
+            "cs": "Kontrola funkčnosti automatizací",
+            "en": "Kontrola funkčnosti automatizací",
+            "de": "Kontrola funkčnosti automatizací"
+          },
+          "tooltip": {
+            "cs": "Spouštěče, podmínky, odkazy, slevové kódy a prázdné větve. Rozbitá automatizace mlčí, nikdo si toho nevšimne.",
+            "en": "Spouštěče, podmínky, odkazy, slevové kódy a prázdné větve. Rozbitá automatizace mlčí, nikdo si toho nevšimne.",
+            "de": "Spouštěče, podmínky, odkazy, slevové kódy a prázdné větve. Rozbitá automatizace mlčí, nikdo si toho nevšimne."
+          },
+          "minHours": 0.5,
+          "maxHours": 2,
+          "avgHours": 1,
+          "role": "specialista",
+          "uspora": 0.2,
+          "popisKlient": {
+            "cs": "Pravidelná kontrola, že automatické e-maily chodí, odkazy fungují a kódy platí."
+          }
+        },
+        {
+          "kind": "hours",
+          "id": "au-tuning",
+          "name": {
+            "cs": "Ladění automatizací podle výsledků",
+            "en": "Ladění automatizací podle výsledků",
+            "de": "Ladění automatizací podle výsledků"
+          },
+          "tooltip": {
+            "cs": "Úprava textů, předmětů, časování a podmínek podle open rate, prokliků a tržeb. Navazuje na analýzu výkonu.",
+            "en": "Úprava textů, předmětů, časování a podmínek podle open rate, prokliků a tržeb. Navazuje na analýzu výkonu.",
+            "de": "Úprava textů, předmětů, časování a podmínek podle open rate, prokliků a tržeb. Navazuje na analýzu výkonu."
+          },
+          "minHours": 1,
+          "maxHours": 4,
+          "avgHours": 2,
+          "role": "specialista",
+          "uspora": 0.4,
+          "popisKlient": {
+            "cs": "Úpravy textů, časování a podmínek podle toho, co přináší nejlepší výsledky."
+          }
+        },
+        {
+          "kind": "hours",
+          "id": "au-seasonal",
+          "name": {
+            "cs": "Obměna obsahu automatizací",
+            "en": "Obměna obsahu automatizací",
+            "de": "Obměna obsahu automatizací"
+          },
+          "tooltip": {
+            "cs": "Sezónní a akční úpravy, nové produkty, menu nebo ceny. U gastra a sezónního zboží každý měsíc.",
+            "en": "Sezónní a akční úpravy, nové produkty, menu nebo ceny. U gastra a sezónního zboží každý měsíc.",
+            "de": "Sezónní a akční úpravy, nové produkty, menu nebo ceny. U gastra a sezónního zboží každý měsíc."
+          },
+          "minHours": 0.5,
+          "maxHours": 3,
+          "avgHours": 1,
+          "role": "specialista",
+          "uspora": 0.4,
+          "popisKlient": {
+            "cs": "Aktualizace obsahu automatických e-mailů podle sezóny, akcí a nabídky."
+          }
+        }
+      ]
+    },
+    {
       "id": "cold-outreach-run",
       "phase": "during",
       "icon": "📨",
@@ -1726,7 +1861,8 @@
             "cs": "Přehled, kolik firem bylo osloveno, kolik odpovědělo a kolik schůzek vzniklo."
           }
         }
-      ]
+      ],
+      "divize": "getleads"
     },
     {
       "id": "strategy",
@@ -1956,6 +2092,95 @@
           "uspora": 0.2,
           "popisKlient": {
             "cs": "Převod e-mailingu do jiného nástroje jako samostatný projekt."
+          }
+        }
+      ]
+    },
+    {
+      "id": "automation-extend",
+      "phase": "adhoc",
+      "icon": "➕",
+      "name": {
+        "cs": "Rozšíření automatizací",
+        "en": "Extending automations",
+        "de": "Erweiterung der Automationen"
+      },
+      "description": {
+        "cs": "Nové automatizace a úklid starých během spolupráce, mimo rozjezd.",
+        "en": "New automations and retiring old ones during the engagement.",
+        "de": "Neue Automationen und Abbau alter während der Zusammenarbeit."
+      },
+      "activities": [
+        {
+          "kind": "units",
+          "id": "au-new",
+          "name": {
+            "cs": "Nová automatizace",
+            "en": "New automation",
+            "de": "Neue Automation"
+          },
+          "tooltip": {
+            "cs": "Automatizace přidaná během spolupráce, například narozeninová, po rezervaci nebo pro věrnostní program.",
+            "en": "An automation added during the engagement.",
+            "de": "Eine während der Zusammenarbeit hinzugefügte Automation."
+          },
+          "unitLabel": {
+            "cs": "automatizace",
+            "en": "automation",
+            "de": "Automation"
+          },
+          "complexity": {
+            "simple": {
+              "label": {
+                "cs": "Jeden e-mail",
+                "en": "One email",
+                "de": "Eine E-Mail"
+              },
+              "hoursPerUnit": 4
+            },
+            "standard": {
+              "label": {
+                "cs": "Série 2 až 4 e-mailů",
+                "en": "Series of 2 to 4 emails",
+                "de": "Serie mit 2 bis 4 E-Mails"
+              },
+              "hoursPerUnit": 8
+            },
+            "complex": {
+              "label": {
+                "cs": "Větvená série",
+                "en": "Branched series",
+                "de": "Verzweigte Serie"
+              },
+              "hoursPerUnit": 14
+            }
+          },
+          "role": "specialista",
+          "uspora": 0.4,
+          "popisKlient": {
+            "cs": "Nová automatická série přidaná během spolupráce, třeba k narozeninám nebo po rezervaci."
+          }
+        },
+        {
+          "kind": "hours",
+          "id": "au-retire",
+          "name": {
+            "cs": "Vypnutí nebo sloučení automatizace",
+            "en": "Vypnutí nebo sloučení automatizace",
+            "de": "Vypnutí nebo sloučení automatizace"
+          },
+          "tooltip": {
+            "cs": "Zrušení automatizace, která nefunguje nebo se překrývá s jinou, bez výpadku pro odběratele, kteří jsou zrovna uvnitř.",
+            "en": "Zrušení automatizace, která nefunguje nebo se překrývá s jinou, bez výpadku pro odběratele, kteří jsou zrovna uvnitř.",
+            "de": "Zrušení automatizace, která nefunguje nebo se překrývá s jinou, bez výpadku pro odběratele, kteří jsou zrovna uvnitř."
+          },
+          "minHours": 0.5,
+          "maxHours": 2,
+          "avgHours": 1,
+          "role": "specialista",
+          "uspora": 0.2,
+          "popisKlient": {
+            "cs": "Vypnutí nebo sloučení automatizace, která už neplní svůj účel."
           }
         }
       ]

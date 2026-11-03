@@ -6,7 +6,7 @@
 <title>@ktivity</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Funnel+Display:wght@500;700&family=Funnel+Sans:wght@400;600&display=swap" rel="stylesheet">
 <style>
 :root{
   --pink:#EA406F; --orange:#FD5D47; --dark:#232323; --gray:#686868;
@@ -78,6 +78,11 @@ details.kat .kpocet{font-size:12px;color:var(--gray)}
 details.kat .kcena{margin-left:auto;font-weight:600;white-space:nowrap}
 details.kat .kbody{padding:0 16px 10px}
 .kpopis{font-size:13px;color:var(--gray);margin:0 0 4px}
+/* GetLeads: navy linka vlevo a logo, aby bylo vidět, kterou část dodává B2B divize */
+details.kat-gl{border-left:4px solid #042150}
+.gl-logo{display:inline-flex;align-items:center;gap:5px;font-family:'Funnel Display','Segoe UI',sans-serif;font-weight:700;
+  font-size:13px;letter-spacing:-.02em;color:#042150;white-space:nowrap}
+.gl-logo svg{width:13px;height:13px;flex:none}
 
 .act{border-top:var(--line);padding:12px 0}
 .act .head{display:flex;gap:10px;align-items:flex-start}
@@ -147,8 +152,26 @@ details.nast summary{cursor:pointer;font-weight:600}
 @media print{
   body{background:#fff;font-size:12px}
   body > *:not(#tisk){display:none !important}
-  @page{size:A4;margin:14mm 16mm}
-  #tisk{display:block;color:var(--dark);-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  @page{size:A4;margin:0}
+  #tisk{display:block;color:var(--dark);padding:0 16mm;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  #tisk table.tobal{margin:0}
+  #tisk table.tobal > * > tr > td{padding:0;border:0}
+  #tisk table.tobal > tbody > tr{break-inside:auto;page-break-inside:auto}
+  .tokraj{height:14mm}
+  .tgl{margin-top:26px;border-top:2px solid #042150;padding-top:12px}
+  .tglhlava{display:flex;align-items:center;gap:12px;font-weight:700;font-size:15px}
+  .tglhlava .gl-logo{font-size:18px}
+  .tglhlava .gl-logo svg{width:18px;height:18px}
+  .tglpozn{font-size:11px;color:var(--gray);margin:4px 0 0}
+  .tgl .tfaze{border-bottom-color:#C9DEFF}
+  .tlogo .gl-logo{font-size:24px}
+  .tlogo .gl-logo svg{width:24px;height:24px}
+  /* čistě oslovovací nacenění v brandu GetLeads: navy místo růžové, bez přechodu, písmo Funnel */
+  #tisk.brand-gl{font-family:'Funnel Sans','Segoe UI',sans-serif}
+  #tisk.brand-gl h1,#tisk.brand-gl h2{font-family:'Funnel Display','Segoe UI',sans-serif;font-weight:500;letter-spacing:-.02em;color:#042150}
+  #tisk.brand-gl .tpruh{background:#042150}
+  #tisk.brand-gl .tdlazdice strong{color:#042150}
+  #tisk.brand-gl .tfaze{border-bottom-color:#C9DEFF}
   .tpruh{height:6px;border-radius:3px;background:linear-gradient(135deg,#FD5D47 0%,#EA406F 100%);margin-bottom:18px}
   .thlava{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px}
   .tlogo svg{height:34px;width:auto;display:block}
@@ -234,7 +257,11 @@ function fmtKc(n){ return Math.round(n).toLocaleString("cs-CZ") + " Kč"; }
 const KATEGORIE = CATALOG.kategorie;
 const FAZE = CATALOG.faze;
 const TYPY = CATALOG.typyProjektu;
-const katFaze = f => KATEGORIE.filter(c => c.phase === f);
+// Aktivní oslovování dodává GetLeads, zbytek CreatiCom. Bez divize = obě.
+const DIVIZE = ["creaticom", "getleads"];
+const divizeKat = c => c.divize || "creaticom";
+const katFaze = (f, div) => KATEGORIE.filter(c => c.phase === f && (!div || divizeKat(c) === div));
+const LOGO_GL = `<span class="gl-logo"><svg viewBox="0 0 100 100" aria-hidden="true"><rect x="0" y="13" width="44" height="44" fill="#042150"/><rect x="56" y="0" width="44" height="44" fill="#EA406F"/><rect x="43" y="56" width="44" height="44" fill="#042150"/></svg>GetLeads</span>`;
 
 function actState(id){
   if(!state.acts[id]) state.acts[id] = {sel:false};
@@ -285,18 +312,22 @@ const naklad = h => h * (Number(state.nastaveni.nakladovaSazba)||0);
 
 // Komunikace a schvalování se počítá z hodin specialisty ve fázi, ze které vzniká.
 // Nezrychluje se, hovory a schvalovací kola trvají stejně dlouho.
-function hodinyKomunikace(f){
+// Komunikace se počítá zvlášť za CreatiCom a za GetLeads, aby šly obě části nacenění
+// vytisknout odděleně a jejich součet seděl s celkem do koruny.
+function hodinyKomunikace(f, div){
   let spec = 0;
-  katFaze(f).forEach(c => {
+  katFaze(f, div).forEach(c => {
     c.activities.forEach(a => { if(a.role === "specialista") spec += hodinyUkonu(a); });
     vlastniKat(c.id).forEach(v => spec += Number(v.hours)||0);
   });
   return spec * (Number(state.nastaveni.komunikace)||0) / 100;
 }
+const cenaKomunikace = f => DIVIZE.reduce((a,d) => a + cena(hodinyKomunikace(f, d)), 0);
 
-function polozkyFaze(f){
+function polozkyFaze(f, div){
+  if(!div) return DIVIZE.flatMap(d => polozkyFaze(f, d));
   const out = [];
-  katFaze(f).forEach(c => {
+  katFaze(f, div).forEach(c => {
     c.activities.forEach(a => {
       const h = hodinyUkonu(a);
       if(!h) return;
@@ -309,13 +340,13 @@ function polozkyFaze(f){
       if(h) out.push({kat:c, nazev:v.name, pocet:null, h, skut: skutecneVlastni(v), cena: cena(h)});
     });
   });
-  const kh = hodinyKomunikace(f);
+  const kh = hodinyKomunikace(f, div);
   if(kh) out.push({kat:null, nazev:"Koordinace, komunikace a schvalování", komunikace:true,
     popis:"Hovory, schvalovací kola a zápisy, které k práci v této fázi patří.", h:kh, skut:kh, cena: cena(kh)});
   return out;
 }
-function soucetFaze(f){
-  return polozkyFaze(f).reduce((a,p) => ({cena:a.cena+p.cena, h:a.h+p.h, skut:a.skut+p.skut}), {cena:0,h:0,skut:0});
+function soucetFaze(f, div){
+  return polozkyFaze(f, div).reduce((a,p) => ({cena:a.cena+p.cena, h:a.h+p.h, skut:a.skut+p.skut}), {cena:0,h:0,skut:0});
 }
 function cenaKategorie(c){
   return c.activities.reduce((a,x)=>a+cena(hodinyUkonu(x)),0) + vlastniKat(c.id).reduce((a,v)=>a+cena(Number(v.hours)||0),0);
@@ -416,14 +447,14 @@ function viewEditor(){
   const sekce = FAZE.map(f => {
     const s = soucetFaze(f.id);
     const kats = katFaze(f.id).map(c => blokKategorie(c)).join("");
-    const kh = hodinyKomunikace(f.id);
+    const kh = DIVIZE.reduce((a,d) => a + hodinyKomunikace(f.id, d), 0);
     return `<div class="faze" id="faze-${f.id}">
         <h2>${esc(L(f))}</h2><span class="fakt">${esc(L(f.fakturace))}</span>
         <span class="cena">${s.cena ? fmtKc(s.cena) : ""}</span>
       </div>
       ${kats}
       ${kh ? `<div class="komrow"><span>Koordinace, komunikace a schvalování (${esc(state.nastaveni.komunikace)} %)</span>
-        <span>${fmtKc(cena(kh))}${state.interni ? ` <span class="muted">· ${fmtH(kh)} h</span>` : ""}</span></div>` : ""}`;
+        <span>${fmtKc(cenaKomunikace(f.id))}${state.interni ? ` <span class="muted">· ${fmtH(kh)} h</span>` : ""}</span></div>` : ""}`;
   }).join("");
 
   $("#view").innerHTML = `
@@ -459,8 +490,9 @@ function blokKategorie(c){
   const n = pocetVybranych(c);
   const open = state.otevrene[c.id] ? "open" : "";
   const radky = c.activities.map(a => radekUkonu(a)).join("") + vlastniKat(c.id).map((v,i) => radekVlastni(c,v,i)).join("");
-  return `<details class="kat" data-kat="${c.id}" ${open}>
-    <summary><span class="kn">${esc(L(c.name))}</span>
+  const gl = divizeKat(c) === "getleads";
+  return `<details class="kat ${gl ? "kat-gl" : ""}" data-kat="${c.id}" ${open}>
+    <summary><span class="kn">${esc(L(c.name))}</span>${gl ? LOGO_GL : ""}
       <span class="kpocet">${n ? n + " vybráno" : ""}</span>
       <span class="kcena">${n ? fmtKc(cenaKategorie(c)) : ""}</span></summary>
     <div class="kbody">
@@ -552,18 +584,20 @@ function interniHtml(r){
   const bloky = [["Rozjezd", r.f.before], ["Měsíčně", r.f.during], ["Na vyžádání", r.f.adhoc], ["Ukončení", r.f.after]]
     .filter(([,s]) => s.cena).map(([nazev, s]) => {
       const nak = naklad(s.skut);
+      const marzePct = Math.round((s.cena - nak) / s.cena * 100);
       return `<div class="iblok">
-        <div class="ihlava"><span>${nazev}</span><span class="ipomer">${nak ? fmtH(s.cena / nak) + "×" : "–"}</span></div>
+        <div class="ihlava"><span>${nazev}</span><span class="ipomer">marže ${marzePct} %</span></div>
         <dl><dt>Hodiny</dt><dd>${fmtH(s.h)} → ${fmtH(s.skut)}</dd>
           <dt>Cena</dt><dd>${fmtKc(s.cena)}</dd>
           <dt>Náklad</dt><dd>${fmtKc(nak)}</dd>
-          <dt>Marže</dt><dd>${fmtKc(s.cena - nak)}</dd></dl>
+          <dt>Marže</dt><dd>${fmtKc(s.cena - nak)}</dd>
+          <dt>Cena / náklad</dt><dd>${nak ? fmtH(s.cena / nak) + "×" : "–"}</dd></dl>
       </div>`;
     }).join("");
   return `<div class="card interni">
     <h3>Interní pohled</h3>
     ${bloky || `<p class="muted" style="font-size:13px">Nic k výpočtu.</p>`}
-    <p class="hint">Číslo vpravo je poměr ceny a nákladu. Hodiny „katalog → skutečně“. Skutečné hodiny počítá výchozí odhad úspory s Claudem
+    <p class="hint">Marže v procentech je podíl z ceny. Hodiny „katalog → skutečně“. Skutečné hodiny počítá výchozí odhad úspory s Claudem
       (texty 40 %, data 30 %, technika 20 %, schůzky 0 %), dokud se u úkonu nevyplní naměřené číslo.
       Sazby ${fmtKc(n.cenovaSazba)}/h cena a ${fmtKc(n.nakladovaSazba)}/h náklad se mění na úvodní stránce.</p>
   </div>`;
@@ -613,48 +647,82 @@ function vazbyEditoru(){
 function nazevPolozky(p){
   return p.pocet != null && p.pocet !== 1 ? p.pocet + "× " + p.nazev : p.nazev;
 }
-const NADPIS_NACENENI = "Nacenění e-mail marketingu";
 const podnadpisNaceneni = () => [state.klient, state.projekt].filter(Boolean).join(", ");
+const LOGO_CC = `<!--__LOGO__-->`;
+const GL_POZNAMKA = "Aktivní oslovování zajišťuje GetLeads, B2B divize CreatiComu.";
+
+// Která divize v nacenění je. Čistě oslovovací nacenění jde celé pod GetLeads,
+// smíšené pod CreatiComem s oddělenou částí GetLeads.
+function divizeVNaceneni(){
+  return DIVIZE.filter(d => FAZE.some(f => polozkyFaze(f.id, d).length));
+}
+function nadpisNaceneni(){
+  const d = divizeVNaceneni();
+  return d.length === 1 && d[0] === "getleads" ? "Nacenění aktivního oslovování" : "Nacenění e-mail marketingu";
+}
 
 function exportMd(){
-  const l = ["# " + NADPIS_NACENENI + (podnadpisNaceneni() ? ": " + podnadpisNaceneni() : ""), ""];
+  const l = ["# " + nadpisNaceneni() + (podnadpisNaceneni() ? ": " + podnadpisNaceneni() : ""), ""];
   l.push("Datum: " + new Date().toLocaleDateString("cs-CZ"), "");
   if(state.cil) l.push("**Cíl spolupráce.** " + state.cil, "");
-  FAZE.forEach(f => {
-    const pol = polozkyFaze(f.id);
-    if(!pol.length) return;
-    l.push("## " + f.cs + " (" + f.fakturace.cs + ")", "", "| Položka | Cena |", "|---|---:|");
-    pol.forEach(p => l.push("| **" + nazevPolozky(p) + "**" + (p.popis ? "<br>" + p.popis : "") + " | " + fmtKc(p.cena) + " |"));
-    l.push("| **Celkem** | **" + fmtKc(soucetFaze(f.id).cena) + "** |", "");
+  const divize = divizeVNaceneni();
+  divize.forEach(d => {
+    if(d === "getleads" && divize.length > 1) l.push("## Aktivní oslovování (GetLeads)", "", GL_POZNAMKA, "");
+    const uroven = d === "getleads" && divize.length > 1 ? "### " : "## ";
+    FAZE.forEach(f => {
+      const pol = polozkyFaze(f.id, d);
+      if(!pol.length) return;
+      l.push(uroven + f.cs + " (" + f.fakturace.cs + ")", "", "| Položka | Cena |", "|---|---:|");
+      pol.forEach(p => l.push("| **" + nazevPolozky(p) + "**" + (p.popis ? "<br>" + p.popis : "") + " | " + fmtKc(p.cena) + " |"));
+      l.push("| **Celkem** | **" + fmtKc(soucetFaze(f.id, d).cena) + "** |", "");
+    });
   });
   stahni(nazevSouboru("naceneni") + ".md", l.join("\n"), "text/markdown");
 }
 
-// Tisková verze je dokument CreatiComu pro klienta: bílá stránka, logo, růžové nadpisy,
-// přechod jen v tenkém pruhu nahoře. Vysvětlivka jde pod název, „i“ v PDF nefunguje.
-function tisk(){
-  const sekce = FAZE.map(f => {
-    const pol = polozkyFaze(f.id);
+function tiskSekce(d){
+  return FAZE.map(f => {
+    const pol = polozkyFaze(f.id, d);
     if(!pol.length) return "";
     return `<section>
       <div class="tfaze"><h2>${esc(f.cs)}</h2><span>${esc(f.fakturace.cs)}</span></div>
       <table><tbody>
       ${pol.map(p => `<tr><td><strong>${esc(nazevPolozky(p))}</strong>${p.popis ? `<span class="tpopis">${esc(p.popis)}</span>` : ""}</td>
         <td class="num">${fmtKc(p.cena)}</td></tr>`).join("")}
-      <tr class="total"><td>Celkem ${esc(f.fakturace.cs)}</td><td class="num">${fmtKc(soucetFaze(f.id).cena)}</td></tr></tbody></table>
+      <tr class="total"><td>Celkem ${esc(f.fakturace.cs)}</td><td class="num">${fmtKc(soucetFaze(f.id, d).cena)}</td></tr></tbody></table>
     </section>`;
+  }).join("");
+}
+
+// Tisková verze je dokument pro klienta: bílá stránka, logo, nadpis, přehled a položky.
+// Vysvětlivka jde pod název, protože „i“ v PDF nefunguje. Okraje stránky drží
+// opakované záhlaví a zápatí tabulky, @page má nulový okraj, aby prohlížeč
+// nepřidával vlastní hlavičku s adresou a patičku s datem.
+function tisk(){
+  const divize = divizeVNaceneni();
+  const jenGl = divize.length === 1 && divize[0] === "getleads";
+  const obsah = divize.map(d => {
+    const sekce = tiskSekce(d);
+    if(d === "getleads" && !jenGl) return `<div class="tgl"><div class="tglhlava">${LOGO_GL}<span>Aktivní oslovování</span></div>
+      <p class="tglpozn">${GL_POZNAMKA}</p>${sekce}</div>`;
+    return sekce;
   }).join("");
   const r = rozpocet();
   const prehled = [["Rozjezd", "jednorázově", r.start], ["Měsíční správa", "každý měsíc", r.mesic],
                    ["Na vyžádání", "při objednání", r.adhoc], ["Ukončení spolupráce", "jednorázově na konci", r.konec]]
     .filter(x => x[2]).map(([n, k, v]) => `<div class="tdlazdice"><span>${n}</span><strong>${fmtKc(v)}</strong><small>${k}</small></div>`).join("");
-  $("#tisk").innerHTML = `<div class="tpruh"></div>
-    <div class="thlava"><div class="tlogo"><!--__LOGO__--></div><div class="tdatum">${new Date().toLocaleDateString("cs-CZ")}</div></div>
-    <h1>${NADPIS_NACENENI}</h1>
+  const okraj = `<tr><td><div class="tokraj"></div></td></tr>`;
+  $("#tisk").className = jenGl ? "brand-gl" : "";
+  $("#tisk").innerHTML = `<table class="tobal"><thead>${okraj}</thead><tfoot>${okraj}</tfoot><tbody><tr><td>
+    <div class="tpruh"></div>
+    <div class="thlava"><div class="tlogo">${jenGl ? LOGO_GL : LOGO_CC}</div><div class="tdatum">${new Date().toLocaleDateString("cs-CZ")}</div></div>
+    <h1>${nadpisNaceneni()}</h1>
     ${podnadpisNaceneni() ? `<p class="tklient">${esc(podnadpisNaceneni())}</p>` : ""}
     ${state.cil ? `<p class="tcil"><strong>Cíl spolupráce.</strong> ${esc(state.cil)}</p>` : ""}
+    ${jenGl ? `<p class="tglpozn">${GL_POZNAMKA}</p>` : ""}
     <div class="tprehled">${prehled}</div>
-    ${sekce}`;
+    ${obsah}
+  </td></tr></tbody></table>`;
   window.print();
 }
 

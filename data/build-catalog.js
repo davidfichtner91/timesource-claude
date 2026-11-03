@@ -63,6 +63,7 @@ const ACCOUNT = new Set([
   "st-consult",
   "co-replies",
   "of-handover",
+  "co-briefing",
 ]);
 
 // ── 4. Nové kategorie a úkony ─────────────────────────────────────────────────
@@ -125,6 +126,8 @@ const COLD_BEFORE = {
     de: "Einmaliges Setup des Outreach-Kanals vor der ersten Welle.",
   },
   activities: [
+    h("co-briefing", "Úvodní schůzka a zadání oslovování",
+      "Cílová skupina, nabídka, kdo odpovědi převezme a co se počítá jako úspěch.", 1, 3, 2),
     h("co-setup", "Nastavení nástroje pro oslovování",
       "Konfigurace nástroje (Woodpecker, Instantly), napojení schránek, kroky sekvence, denní stropy.", 2, 6, 3),
     h("co-mailbox", "Zřízení odesílacích schránek a subdomény",
@@ -213,16 +216,77 @@ cats.forEach((cat) => {
   });
 });
 
+// Automatizace se jednou postaví, ale pak se musí hlídat, ladit a obměňovat.
+// Bez téhle kategorie by nacenění tvrdilo, že po rozjezdu běží samy. Doplněno 3. 11. 2026.
+const AUTOMATIZACE_PECE = {
+  id: "automation-care",
+  phase: "during",
+  icon: "🔁",
+  name: { cs: "Péče o automatizace", en: "Automation care", de: "Pflege der Automationen" },
+  description: {
+    cs: "Automatizace po spuštění nežijí samy. Kontrola, ladění podle výsledků a obměna obsahu.",
+    en: "Automations need checking, tuning and fresh content after launch.",
+    de: "Automationen brauchen nach dem Start Kontrolle, Optimierung und neue Inhalte.",
+  },
+  activities: [
+    h("au-qa", "Kontrola funkčnosti automatizací",
+      "Spouštěče, podmínky, odkazy, slevové kódy a prázdné větve. Rozbitá automatizace mlčí, nikdo si toho nevšimne.", 0.5, 2, 1),
+    h("au-tuning", "Ladění automatizací podle výsledků",
+      "Úprava textů, předmětů, časování a podmínek podle open rate, prokliků a tržeb. Navazuje na analýzu výkonu.", 1, 4, 2),
+    h("au-seasonal", "Obměna obsahu automatizací",
+      "Sezónní a akční úpravy, nové produkty, menu nebo ceny. U gastra a sezónního zboží každý měsíc.", 0.5, 3, 1),
+  ],
+};
+
+const AUTOMATIZACE_ROZSIRENI = {
+  id: "automation-extend",
+  phase: "adhoc",
+  icon: "➕",
+  name: { cs: "Rozšíření automatizací", en: "Extending automations", de: "Erweiterung der Automationen" },
+  description: {
+    cs: "Nové automatizace a úklid starých během spolupráce, mimo rozjezd.",
+    en: "New automations and retiring old ones during the engagement.",
+    de: "Neue Automationen und Abbau alter während der Zusammenarbeit.",
+  },
+  activities: [
+    {
+      kind: "units",
+      id: "au-new",
+      name: { cs: "Nová automatizace", en: "New automation", de: "Neue Automation" },
+      tooltip: {
+        cs: "Automatizace přidaná během spolupráce, například narozeninová, po rezervaci nebo pro věrnostní program.",
+        en: "An automation added during the engagement.",
+        de: "Eine während der Zusammenarbeit hinzugefügte Automation.",
+      },
+      unitLabel: { cs: "automatizace", en: "automation", de: "Automation" },
+      complexity: {
+        simple: { label: { cs: "Jeden e-mail", en: "One email", de: "Eine E-Mail" }, hoursPerUnit: 4 },
+        standard: { label: { cs: "Série 2 až 4 e-mailů", en: "Series of 2 to 4 emails", de: "Serie mit 2 bis 4 E-Mails" }, hoursPerUnit: 8 },
+        complex: { label: { cs: "Větvená série", en: "Branched series", de: "Verzweigte Serie" }, hoursPerUnit: 14 },
+      },
+    },
+    h("au-retire", "Vypnutí nebo sloučení automatizace",
+      "Zrušení automatizace, která nefunguje nebo se překrývá s jinou, bez výpadku pro odběratele, kteří jsou zrovna uvnitř.", 0.5, 2, 1),
+  ],
+};
+
 // cold outreach na své místo: rozjezd za ostatní "before", provoz za ostatní "during"
 const byPhase = (p) => cats.filter((c) => c.phase === p);
 cats = [
   ...byPhase("before"),
   COLD_BEFORE,
   ...byPhase("during"),
+  AUTOMATIZACE_PECE,
   COLD_DURING,
   ...byPhase("adhoc"),
+  AUTOMATIZACE_ROZSIRENI,
   OFFBOARDING,
 ];
+
+// Aktivní oslovování dodává GetLeads, B2B divize CreatiComu. V appce i v nacenění
+// má vlastní označení a logo, aby klient viděl, kdo za kterou částí stojí.
+COLD_BEFORE.divize = "getleads";
+COLD_DURING.divize = "getleads";
 
 // ── 4b. Odhad úspory času s Claudem ───────────────────────────────────────────
 // Podíl času, který na úkonu ušetří práce s Claudem. VÝCHOZÍ ODHAD z 3. 11. 2026,
@@ -231,7 +295,7 @@ cats = [
 const USPORA_TEXTY = 0.4;     // copywriting, šablony, automatizace, reporty, strategie, audit
 const USPORA_DATA = 0.3;      // import, čištění, segmenty, seznamy firem
 const USPORA_TECHNIKA = 0.2;  // DNS, integrace, nastavení nástrojů, migrace, řešení potíží
-const TEXTOVE = /^(if-|ca-|re-monthly|re-flows|co-sequence|co-report|ob-template|ob-audit|st-strategy|st-fullaudit|st-multimarket)/;
+const TEXTOVE = /^(if-|ca-|au-tuning|au-seasonal|au-new|re-monthly|re-flows|co-sequence|co-report|ob-template|ob-audit|st-strategy|st-fullaudit|st-multimarket)/;
 const DATOVE = /^(ob-import|ob-lists|lm-|co-list|co-snippets|co-wave)/;
 
 cats.forEach((cat) => {
@@ -269,6 +333,7 @@ const POPIS_KLIENT = {
   "if-winback": "Série pro zákazníky, kteří delší dobu nenakoupili, s pozvánkou zpět.",
   "if-browse": "Připomenutí produktů, které si někdo prohlížel a nekoupil.",
   "if-b2b": "Navazující e-maily po poptávce, aby obchodní příležitost nevychladla.",
+  "co-briefing": "Úvodní schůzka o cílové skupině, nabídce a předávání zájemců obchodu.",
   "co-setup": "Nastavení nástroje, ze kterého se oslovovací e-maily posílají.",
   "co-mailbox": "Samostatné odesílací schránky a doména, aby oslovování neohrozilo běžnou poštu firmy.",
   "co-warmup": "Postupné zahřívání nových schránek, aby e-maily od začátku chodily do doručené pošty.",
@@ -303,6 +368,11 @@ const POPIS_KLIENT = {
   "of-handover": "Předávací dokument a schůzka se soupisem všeho, co v účtu běží.",
   "of-access": "Předání vlastnictví účtu a odebrání přístupů agentury.",
   "of-export": "Předání databáze, šablon a reportů, aby zůstaly k dispozici i po ukončení spolupráce.",
+  "au-qa": "Pravidelná kontrola, že automatické e-maily chodí, odkazy fungují a kódy platí.",
+  "au-tuning": "Úpravy textů, časování a podmínek podle toho, co přináší nejlepší výsledky.",
+  "au-seasonal": "Aktualizace obsahu automatických e-mailů podle sezóny, akcí a nabídky.",
+  "au-new": "Nová automatická série přidaná během spolupráce, třeba k narozeninám nebo po rezervaci.",
+  "au-retire": "Vypnutí nebo sloučení automatizace, která už neplní svůj účel.",
 };
 
 cats.forEach((cat) => cat.activities.forEach((a) => {
@@ -325,6 +395,7 @@ const TYPY_PROJEKTU = [
       "ob-briefing", "ob-audit", "ob-import", "ob-lists", "ob-template", "ob-optin", "ob-doubleoptin", "ob-utm",
       "if-welcome", "if-cart", "if-postpurchase", "if-winback",
       { id: "ca-campaign", units: 2 }, "lm-cleaning", "lm-segment", "re-monthly", "tt-monitoring",
+      "au-qa", "au-tuning",
     ],
   },
   {
@@ -333,7 +404,7 @@ const TYPY_PROJEKTU = [
     popis: { cs: "Klient už e-mailing má. Kampaně, péče o databázi a report každý měsíc." },
     ukony: [
       { id: "ca-campaign", units: 2 }, "ca-abtest", "lm-cleaning", "lm-import", "lm-segment",
-      "re-monthly", "re-flows", "tt-monitoring", "tt-dns",
+      "re-monthly", "re-flows", "tt-monitoring", "tt-dns", "au-qa", "au-tuning",
     ],
   },
   {
@@ -351,6 +422,7 @@ const TYPY_PROJEKTU = [
       "ob-optin", "ob-doubleoptin", "ob-utm",
       { id: "if-welcome", cx: "simple" },
       { id: "ca-campaign", units: 2, cx: "simple" }, "lm-cleaning", { id: "re-monthly", cx: "simple" }, "tt-monitoring",
+      { id: "au-qa", hours: 0.5 }, "au-seasonal",
     ],
   },
   {
@@ -361,6 +433,7 @@ const TYPY_PROJEKTU = [
       "ob-briefing", "ob-audit", "ob-template", "ob-lists",
       { id: "if-welcome", cx: "simple" },
       { id: "ca-campaign", units: 2, cx: "simple" }, "lm-cleaning", "lm-segment", { id: "re-monthly", cx: "simple" }, "tt-monitoring",
+      { id: "au-qa", hours: 0.5 }, "au-tuning", "au-seasonal",
     ],
   },
   {
@@ -368,7 +441,7 @@ const TYPY_PROJEKTU = [
     name: { cs: "Aktivní oslovování", en: "Cold outreach", de: "Cold Outreach" },
     popis: { cs: "Oslovování firem dvěma automatickými e-maily. Rozjezd domény a schránek, pak měsíční vlny." },
     ukony: [
-      "ob-briefing", "co-setup", "co-mailbox", "co-warmup", "co-list-setup", "co-sequence",
+      "co-briefing", "co-setup", "co-mailbox", "co-warmup", "co-list-setup", "co-sequence",
       "co-list-monthly", "co-snippets", "co-wave", "co-replies", "co-report",
     ],
   },
