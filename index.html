@@ -1757,8 +1757,8 @@ const T = {
     soucetKat:"Součet kategorie", krok:"Krok", z:"z",
     vlastni:"Přidat vlastní úkon", nazevUkonu:"Název úkonu",
     prehled:"Přehled", rozpad:"Rozpad po kategoriích", poRolich:"Rozdělení podle rolí",
-    jednorazove:"Jednorázově", mesicne:"Měsíčně", celkemHod:"Celkem hodin",
-    fazeCelkem:"Celkem", nicVybrano:"Zatím není vybraný žádný úkon.",
+    jednorazove:"Jednorázově", mesicne:"Měsíčně", celkemHod:"Rozjezd a první měsíc",
+    nicVybrano:"Zatím není vybraný žádný úkon.",
     ulozit:"Uložit projekt", nacist:"Načíst projekt", tisk:"Tisk a PDF",
     export:"Export do naceneni.md", odkaz:"Sdílecí odkaz", zkopirovano:"Zkopírováno",
     nacteno:"Projekt načten", chybaSouboru:"Soubor se nepodařilo načíst",
@@ -1783,8 +1783,8 @@ const T = {
     soucetKat:"Category subtotal", krok:"Step", z:"of",
     vlastni:"Add custom activity", nazevUkonu:"Activity name",
     prehled:"Overview", rozpad:"By category", poRolich:"By role",
-    jednorazove:"One-off", mesicne:"Monthly", celkemHod:"Total hours",
-    fazeCelkem:"Total", nicVybrano:"Nothing selected yet.",
+    jednorazove:"One-off", mesicne:"Monthly", celkemHod:"Setup and first month",
+    nicVybrano:"Nothing selected yet.",
     ulozit:"Save project", nacist:"Load project", tisk:"Print and PDF",
     export:"Export to naceneni.md", odkaz:"Share link", zkopirovano:"Copied",
     nacteno:"Project loaded", chybaSouboru:"Could not read the file",
@@ -1809,8 +1809,8 @@ const T = {
     soucetKat:"Zwischensumme", krok:"Schritt", z:"von",
     vlastni:"Eigene Tätigkeit", nazevUkonu:"Bezeichnung",
     prehled:"Überblick", rozpad:"Nach Kategorie", poRolich:"Nach Rolle",
-    jednorazove:"Einmalig", mesicne:"Monatlich", celkemHod:"Stunden gesamt",
-    fazeCelkem:"Gesamt", nicVybrano:"Noch nichts ausgewählt.",
+    jednorazove:"Einmalig", mesicne:"Monatlich", celkemHod:"Start und erster Monat",
+    nicVybrano:"Noch nichts ausgewählt.",
     ulozit:"Projekt speichern", nacist:"Projekt laden", tisk:"Drucken und PDF",
     export:"Export nach naceneni.md", odkaz:"Freigabelink", zkopirovano:"Kopiert",
     nacteno:"Projekt geladen", chybaSouboru:"Datei konnte nicht gelesen werden",
@@ -1902,18 +1902,33 @@ function hodinyKategorie(kat){
 function hodinyFaze(faze){
   return KATEGORIE.filter(c=>c.phase===faze).reduce((a,c)=>a+hodinyKategorie(c),0);
 }
-function hodinyRole(role){
+// Bez fáze sčítá přes všechny fáze.
+function hodinyRole(role, faze){
   let sum = 0;
-  KATEGORIE.forEach(c => c.activities.forEach(a => { if(a.role===role) sum += hodinyUkonu(a); }));
-  KATEGORIE.forEach(c => (state.vlastni[c.id]||[]).forEach(v => { if((v.role||"specialista")===role) sum += Number(v.hours)||0; }));
+  KATEGORIE.filter(c => !faze || c.phase === faze).forEach(c => {
+    c.activities.forEach(a => { if(a.role===role) sum += hodinyUkonu(a); });
+    (state.vlastni[c.id]||[]).forEach(v => { if((v.role||"specialista")===role) sum += Number(v.hours)||0; });
+  });
   return sum;
 }
-function hodinyKomunikace(){
+// Komunikace patří do té fáze, ze které vznikla. Jinak by se měsíční schvalování
+// přičetlo k rozjezdu a jedno číslo za celou spolupráci by nešlo nacenit.
+function hodinyKomunikace(faze){
   const pct = Number(state.komunikace) || 0;
-  return hodinyRole("specialista") * pct / 100;
+  return hodinyRole("specialista", faze) * pct / 100;
+}
+const JEDNORAZOVE_FAZE = ["before","adhoc","after"];
+function hodinyFazeSKomunikaci(faze){
+  return hodinyFaze(faze) + hodinyKomunikace(faze);
+}
+function hodinyJednorazove(){
+  return JEDNORAZOVE_FAZE.reduce((a,f)=>a+hodinyFazeSKomunikaci(f),0);
+}
+function hodinyMesicne(){
+  return hodinyFazeSKomunikaci("during");
 }
 function celkem(){
-  return FAZE.reduce((a,f)=>a+hodinyFaze(f.id),0) + hodinyKomunikace();
+  return hodinyJednorazove() + hodinyMesicne();
 }
 
 /* ── vykreslení ────────────────────────────────────────────────────────────── */
@@ -2126,8 +2141,8 @@ function viewSouhrn(){
   const sazba = Number(state.sazba) || 0;
   const kc = h => sazba ? `<div class="m">${fmtKc(h*sazba)}</div>` : "";
 
-  const jednoraz = hodinyFaze("before") + hodinyFaze("adhoc") + hodinyFaze("after");
-  const mesicne = hodinyFaze("during");
+  const jednoraz = hodinyJednorazove();
+  const mesicne = hodinyMesicne();
   const kom = hodinyKomunikace();
   const tot = celkem();
 
@@ -2138,18 +2153,18 @@ function viewSouhrn(){
     return;
   }
 
-  const radky = FAZE.map(f => {
-    const kats = KATEGORIE.filter(c => c.phase === f.id && hodinyKategorie(c) > 0);
-    if(!kats.length) return "";
-    return `<tr><td colspan="${sazba?4:3}" style="padding-top:16px">
-        <span class="phase ph-${f.id}">${esc(f[state.lang]||f.cs)}</span></td></tr>` +
-      kats.map(c => {
-        const h = hodinyKategorie(c);
-        return `<tr><td>${esc(L(c.name))}</td>
+  const radek = (nazev, h) => `<tr><td>${esc(nazev)}</td>
           <td class="num">${fmtH(h)} ${t("hodin")}</td>
           <td class="num muted">${dny(h)}</td>
           ${sazba?`<td class="num">${fmtKc(h*sazba)}</td>`:""}</tr>`;
-      }).join("");
+  const radky = FAZE.map(f => {
+    const kats = KATEGORIE.filter(c => c.phase === f.id && hodinyKategorie(c) > 0);
+    if(!kats.length) return "";
+    const komF = hodinyKomunikace(f.id);
+    return `<tr><td colspan="${sazba?4:3}" style="padding-top:16px">
+        <span class="phase ph-${f.id}">${esc(f[state.lang]||f.cs)}</span></td></tr>` +
+      kats.map(c => radek(L(c.name), hodinyKategorie(c))).join("") +
+      (komF ? radek(t("komunikace"), komF) : "");
   }).join("");
 
   const spec = hodinyRole("specialista"), acc = hodinyRole("account");
@@ -2177,10 +2192,7 @@ function viewSouhrn(){
         <thead><tr><th></th><th class="num">${t("hodiny")}</th><th class="num"></th>${sazba?"<th class='num'></th>":""}</tr></thead>
         <tbody>
           ${radky}
-          ${kom ? `<tr><td style="padding-top:16px">${t("komunikace")}</td>
-            <td class="num">${fmtH(kom)} ${t("hodin")}</td><td class="num muted">${dny(kom)}</td>
-            ${sazba?`<td class="num">${fmtKc(kom*sazba)}</td>`:""}</tr>` : ""}
-          <tr class="total"><td>${t("fazeCelkem")}</td><td class="num">${fmtH(tot)} ${t("hodin")}</td>
+          <tr class="total"><td>${t("celkemHod")}</td><td class="num">${fmtH(tot)} ${t("hodin")}</td>
             <td class="num">${dny(tot)}</td>${sazba?`<td class="num">${fmtKc(tot*sazba)}</td>`:""}</tr>
         </tbody>
       </table>
@@ -2338,29 +2350,24 @@ function exportMd(){
         l.push("| " + v.name + " | " + (v.role||"specialista") + " | " + fmtH(v.hours) + " | " + (sazba ? fmtKc(v.hours*sazba) + " |" : ""));
       });
     });
-    const sum = kats.reduce((a,c)=>a+hodinyKategorie(c),0);
+    const komF = hodinyKomunikace(f.id);
+    if(komF) l.push("| Komunikace a schvalování (" + state.komunikace + " % z hodin specialisty) | specialista | " + fmtH(komF) + " | " + (sazba ? fmtKc(komF*sazba) + " |" : ""));
+    const sum = hodinyFazeSKomunikaci(f.id);
     l.push(sazba
       ? "| **" + f.cs + " celkem** | | **" + fmtH(sum) + "** | **" + fmtKc(sum*sazba) + "** |"
       : "| **" + f.cs + " celkem** | | **" + fmtH(sum) + "** |");
     l.push("");
   });
 
-  const kom = hodinyKomunikace();
-  if(kom){
-    l.push("## Komunikace a schvalování");
-    l.push("");
-    l.push("Připočteno " + state.komunikace + " % z hodin specialisty, tedy " + fmtH(kom) + " h"
-      + (sazba ? " (" + fmtKc(kom*sazba) + ")" : "") + ". Zahrnuje hovory, schvalovací kola a zápisy.");
-    l.push("");
-  }
-
-  const tot = celkem();
   l.push("## Celkem");
   l.push("");
+  if(hodinyKomunikace()) {
+    l.push("Komunikace a schvalování (hovory, schvalovací kola, zápisy) je v každé fázi připočtená jako " + state.komunikace + " % z hodin specialisty.");
+    l.push("");
+  }
   l.push("| | Hodiny | Pracovních dnů |" + (sazba ? " Cena |" : ""));
   l.push("|---|---:|---:|" + (sazba ? "---:|" : ""));
-  const rows = [["Jednorázově", hodinyFaze("before")+hodinyFaze("adhoc")+hodinyFaze("after")],
-                ["Měsíčně", hodinyFaze("during")], ["Celkem", tot]];
+  const rows = [["Jednorázově", hodinyJednorazove()], ["Měsíčně", hodinyMesicne()], ["Rozjezd a první měsíc", celkem()]];
   rows.forEach(([n,h]) => l.push("| " + n + " | " + fmtH(h) + " | " + fmtH(h/8) + " |" + (sazba ? " " + fmtKc(h*sazba) + " |" : "")));
   l.push("");
   l.push("Sazba " + (sazba ? sazba.toLocaleString("cs-CZ") + " Kč/hod" : "není v dokumentu uvedená") + ".");
