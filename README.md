@@ -1,4 +1,4 @@
-# Time Source
+# @ktivity (dřív Time Source)
 
 Průvodce odhadem času na e-mailový projekt. Vybere se, co se u klienta bude dělat, doplní hodiny a vypadne z toho nacenění ve struktuře fáze 04 playbooku.
 

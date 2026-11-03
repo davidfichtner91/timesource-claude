@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Time Source</title>
+<title>@ktivity</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
@@ -125,7 +125,7 @@ details summary{cursor:pointer;font-weight:600;font-size:14px}
 <header>
   <div class="wrap">
     <div>
-      <h1>Time Source</h1>
+      <h1>@ktivity</h1>
       <div class="sub" id="hsub"></div>
     </div>
     <div class="langs" id="langs"></div>
@@ -723,7 +723,7 @@ function exportMd(){
   const l = [];
   l.push("# Nacenění: " + (state.klient || "klient") + (state.projekt ? ", " + state.projekt : ""));
   l.push("");
-  l.push("Odhad vznikl v Time Source " + dnes + ". Hodiny jsou odhad, ne závazek.");
+  l.push("Odhad vznikl v @ktivity " + dnes + ". Hodiny jsou odhad, ne závazek.");
   l.push("");
   if(state.cil){ l.push("**Cíl spolupráce.** " + state.cil); l.push(""); }
 
