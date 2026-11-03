@@ -73,6 +73,6 @@ Katalog je vytažený z verze běžící na timesource.davidfichtner.cz (postave
 
 ## Co je otevřené
 
-- Nasazuje se přes Vercel, ne přes GitHub Pages. Projekt je statický, žádný build, výstupem je `index.html` v rootu. Proto v repozitáři není soubor `CNAME`, ten patří jen GitHub Pages.
+- Běží na https://aktivity-emailing.davidfichtner.cz/ (Vercel projekt `timesource`, nasazuje se sám po každém pushi do `main`). Projekt je statický, žádný build, výstupem je `index.html` v rootu. Stará Macaly verze zůstává na timesource.davidfichtner.cz, dokud se nevypne.
 - Presety hodin jsou převzaté z předchozí verze a nikdo neověřil, z jakého období pocházejí. Doplnit je z reálně odpracovaných měsíců, začít u CX Techu.
 - Logo klienta v hlavičce se zatím nevkládá. Dřív bylo v JSON jako base64 a nafukovalo odkaz, proto vypadlo.
