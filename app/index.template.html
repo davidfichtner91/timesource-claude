@@ -76,6 +76,10 @@ textarea{min-height:64px;resize:vertical}
 .presets{display:flex;gap:6px}
 .presets button{border:1px solid #ddd;background:#fff;border-radius:6px;padding:4px 10px;font:inherit;font-size:12px;cursor:pointer}
 .presets button:hover{border-color:var(--pink);color:var(--pink)}
+.typy{display:flex;flex-wrap:wrap;gap:8px}
+.typy button{border:1px solid #ddd;background:#fff;border-radius:8px;padding:8px 14px;font:inherit;font-size:14px;cursor:pointer}
+.typy button:hover{border-color:var(--pink);color:var(--pink)}
+.typy button.on{background:var(--pink);border-color:var(--pink);color:#fff}
 .rng{font-size:12px;color:var(--gray)}
 .sum{margin-left:auto;font-weight:600;white-space:nowrap}
 
@@ -150,6 +154,8 @@ const T = {
     cilPh:"Rozjet newsletter a uvítací sérii, do půl roku dostat e-mail na desetinu tržeb.",
     komunikace:"Komunikace a schvalování", komunikaceIn:"Komunikace a schvalování (% z hodin specialisty)",
     komunikaceHint:"Připočítá se automaticky. Nepatří mezi úkony, protože se na ni jinak zapomene.",
+    typ:"Rychlý start podle typu projektu",
+    typHint:"Předvybere kategorie a úkony s běžnými hodinami. Pak už se jen ubírá a ladí. Dosavadní výběr se přepíše.",
     vyber:"Které kategorie se budou řešit",
     vyberHint:"Průvodce projde jen zaškrtnuté kategorie.",
     dal:"Pokračovat", zpet:"Zpět", souhrn:"Souhrn", start:"Začít",
@@ -175,6 +181,8 @@ const T = {
     cilPh:"Launch the newsletter and a welcome series, get email to a tenth of revenue within six months.",
     komunikace:"Communication and approvals", komunikaceIn:"Communication and approvals (% of specialist hours)",
     komunikaceHint:"Added automatically.",
+    typ:"Quick start by project type",
+    typHint:"Preselects categories and activities with typical hours. Replaces the current selection.",
     vyber:"Categories in scope", vyberHint:"The wizard only walks through ticked categories.",
     dal:"Continue", zpet:"Back", souhrn:"Summary", start:"Start",
     hodin:"h", hodiny:"Hours", jednotek:"Units", slozitost:"Complexity",
@@ -199,6 +207,8 @@ const T = {
     cilPh:"Newsletter und Willkommensserie starten, in sechs Monaten ein Zehntel des Umsatzes über E-Mail.",
     komunikace:"Kommunikation und Freigaben", komunikaceIn:"Kommunikation und Freigaben (% der Spezialistenstunden)",
     komunikaceHint:"Wird automatisch addiert.",
+    typ:"Schnellstart nach Projekttyp",
+    typHint:"Wählt Kategorien und Tätigkeiten mit üblichen Stunden vor. Ersetzt die bisherige Auswahl.",
     vyber:"Kategorien im Umfang", vyberHint:"Der Assistent zeigt nur gewählte Kategorien.",
     dal:"Weiter", zpet:"Zurück", souhrn:"Zusammenfassung", start:"Starten",
     hodin:"Std", hodiny:"Stunden", jednotek:"Anzahl", slozitost:"Komplexität",
@@ -221,6 +231,7 @@ const state = {
   lang:"cs", step:0,
   klient:"", projekt:"", cil:"",
   sazba:"", komunikace:20,
+  typ:null,              // id použitého typu projektu, jen pro zvýraznění tlačítka
   kategorie:{},          // id -> true/false
   acts:{},               // id -> {sel,hours,units,cx}
   vlastni:{},            // katId -> [{id,name,hours,role}]
@@ -260,6 +271,25 @@ function aktivniKategorie(){
 function actState(id){
   if(!state.acts[id]) state.acts[id] = {sel:false};
   return state.acts[id];
+}
+
+function vyberUkon(a){
+  const s = actState(a.id);
+  s.sel = true;
+  if(a.kind === "hours" && s.hours == null) s.hours = a.avgHours ?? 1;
+  if(a.kind === "units"){ if(s.units == null) s.units = 1; if(!s.cx) s.cx = "standard"; }
+}
+
+function pouzijTyp(typ){
+  const ids = new Set(typ.ukony);
+  state.typ = typ.id;
+  state.acts = {};
+  state.kategorie = {};
+  KATEGORIE.forEach(c => c.activities.forEach(a => {
+    if(!ids.has(a.id)) return;
+    vyberUkon(a);
+    state.kategorie[c.id] = true;
+  }));
 }
 
 function hodinyUkonu(act){
@@ -368,6 +398,13 @@ function viewZadani(){
     </div>
 
     <div class="card">
+      <h2>${t("typ")}</h2>
+      <div class="hint" style="margin-bottom:12px">${t("typHint")}</div>
+      <div class="typy">${(CATALOG.typyProjektu||[]).map(p =>
+        `<button class="${state.typ===p.id?"on":""}" data-typ="${p.id}">${esc(L(p.name))}</button>`).join("")}</div>
+    </div>
+
+    <div class="card">
       <h2>${t("vyber")}</h2>
       <div class="hint" style="margin-bottom:12px">${t("vyberHint")}</div>
       <div class="catlist">${kats}</div>
@@ -386,6 +423,8 @@ function viewZadani(){
   $("#i-kom").oninput = e => state.komunikace = e.target.value;
   $("#view").querySelectorAll("[data-kat]").forEach(cb =>
     cb.onchange = () => { state.kategorie[cb.dataset.kat] = cb.checked; render(); });
+  $("#view").querySelectorAll("[data-typ]").forEach(b =>
+    b.onclick = () => { pouzijTyp(CATALOG.typyProjektu.find(p=>p.id===b.dataset.typ)); render(); });
   $("#b-nacist").onclick = nacistSoubor;
   $("#b-dal").onclick = () => { if(aktivniKategorie().length){ state.step = 1; render(); } };
 }
@@ -476,11 +515,7 @@ function vazbyUkonu(kat){
   v.querySelectorAll("[data-s]").forEach(cb => cb.onchange = () => {
     const a = kat.activities.find(x=>x.id===cb.dataset.s);
     const s = actState(a.id);
-    s.sel = cb.checked;
-    if(s.sel){
-      if(a.kind === "hours" && s.hours == null) s.hours = a.avgHours ?? 1;
-      if(a.kind === "units"){ if(s.units == null) s.units = 1; if(!s.cx) s.cx = "standard"; }
-    }
+    if(cb.checked) vyberUkon(a); else s.sel = false;
     render();
   });
   v.querySelectorAll("[data-h]").forEach(i => i.onchange = () => { actState(i.dataset.h).hours = Number(i.value)||0; render(); });

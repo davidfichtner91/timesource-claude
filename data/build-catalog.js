@@ -76,6 +76,40 @@ const h = (id, cs, tip, min, max, avg) => ({
   avgHours: avg,
 });
 
+// Copywriting sekvence z raw katalogu počítal se třemi až pěti kroky. Automatická
+// sekvence má ale vždy jen dva e-maily (oslovení a jedno navázání), třetí zpráva
+// se píše ručně mimo ni. Složitost se proto liší personalizací, ne počtem kroků.
+// Hodiny na jednotku zůstávají z raw katalogu, dokud je nenahradí odpracované.
+const SEKVENCE = {
+  kind: "units",
+  id: "co-sequence",
+  name: {
+    cs: "Copywriting oslovovací sekvence",
+    en: "Outreach sequence copywriting",
+    de: "Copywriting der Outreach-Sequenz",
+  },
+  tooltip: {
+    cs: "Dva automatické e-maily: první oslovení a jedno navázání. Třetí zprávu, kde dává smysl, píše obchod ručně mimo sekvenci.",
+    en: "Two automated emails: the first touch and one follow-up. Any third message is written by hand outside the sequence.",
+    de: "Zwei automatische E-Mails: Erstansprache und ein Follow-up. Eine dritte Nachricht wird manuell außerhalb der Sequenz geschrieben.",
+  },
+  unitLabel: { cs: "sekvence", en: "sequence", de: "Sequenz" },
+  complexity: {
+    simple: {
+      label: { cs: "Bez personalizace", en: "No personalisation", de: "Ohne Personalisierung" },
+      hoursPerUnit: 2,
+    },
+    standard: {
+      label: { cs: "Personalizace podle segmentu", en: "Personalised by segment", de: "Nach Segment personalisiert" },
+      hoursPerUnit: 4,
+    },
+    complex: {
+      label: { cs: "Víc person nebo jazyků", en: "Several personas or languages", de: "Mehrere Personas oder Sprachen" },
+      hoursPerUnit: 7,
+    },
+  },
+};
+
 const COLD_BEFORE = {
   id: "cold-outreach-setup",
   phase: "before",
@@ -99,6 +133,7 @@ const COLD_BEFORE = {
       "Postupné zvyšování objemu na nové subdoméně. Samotná nižší kadence nestačí, zahřívání je placená funkce nástroje a hlídá se týdně.", 1, 4, 2),
     h("co-list-setup", "Sestavení prvního seznamu firem",
       "Zdroj dat, filtry, obohacení o kontaktní osoby, kontrola duplicit proti stávající databázi klienta.", 3, 10, 5),
+    SEKVENCE,
   ],
 };
 
@@ -195,10 +230,52 @@ cats.forEach((cat) => {
   });
 });
 
+// ── 5. Typy projektu pro rychlý start ─────────────────────────────────────────
+// Předvybere kategorie a úkony, account pak jen ubírá a ladí hodiny. První tři
+// jsou převzaté z Macaly verze, aktivní oslovování přibylo 3. 11. 2026.
+const TYPY_PROJEKTU = [
+  {
+    id: "eshop",
+    name: { cs: "E-shop od nuly", en: "E-shop from scratch", de: "E-Shop von Grund auf" },
+    ukony: [
+      "pl-eval", "pl-account", "pl-dns", "pl-senddomain", "pl-integration",
+      "ob-briefing", "ob-audit", "ob-import", "ob-lists", "ob-template", "ob-optin", "ob-doubleoptin", "ob-utm",
+      "if-welcome", "if-cart", "if-postpurchase", "if-winback",
+      "ca-campaign", "lm-cleaning", "lm-segment", "re-monthly", "tt-monitoring",
+    ],
+  },
+  {
+    id: "sprava",
+    name: { cs: "Měsíční správa stávajícího klienta", en: "Monthly management, existing client", de: "Monatliche Betreuung, Bestandskunde" },
+    ukony: ["ca-campaign", "ca-abtest", "lm-cleaning", "lm-import", "lm-segment", "re-monthly", "re-flows", "tt-monitoring", "tt-dns"],
+  },
+  {
+    id: "audit",
+    name: { cs: "Jednorázový audit", en: "One-off audit", de: "Einmaliger Audit" },
+    ukony: ["st-fullaudit", "st-strategy", "st-consult", "re-quarterly"],
+  },
+  {
+    id: "osloveni",
+    name: { cs: "Aktivní oslovování", en: "Cold outreach", de: "Cold Outreach" },
+    ukony: [
+      "ob-briefing", "co-setup", "co-mailbox", "co-warmup", "co-list-setup", "co-sequence",
+      "co-list-monthly", "co-snippets", "co-wave", "co-replies", "co-report",
+    ],
+  },
+];
+
+const vsechnyId = new Set(cats.flatMap((c) => c.activities.map((a) => a.id)));
+TYPY_PROJEKTU.forEach((typ) =>
+  typ.ukony.forEach((id) => {
+    if (!vsechnyId.has(id)) throw new Error("Typ projektu " + typ.id + " odkazuje na neexistující úkon " + id);
+  })
+);
+
 const doc = {
-  verze: 9,
+  verze: 10,
   zdroj:
-    "Katalog vytažený z živé Macaly verze 23. 9. 2026, upravený podle poznámek z 22. 9. 2026 (ZADANI-v9.md).",
+    "Katalog vytažený z živé Macaly verze 23. 9. 2026, upravený podle poznámek z 22. 9. 2026 (ZADANI-v9.md). Typy projektu a copywriting sekvence doplněny 3. 11. 2026.",
+  typyProjektu: TYPY_PROJEKTU,
   faze: [
     { id: "before", cs: "Před začátkem", en: "Before start", de: "Vor dem Start" },
     { id: "during", cs: "V průběhu", en: "Ongoing", de: "Laufend" },

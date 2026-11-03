@@ -53,6 +53,10 @@ Struktura úkonu:
 
 Rozdělení na rozjezd a provoz je podstatné. Bez něj vznikne jedna hromada hodin, ve které se jednorázová práce míchá s tou opakovanou a číslo nedává smysl ani nám, ani klientovi.
 
+## Typy projektu
+
+Rychlý start na první obrazovce předvybere kategorie a úkony s průměrnými hodinami. Account pak jen ubírá a ladí. Seznam je v `data/build-catalog.js` v `TYPY_PROJEKTU` (e-shop od nuly, měsíční správa, jednorázový audit, aktivní oslovování). Build katalogu spadne, když typ odkazuje na úkon, který v katalogu není.
+
 ## Jazyky
 
 Výchozí je čeština. Angličtina a němčina zůstávají v katalogu, ale používají se jen na vyžádání klienta. U názvů se drží české pojmy (uvítací série, opuštěný košík), anglický termín je v tooltipu.
