@@ -133,6 +133,29 @@ aside .card{margin:0 0 14px}
 details.nast summary{cursor:pointer;font-weight:600}
 #tisk{display:none}
 
+/* průvodce */
+.napoveda{position:relative}
+.otaznik{width:36px;height:36px;border-radius:50%;border:2px solid rgba(255,255,255,.85);background:transparent;color:#fff;
+  font:700 18px/1 Poppins,sans-serif;cursor:pointer;padding:0}
+.otaznik:hover,.otaznik:focus-visible{background:#fff;color:var(--pink);outline:none}
+.tip-poprve{position:absolute;right:0;top:46px;width:240px;background:#fff;color:var(--dark);font-size:13px;line-height:1.45;
+  padding:10px 30px 10px 12px;border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.18);z-index:30}
+.tip-poprve::before{content:"";position:absolute;right:12px;top:-6px;width:12px;height:12px;background:#fff;transform:rotate(45deg)}
+.tip-poprve button{position:absolute;right:6px;top:4px;border:0;background:none;font-size:18px;color:var(--gray);cursor:pointer}
+.pruvodce{position:fixed;inset:0;z-index:100}
+.pr-svetlo{position:absolute;border-radius:12px;box-shadow:0 0 0 9999px rgba(20,20,20,.58);transition:all .25s ease;pointer-events:none}
+.pr-svetlo.zadny{top:50%;left:50%;width:0;height:0}
+.pr-karta{position:absolute;width:340px;max-width:calc(100vw - 32px);background:#fff;border-radius:14px;padding:18px 18px 14px;
+  box-shadow:0 12px 32px rgba(0,0,0,.25);transition:top .25s ease,left .25s ease;outline:none}
+.pr-karta h3{margin:2px 0 6px;color:var(--pink);font-size:17px}
+.pr-karta p{margin:0 0 14px;font-size:14px;line-height:1.5}
+.pr-krok{font-size:12px;color:var(--gray)}
+.pr-tlacitka{display:flex;gap:8px;align-items:center}
+.pr-tlacitka .spacer{flex:1}
+@media (max-width:640px){
+  .pr-karta{left:16px !important;right:16px;width:auto;top:auto !important;bottom:16px}
+}
+
 @media (max-width:900px){
   .layout{grid-template-columns:minmax(0,1fr)}
   aside{position:static}
@@ -206,6 +229,11 @@ details.nast summary{cursor:pointer;font-weight:600}
       <button class="home" id="b-home" title="Zpět na úvod">@ktivity</button>
       <div class="sub">Nacenění e-mailového projektu</div>
     </div>
+    <div class="napoveda">
+      <button class="otaznik" id="b-help" title="Průvodce appkou" aria-label="Spustit průvodce appkou">?</button>
+      <div class="tip-poprve" id="tip-poprve" hidden>Poprvé tady? Klikni na otazník a průvodce ukáže, co je co.
+        <button id="b-tip-zavrit" aria-label="Zavřít">×</button></div>
+    </div>
   </div>
 </header>
 
@@ -213,6 +241,20 @@ details.nast summary{cursor:pointer;font-weight:600}
 <div class="mbar" id="mbar"></div>
 <div id="tisk"></div>
 <div class="toast" id="toast"></div>
+<div class="pruvodce" id="pruvodce" hidden>
+  <div class="pr-svetlo" id="pr-svetlo"></div>
+  <div class="pr-karta" id="pr-karta" role="dialog" aria-modal="true" aria-labelledby="pr-nadpis" tabindex="-1">
+    <div class="pr-krok" id="pr-krok"></div>
+    <h3 id="pr-nadpis"></h3>
+    <p id="pr-text"></p>
+    <div class="pr-tlacitka">
+      <button class="btn ghost small" id="pr-konec">Ukončit</button>
+      <span class="spacer"></span>
+      <button class="btn ghost small" id="pr-zpet">Zpět</button>
+      <button class="btn small" id="pr-dal">Další</button>
+    </div>
+  </div>
+</div>
 
 <script>
 const CATALOG = /*__CATALOG__*/null/*__END__*/;
@@ -823,7 +865,155 @@ function toast(msg){
   toastTimer = setTimeout(()=>el.classList.remove("show"), 2200);
 }
 
+/* ── průvodce appkou ───────────────────────────────────────────────────────── */
+// Z úvodu projde úvod i editor (editor na ukázkovém nacenění, na konci se vrátí
+// rozpracovaný stav přesně tak, jak byl). Z editoru projde jen editor.
+// Krok, jehož prvek na stránce není, se přeskočí.
+const KROKY_UVOD = [
+  {cil:".sablony", nadpis:"Šablony", text:"Začni šablonou, která je projektu nejblíž. Předvybere úkony i počty, takže pak už jen ubíráš a ladíš. Cena na kartě je orientační, spočítaná z aktuálních sazeb."},
+  {cil:".sablona.prazdna", nadpis:"Prázdné nacenění", text:"Když žádná šablona nesedí, začni s prázdným a úkony si naklikej sám."},
+  {cil:"#b-nacist", nadpis:"Uložené projekty", text:"Načte nacenění, které jsi dřív uložil tlačítkem Uložit projekt. Soubor .json patří ke klientovi, ne do appky."},
+  {cil:"details.nast", nadpis:"Sazby a výchozí hodnoty", text:"Ceníková sazba určuje cenu pro klienta, nákladová je jen interní. Procento komunikace se přičítá ke každé fázi. Hodnoty si pamatuje tenhle prohlížeč."},
+  {cil:null, nadpis:"Teď editor", text:"Ukážu zbytek na ukázkovém nacenění Gastro: rozjezd newsletteru. Nic se tím neuloží a na konci se vrátíš sem.", ukazka:true},
+];
+const KROKY_EDITOR = [
+  {cil:"main > .card", nadpis:"Zadání", text:"Klient, název a cíl spolupráce. Všechno se propíše do nacenění pro klienta, cíl jako první odstavec."},
+  {cil:"#faze-before", nadpis:"Fáze", text:"Nacenění má čtyři části: Rozjezd platí klient jednou, Měsíční správu každý měsíc, Na vyžádání jen když si ji objedná a Ukončení na konci spolupráce. Vpravo je cena celé fáze."},
+  {cil:"details.kat[open]", nadpis:"Kategorie", text:"Kategorie se rozbalují kliknutím. V záhlaví je vidět, kolik úkonů je vybraných a kolik stojí.", pred:otevritKategorii},
+  {cil:"details.kat[open] .act:not(.vypnuto)", nadpis:"Úkon", text:"Zaškrtnutím se úkon přidá do nacenění. Pak se nastaví hodiny, nebo počet a složitost. Tlačítka s čísly jsou rychlá volba minima, průměru a maxima. Cena úkonu je vpravo."},
+  {cil:"details.kat[open] .info", nadpis:"Vysvětlivka", text:"Pod „i“ je lidské vysvětlení úkonu a technická poznámka. Lidská věta jde klientovi do nacenění pod odborný název."},
+  {cil:".komrow", nadpis:"Komunikace a schvalování", text:"Hovory, schvalovací kola a zápisy se přičítají samy jako procento z hodin specialisty v dané fázi. Nemusí se na ně myslet."},
+  {cil:"details.kat-gl", nadpis:"GetLeads", text:"Aktivní oslovování dodává GetLeads, B2B divize CreatiComu. Poznáš ho podle navy linky a loga. V nacenění má vlastní část, a když je v něm jen oslovování, vyjde celé v brandu GetLeads."},
+  {cil:"#souhrn .card", nadpis:"Cena pro klienta", text:"Průběžný součet podle fází. Mění se s každým zaškrtnutím. Na mobilu jsou rozjezd a měsíční cena i ve spodní liště."},
+  {cil:".prepinac", nadpis:"Interní pohled", text:"Zapne hodiny podle katalogu proti skutečným hodinám s Claudem, náklad, marži v korunách i procentech. Klient z toho nic nevidí, do exportu se to nedostane."},
+  {cil:".akce", nadpis:"Výstupy", text:"Nacenění pro klienta jako .md nebo tisk do PDF v brandu, jen s položkami a cenami. Uložit projekt stáhne .json k dalším úpravám, odkaz se dá poslat kolegovi."},
+  {cil:"#b-home", nadpis:"Zpět na úvod", text:"Kliknutím na @ktivity se vrátíš na šablony. Rozpracované nacenění zůstane a dá se v něm pokračovat."},
+  {cil:"#b-help", nadpis:"Hotovo", text:"Průvodce spustíš kdykoli znovu tímhle otazníkem."},
+];
+
+const pruvodce = {kroky:[], i:0, zaloha:null};
+
+function otevritKategorii(){
+  if(document.querySelector("details.kat[open] .act:not(.vypnuto)")) return;
+  const kat = KATEGORIE.find(c => pocetVybranych(c)) || KATEGORIE[0];
+  state.otevrene[kat.id] = true;
+  render();
+}
+
+function spustitPruvodce(){
+  zavritTipPoprve();
+  pruvodce.zaloha = null;
+  pruvodce.kroky = state.view === "home" ? KROKY_UVOD.concat(KROKY_EDITOR) : KROKY_EDITOR.slice();
+  pruvodce.i = 0;
+  $("#pruvodce").hidden = false;
+  document.addEventListener("keydown", klavesyPruvodce);
+  window.addEventListener("resize", umistitKrok);
+  ukazKrok(1);
+}
+
+function ukazKrok(smer){
+  const k = pruvodce.kroky[pruvodce.i];
+  if(!k) return ukoncitPruvodce();
+  if(k.pred) k.pred();
+  const el = k.cil ? document.querySelector(k.cil) : null;
+  if(k.cil && !el){                       // prvek tu není, třeba nic vybraného: přeskočit
+    pruvodce.i += smer;
+    return pruvodce.i < 0 ? (pruvodce.i = 0, ukazKrok(1)) : ukazKrok(smer);
+  }
+  $("#pr-krok").textContent = "Krok " + (pruvodce.i + 1) + " z " + pruvodce.kroky.length;
+  $("#pr-nadpis").textContent = k.nadpis;
+  $("#pr-text").textContent = k.text;
+  $("#pr-zpet").disabled = pruvodce.i === 0;
+  $("#pr-dal").textContent = k.ukazka ? "Ukázat editor" : pruvodce.i === pruvodce.kroky.length - 1 ? "Hotovo" : "Další";
+  if(el) el.scrollIntoView({block:"center", behavior:"instant"});
+  umistitKrok();
+  $("#pr-karta").focus();
+}
+
+function umistitKrok(){
+  const k = pruvodce.kroky[pruvodce.i];
+  const el = k && k.cil ? document.querySelector(k.cil) : null;
+  const svetlo = $("#pr-svetlo"), karta = $("#pr-karta");
+  if(!el){
+    svetlo.className = "pr-svetlo zadny";
+    svetlo.removeAttribute("style");
+    karta.style.left = Math.max(16, (innerWidth - karta.offsetWidth) / 2) + "px";
+    karta.style.top = Math.max(16, (innerHeight - karta.offsetHeight) / 2) + "px";
+    return;
+  }
+  const r = el.getBoundingClientRect(), o = 6;
+  // Vysoký prvek se ořízne na výšku okna, jinak by světlo zabralo celou obrazovku a karta neměla kam.
+  const top = Math.max(8, r.top - o), bottom = Math.min(innerHeight - 8, r.bottom + o);
+  svetlo.className = "pr-svetlo";
+  Object.assign(svetlo.style, {top: top + "px", left: (r.left - o) + "px", width: (r.width + 2*o) + "px", height: Math.max(0, bottom - top) + "px"});
+  const kw = karta.offsetWidth, kh = karta.offsetHeight, m = 12;
+  let kTop = bottom + m <= innerHeight - kh - 8 ? bottom + m : top - kh - m;
+  if(kTop < 8) kTop = Math.min(innerHeight - kh - 8, Math.max(8, top + 12));
+  const kLeft = Math.min(innerWidth - kw - 16, Math.max(16, r.left));
+  karta.style.top = kTop + "px";
+  karta.style.left = kLeft + "px";
+}
+
+function dalsiKrok(){
+  const k = pruvodce.kroky[pruvodce.i];
+  if(k && k.ukazka && !pruvodce.zaloha){  // přechod z úvodu do editoru na ukázce
+    pruvodce.zaloha = JSON.parse(JSON.stringify({view:state.view, klient:state.klient, projekt:state.projekt, cil:state.cil,
+      typ:state.typ, acts:state.acts, vlastni:state.vlastni, otevrene:state.otevrene, info:state.info, interni:state.interni}));
+    novyProjekt(TYPY.find(p => p.id === "gastro-start"));
+    state.klient = "Ukázková restaurace";
+    state.view = "edit";
+    render();
+  }
+  pruvodce.i++;
+  ukazKrok(1);
+}
+
+// Zpět přes hranici úvod / editor vrátí úvodní obrazovku i s původním stavem.
+function predchoziKrok(){
+  if(pruvodce.i === 0) return;
+  pruvodce.i--;
+  if(pruvodce.kroky[pruvodce.i].ukazka && pruvodce.zaloha){
+    Object.assign(state, pruvodce.zaloha);
+    pruvodce.zaloha = null;
+    render();
+  }
+  ukazKrok(-1);
+}
+
+function ukoncitPruvodce(){
+  $("#pruvodce").hidden = true;
+  document.removeEventListener("keydown", klavesyPruvodce);
+  window.removeEventListener("resize", umistitKrok);
+  if(pruvodce.zaloha){ Object.assign(state, pruvodce.zaloha); pruvodce.zaloha = null; render(); window.scrollTo(0,0); }
+  $("#b-help").focus();
+}
+
+function klavesyPruvodce(e){
+  if(e.key === "Escape") ukoncitPruvodce();
+  else if(e.key === "ArrowRight") dalsiKrok();
+  else if(e.key === "ArrowLeft") predchoziKrok();
+}
+
+// Nápověda pro nového návštěvníka. Když úložiště nejde, ukáže se při každé návštěvě, což nevadí.
+const POPRVE_KLIC = "aktivity-pruvodce-videl";
+function zavritTipPoprve(){
+  $("#tip-poprve").hidden = true;
+  try { localStorage.setItem(POPRVE_KLIC, "1"); } catch(e){ /* bez úložiště se tip ukáže znovu */ }
+}
+function ukazatTipPoprve(){
+  let videl = false;
+  try { videl = !!localStorage.getItem(POPRVE_KLIC); } catch(e){ /* bez úložiště jako poprvé */ }
+  $("#tip-poprve").hidden = videl;
+}
+
+$("#b-help").onclick = spustitPruvodce;
+$("#b-tip-zavrit").onclick = zavritTipPoprve;
+$("#pr-dal").onclick = () => pruvodce.i === pruvodce.kroky.length - 1 ? ukoncitPruvodce() : dalsiKrok();
+$("#pr-zpet").onclick = predchoziKrok;
+$("#pr-konec").onclick = ukoncitPruvodce;
+
 $("#b-home").onclick = () => { state.view = "home"; render(); window.scrollTo(0,0); };
+ukazatTipPoprve();
 nacistZOdkazu();
 render();
 </script>
