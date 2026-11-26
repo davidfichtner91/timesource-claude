@@ -4148,7 +4148,7 @@ function shareUrl(){
     const s = state.acts[a.id];
     if(!s || !s.sel) return;
     if(a.kind === "hours") parts.push(a.id + ":" + (Number(s.hours)||0));
-    else parts.push(a.id + "*" + (Number(s.units)||0) + "~" + (s.cx||"standard").charAt(0));
+    else parts.push(a.id + "*" + (Number(s.units)||0) + "~" + ({simple:"s", standard:"t", complex:"c"})[s.cx || "standard"]);
   }));
   const q = new URLSearchParams();
   q.set("a", parts.join(","));
