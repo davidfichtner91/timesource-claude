@@ -61,7 +61,7 @@ Data jsou v `data/build-catalog.js` v `BALICKY`: řádky (`BAL_RADKY`, každý s
 
 ## Šablony
 
-Šablona předvybere úkony i s počty a složitostí, account pak jen ubírá a ladí. Na úvodu se z nich nabízí jen jednorázový audit a aktivní oslovování, zbytek nahradily balíčky a ukázka v průvodci používá gastro rozjezd. Seznam je v `data/build-catalog.js` v `TYPY_PROJEKTU`: e-shop od nuly, měsíční správa, jednorázový audit, gastro rozjezd newsletteru, gastro audit a převzetí, aktivní oslovování. Build katalogu spadne, když šablona odkazuje na úkon, který v katalogu není.
+Šablona předvybere úkony i s počty a složitostí, account pak jen ubírá a ladí. Zůstaly jen zakázky bez balíčku: jednorázový audit a aktivní oslovování, na úvodu v řadě „Jednorázově a samostatně“. Ostatní šablony 26. 11. 2026 nahradily balíčky. Seznam je v `data/build-catalog.js` v `TYPY_PROJEKTU`. Build katalogu spadne, když šablona odkazuje na úkon, který v katalogu není.
 
 ## Cena, náklad a marže
 

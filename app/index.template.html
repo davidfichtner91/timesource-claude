@@ -583,7 +583,6 @@ function viewHome(){
 }
 
 function viewTypy(){
-  const n = state.nastaveni;
   const s = state.uvod.situace; state.uvod.situace = "nula";
   const karty = BALICKY.typy.map(t => {
     const o = odhadVyberu(vyberUkonu(aktivniRadky(t, t.balicky[0])));
@@ -616,25 +615,7 @@ function viewTypy(){
         <span class="d">Soubor .json z dřívějšího nacenění.</span></button>
     </div>
 
-    <div class="card" style="margin-top:26px">
-      <details class="nast">
-        <summary>Sazby a výchozí hodnoty</summary>
-        <div class="grid3">
-          <div><label class="f">Ceníková sazba (Kč/h)</label>
-            <input type="number" min="0" step="50" data-n="cenovaSazba" value="${esc(n.cenovaSazba)}">
-            <div class="hint">Z ní se počítá cena pro klienta.</div></div>
-          <div><label class="f">Nákladová sazba (Kč/h)</label>
-            <input type="number" min="0" step="50" data-n="nakladovaSazba" value="${esc(n.nakladovaSazba)}">
-            <div class="hint">Interní. Klient ji nevidí.</div></div>
-          <div><label class="f">Komunikace a schvalování (%)</label>
-            <input type="number" min="0" max="50" step="5" data-n="komunikace" value="${esc(n.komunikace)}">
-            <div class="hint">Z hodin specialisty v každé fázi.</div></div>
-        </div>
-        <p class="hint" style="margin-top:12px">Výchozí hodnoty jsou odhad a mají se nahradit skutečnými.
-          Pamatují se v tomhle prohlížeči a ukládají se i do souboru projektu.
-          <button class="btn ghost small" id="b-vychozi" style="margin-left:6px">Vrátit výchozí</button></p>
-      </details>
-    </div>`;
+    ${sazbyHtml()}`;
 
   $("#view").querySelectorAll("[data-uvod-typ]").forEach(b => b.onclick = () => {
     try { history.pushState(null, "", location.href); } catch(e){ /* bez historie */ }
@@ -644,6 +625,37 @@ function viewTypy(){
     novyProjekt(TYPY.find(p => p.id === b.dataset.typ));
     prejitSHistorii("edit");
   });
+  vazbySazeb();
+  $("#b-nacist").onclick = nacistSoubor;
+  if(rozpracovano) $("#b-pokracovat").onclick = () => prejitSHistorii("edit");
+}
+
+// Sazby jsou na výběru typu i u balíčků, protože z nich se počítají ceny na kartách.
+// Rozbalení se pamatuje, aby se po změně sazby karta nezavřela.
+function sazbyHtml(){
+  const n = state.nastaveni;
+  return `  <div class="card" style="margin-top:26px">
+    <details class="nast" ${state.sazbyOtevrene ? "open" : ""}>
+      <summary>Sazby a výchozí hodnoty</summary>
+      <div class="grid3">
+        <div><label class="f">Ceníková sazba (Kč/h)</label>
+          <input type="number" min="0" step="50" data-n="cenovaSazba" value="${esc(n.cenovaSazba)}">
+          <div class="hint">Z ní se počítá cena pro klienta.</div></div>
+        <div><label class="f">Nákladová sazba (Kč/h)</label>
+          <input type="number" min="0" step="50" data-n="nakladovaSazba" value="${esc(n.nakladovaSazba)}">
+          <div class="hint">Interní. Klient ji nevidí.</div></div>
+        <div><label class="f">Komunikace a schvalování (%)</label>
+          <input type="number" min="0" max="50" step="5" data-n="komunikace" value="${esc(n.komunikace)}">
+          <div class="hint">Z hodin specialisty v každé fázi.</div></div>
+      </div>
+      <p class="hint" style="margin-top:12px">Výchozí hodnoty jsou odhad a mají se nahradit skutečnými.
+        Pamatují se v tomhle prohlížeči a ukládají se i do souboru projektu.
+        <button class="btn ghost small" id="b-vychozi" style="margin-left:6px">Vrátit výchozí</button></p>
+    </details>
+  </div>`;
+}
+function vazbySazeb(){
+  $("#view").querySelector("details.nast").ontoggle = e => { state.sazbyOtevrene = e.target.open; };
   $("#view").querySelectorAll("[data-n]").forEach(i => i.onchange = () => {
     state.nastaveni[i.dataset.n] = Number(i.value) || 0; ulozitNastaveni(); render();
   });
@@ -652,8 +664,6 @@ function viewTypy(){
     try { localStorage.removeItem(NASTAVENI_KLIC); } catch(e){ /* nic k mazání */ }
     render();
   };
-  $("#b-nacist").onclick = nacistSoubor;
-  if(rozpracovano) $("#b-pokracovat").onclick = () => prejitSHistorii("edit");
 }
 
 function viewBalicky(t){
@@ -667,7 +677,9 @@ function viewBalicky(t){
     </div>
     <div class="balicky">${t.balicky.map((b, bi) => kartaBalicku(t, b, bi)).join("")}</div>
     <p class="pozn">Najetím na název položky uvidíš, co obsahuje a proč se hodí. Kolečkem před názvem ji přidáš nebo odebereš, cena se přepočítá.
-      Upravený balíček má tečku u změněných položek. Hodiny v šedém rámečku jsou jen pro nás, do nacenění pro klienta se nedostanou.</p>`;
+      Upravený balíček má tečku u změněných položek. Hodiny v šedém rámečku jsou jen pro nás, do nacenění pro klienta se nedostanou.</p>
+    ${sazbyHtml()}`;
+  vazbySazeb();
 
   $("#b-typy").onclick = () => {
     try { history.pushState(null, "", location.href); } catch(e){ /* bez historie */ }
@@ -1136,7 +1148,7 @@ const KROKY_UVOD = [
   {cil:".situace", pred:ukazBalicky, nadpis:"Rozjíždí, nebo přebíráme", text:"Přepne obsah rozjezdu. U nového e-mailingu je v něm výběr nástroje, napojení a strategie, u převzetí audit toho, co už běží."},
   {cil:".bal.dop .radek .t", pred:ukazBalicky, nadpis:"Položky", text:"Najetím na název uvidíš, co položka obsahuje a proč se hodí. Kolečkem před ní ji přidáš nebo odebereš a cena se hned přepočítá. Počet kampaní se mění tlačítky minus a plus."},
   {cil:".bal.dop .cta", pred:ukazBalicky, nadpis:"Do editoru", text:"Otevře balíček v editoru. Tam se doladí hodiny a počty, doplní zadání a vytiskne nacenění pro klienta."},
-  {cil:null, nadpis:"Teď editor", text:"Ukážu zbytek na ukázkovém nacenění Gastro: rozjezd newsletteru. Nic se tím neuloží a na konci se vrátíš sem.", ukazka:true},
+  {cil:null, nadpis:"Teď editor", text:"Ukážu zbytek na ukázkovém nacenění z balíčku Gastro a hospitality, Růst. Nic se tím neuloží a na konci se vrátíš sem.", ukazka:true},
 ];
 // Kroky úvodu přepínají mezi výběrem typu a balíčky. Původní výběr se po skončení vrátí.
 function ukazTypy(){ if(state.uvod.typ){ state.uvod.typ = null; render(); } }
@@ -1239,7 +1251,10 @@ function dalsiKrok(){
   if(k && k.ukazka && !pruvodce.zaloha){  // přechod z úvodu do editoru na ukázce
     pruvodce.zaloha = JSON.parse(JSON.stringify({view:state.view, klient:state.klient, projekt:state.projekt, cil:state.cil,
       typ:state.typ, acts:state.acts, vlastni:state.vlastni, otevrene:state.otevrene, info:state.info, interni:state.interni}));
-    novyProjekt(TYPY.find(p => p.id === "gastro-start"));
+    const t = BALICKY.typy.find(x => x.id === "gastro"), b = t.balicky.find(x => x.dop);
+    novyProjekt(null);
+    nastavVyber(vyberUkonu(Object.fromEntries(Object.entries(b.r).filter(([id]) => !RADKY[id].jen || RADKY[id].jen === "nula"))));
+    state.balicek = t.nazev + ", " + b.nazev;
     state.klient = "Ukázková restaurace";
     state.view = "edit";
     render();

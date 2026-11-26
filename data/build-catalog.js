@@ -394,58 +394,14 @@ cats.forEach((cat) => cat.activities.forEach((a) => {
 // ── 5. Šablony nacenění ───────────────────────────────────────────────────────
 // Předvyberou úkony i s počty, account pak jen ubírá a ladí. Úkon se zapisuje jako
 // id (průměrné hodiny, jedna jednotka standardní složitosti), nebo jako objekt
-// s hodinami, počtem jednotek a složitostí. E-shop, správa a audit jsou převzaté
-// z Macaly verze, oslovování a gastro přibyly 3. 11. 2026.
+// s hodinami, počtem jednotek a složitostí. Zůstaly jen zakázky bez balíčku,
+// ostatní šablony nahradily 26. 11. 2026 balíčky (část 5b).
 const TYPY_PROJEKTU = [
-  {
-    id: "eshop",
-    name: { cs: "E-shop od nuly", en: "E-shop from scratch", de: "E-Shop von Grund auf" },
-    popis: { cs: "Nový e-shop bez e-mailingu. Nástroj, šablona, základní automatizace a první kampaně." },
-    ukony: [
-      "pl-eval", "pl-account", "pl-dns", "pl-senddomain", "pl-integration",
-      "ob-briefing", "ob-audit", "st-strategy", "ob-import", "ob-lists", "ob-template", "ob-optin", "ob-doubleoptin", "ob-utm",
-      "if-welcome", "if-cart", "if-postpurchase", "if-winback",
-      { id: "ca-campaign", units: 2 }, "lm-cleaning", "lm-segment", "re-monthly", "tt-monitoring",
-      "au-qa", "au-tuning",
-    ],
-  },
-  {
-    id: "sprava",
-    name: { cs: "Měsíční správa stávajícího klienta", en: "Monthly management, existing client", de: "Monatliche Betreuung, Bestandskunde" },
-    popis: { cs: "Klient už e-mailing má. Kampaně, péče o databázi a report každý měsíc." },
-    ukony: [
-      { id: "ca-campaign", units: 2 }, "ca-abtest", "lm-cleaning", "lm-import", "lm-segment",
-      "re-monthly", "re-flows", "tt-monitoring", "tt-dns", "au-qa", "au-tuning",
-    ],
-  },
   {
     id: "audit",
     name: { cs: "Jednorázový audit", en: "One-off audit", de: "Einmaliger Audit" },
     popis: { cs: "Rozbor stávajícího e-mailingu s doporučeními, bez navazující správy." },
     ukony: ["ob-briefing", "st-fullaudit", "st-strategy", "st-consult"],
-  },
-  {
-    id: "gastro-start",
-    name: { cs: "Gastro: rozjezd newsletteru", en: "Hospitality: newsletter launch", de: "Gastro: Newsletter-Start" },
-    popis: { cs: "Restaurace nebo bar bez e-mailingu. Nástroj, šablona v brandu, sběr kontaktů, uvítací e-mail a dva newslettery měsíčně." },
-    ukony: [
-      "pl-eval", "pl-account", "pl-dns", "ob-briefing", { id: "st-strategy", hours: 4 }, "ob-import", "ob-lists", "ob-template",
-      "ob-optin", "ob-doubleoptin", "ob-utm",
-      { id: "if-welcome", cx: "simple" },
-      { id: "ca-campaign", units: 2, cx: "simple" }, "lm-cleaning", { id: "re-monthly", cx: "simple" }, "tt-monitoring",
-      { id: "au-qa", hours: 0.5 }, "au-seasonal",
-    ],
-  },
-  {
-    id: "gastro-audit",
-    name: { cs: "Gastro: audit a převzetí newsletteru", en: "Hospitality: audit and takeover", de: "Gastro: Audit und Übernahme" },
-    popis: { cs: "Podnik newsletter posílá. Audit, nová šablona a měsíční správa dvou newsletterů." },
-    ukony: [
-      "ob-briefing", "ob-audit", "ob-template", "ob-lists",
-      { id: "if-welcome", cx: "simple" },
-      { id: "ca-campaign", units: 2, cx: "simple" }, "lm-cleaning", "lm-segment", { id: "re-monthly", cx: "simple" }, "tt-monitoring",
-      { id: "au-qa", hours: 0.5 }, "au-tuning", "au-seasonal",
-    ],
   },
   {
     id: "osloveni",
