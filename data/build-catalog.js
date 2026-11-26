@@ -466,6 +466,154 @@ TYPY_PROJEKTU.forEach((typ) => {
   });
 });
 
+// ── 5b. Balíčky na úvodu ─────────────────────────────────────────────────────
+// Account vybere typ klienta a jeden ze tří balíčků Základ / Růst / Max, položky
+// odškrtává kolečkem. Řádek je srozumitelná položka, pod kterou je jeden nebo víc
+// úkonů z katalogu. "jen" omezí řádek na situaci (nula = e-mailing rozjíždí,
+// prevzeti = přebíráme), "vychozi" ho v ostatních situacích nechá vidět, ale
+// nepředvybere. "pocet" dělá z řádku krokovač, "d" je text tooltipu.
+// Odladěno v prototypu 26. 11. 2026, obsah balíčků je návrh, ne ověřená praxe.
+const BAL_RADKY = {
+  nastroj:   {t:"Výběr nástroje, doména a DNS", g:"r", jen:"nula", u:["ob-briefing","pl-eval","pl-account","pl-dns","pl-senddomain","ob-lists","ob-utm"],
+              d:"Doporučíme nástroj podle velikosti databáze a rozpočtu, založíme účet a ověříme doménu. Bez ověřené domény e-maily častěji končí ve spamu, proto je to základ všeho dalšího."},
+  audit:     {t:"Audit stávajícího e-mailingu", g:"r", jen:"prevzeti", u:["ob-briefing","ob-audit","ob-lists","ob-utm"],
+              d:"Rozbor dosavadních kampaní, automatizací a dat. Ukáže, co funguje a co opravit dřív, než začneme stavět nové věci."},
+  strategie: {t:"Strategie e-mailingu", g:"r", vychozi:"nula", u:["st-strategy"],
+              d:"Plán, komu, co a jak často posílat a jaké automatizace postavit. U nového projektu jím začínáme, aby každá další položka měla jasný cíl. U převzetí jen tehdy, když stávající směr nefunguje."},
+  eshop:     {t:"Napojení e-shopu", g:"r", jen:"nula", u:["pl-integration"],
+              d:"Propojení nástroje s e-shopem, aby se kontakty, objednávky a produkty propisovaly samy. Bez něj nefunguje košík, série po nákupu ani segmenty podle nákupů."},
+  crm:       {t:"Napojení CRM nebo webu", g:"r", jen:"nula", u:["pl-integration"],
+              d:"Propojení s CRM nebo formuláři na webu, aby nový zájemce skončil v nástroji hned a správně označený. Jinak se kontakty přenášejí ručně a poptávky stydnou."},
+  vicetrh:   {t:"Víc jazyků a trhů", g:"r", u:["st-multimarket"],
+              d:"Nastavení pro víc jazyků nebo zemí, aby každý trh dostával vlastní obsah, ne strojový překlad. Hodí se, když klient prodává i do zahraničí."},
+  sablona:   {t:"Šablona e-mailu v brandu", g:"r", u:["ob-template"],
+              d:"Grafická šablona v barvách značky, vyzkoušená na mobilu i v Outlooku. Další e-maily se skládají z ní, takže se kampaně připravují rychleji."},
+  formulare: {t:"Formuláře a potvrzení odběru", g:"r", u:["ob-optin","ob-doubleoptin"],
+              d:"Formuláře na webu a potvrzení přihlášení e-mailem. Databáze roste z lidí, kteří o e-maily stojí, a souhlas je doložitelný kvůli GDPR."},
+  import:    {t:"Import a čištění databáze", g:"r", u:["ob-import"],
+              d:"Převod stávajících kontaktů a vyřazení neplatných a duplicitních adres. Špatné adresy zhoršují doručitelnost i e-mailům, které jdou správným lidem."},
+  welcome:   {t:"Uvítací série", g:"a", u:["if-welcome"],
+              d:"E-maily, které nový kontakt dostane hned po přihlášení. Zájem je v tu chvíli nejvyšší, proto se uvítání čte víc než běžný newsletter."},
+  kosik:     {t:"Opuštěný košík", g:"a", u:["if-cart"],
+              d:"Připomenutí zboží, které zůstalo v košíku. Míří na lidi, kteří už nakoupit chtěli, proto nese tržby hned od spuštění."},
+  ponakupu:  {t:"Série po nákupu", g:"a", u:["if-postpurchase"],
+              d:"Poděkování, tipy k produktu a žádost o recenzi. Z prvního nákupu dělá druhý a sbírá recenze, které pomáhají prodávat dalším."},
+  prohlidka: {t:"Opuštěná prohlídka zboží", g:"a", u:["if-browse"],
+              d:"Připomenutí produktu, který si někdo prohlížel a nekoupil. Potřebuje sledování návštěv na webu, smysl má až při větší návštěvnosti."},
+  poptavky:  {t:"Série pro B2B poptávky", g:"a", u:["if-b2b"],
+              d:"Navazující e-maily po poptávce, než se ozve obchodník, a po schůzce. Udrží zájem, dokud se obchod neuzavře."},
+  winback:   {t:"Reaktivační série", g:"a", u:["if-winback"],
+              d:"Série pro kontakty, které delší dobu nereagují nebo nenakoupily. Část vrátí zpět a zbytek vyřadí, což chrání doručitelnost."},
+  kampane:   {t:"kampaně měsíčně", g:"m", pocet:"ca-campaign", u:["ca-campaign"],
+              d:"Kompletní kampaň od zadání přes text a grafiku po odeslání. Počet volíme podle toho, kolik má klient co říct, pravidelnost drží značku v paměti."},
+  databaze:  {t:"Péče o databázi a doručitelnost", g:"m", u:["lm-cleaning","tt-monitoring"],
+              d:"Vyřazování neaktivních adres a hlídání, že e-maily dorážejí do doručené pošty. Bez toho klesá doručitelnost a s ní výsledky všech ostatních e-mailů."},
+  segmenty:  {t:"Segmentace", g:"m", u:["lm-segment"],
+              d:"Rozdělení kontaktů podle chování a zájmů. Každý dostává to, co ho zajímá, takže víc čte a méně se odhlašuje."},
+  report:    {t:"Měsíční report", g:"m", u:["re-monthly"],
+              d:"Měsíční přehled výsledků s komentářem a doporučením. Klient vidí, co e-mail přinesl, a podle něj plánujeme další měsíc."},
+  ladeni:    {t:"Kontrola a ladění automatizací", g:"m", u:["au-qa","au-tuning"],
+              d:"Pravidelná kontrola, že automatizace chodí a odkazy a kódy fungují, a úpravy podle výsledků. Spuštěním automatizace nekončí, časem zastarává."},
+  sezonni:   {t:"Sezónní obměna automatizací", g:"m", u:["au-seasonal"],
+              d:"Obměna obsahu automatických e-mailů podle sezóny, menu nebo akcí. Uvítání s letní nabídkou v prosinci působí jako zapomenutý podnik."},
+  abtest:    {t:"A/B testy", g:"m", u:["ca-abtest"],
+              d:"Porovnání dvou variant předmětu nebo obsahu. Ukazuje, co na publikum klienta skutečně funguje, místo odhadu."},
+  kvartal:   {t:"Kvartální strategický přehled", g:"m", u:["re-quarterly"],
+              d:"Čtvrtletní schůzka nad výsledky a plánem na další období. Hodí se, když je e-mail pro klienta hlavní kanál a chce ho řídit podle čísel."},
+  osloveni:  {t:"Aktivní oslovování firem", g:"x", gl:true, u:["co-briefing","co-setup","co-mailbox","co-warmup","co-list-setup","co-sequence",
+               "co-list-monthly","co-snippets","co-wave","co-replies","co-report"],
+              d:"Oslovování nových firem dvěma automatickými e-maily z oddělené domény, dodává GetLeads. Pro klienta, kterému nestačí čekat, až se firmy ozvou samy."},
+};
+
+// Parametry u řádku v balíčku: 1 = výchozí z katalogu, objekt = hodiny, počet nebo složitost hlavního úkonu.
+const BAL_TYPY = [
+  {id:"eshop", nazev:"E-shop", popis:"Prodává koncovým zákazníkům online. Automatizace nesou největší část tržeb z e-mailu.",
+   radky:["nastroj","audit","strategie","eshop","sablona","formulare","import","welcome","kosik","ponakupu","winback","prohlidka",
+          "kampane","databaze","segmenty","report","ladeni","abtest","kvartal"],
+   balicky:[
+    {nazev:"Základ", popis:"Základ, který se vyplatí každému e-shopu. Uvítání, košík a dvě kampaně měsíčně.",
+     r:{nastroj:1,audit:1,strategie:1,eshop:1,sablona:1,formulare:1,import:1,welcome:1,kosik:1,kampane:{units:2},databaze:1,report:{cx:"simple"}}},
+    {nazev:"Růst", dop:true, popis:"Celý životní cyklus zákazníka. Po nákupu, reaktivace a segmentované kampaně každý týden.",
+     r:{nastroj:1,audit:1,strategie:1,eshop:1,sablona:1,formulare:1,import:1,welcome:1,kosik:1,ponakupu:1,winback:1,kampane:{units:4},databaze:1,segmenty:1,report:1,ladeni:1}},
+    {nazev:"Max", popis:"Pro e-shop, kde je e-mail hlavní kanál. Víc kampaní, testování a kvartální strategie.",
+     r:{nastroj:1,audit:1,strategie:1,eshop:1,sablona:1,formulare:1,import:1,welcome:1,kosik:1,ponakupu:1,winback:1,prohlidka:1,kampane:{units:6},databaze:1,segmenty:1,report:1,ladeni:1,abtest:{units:2},kvartal:1}},
+   ]},
+  {id:"b2b-eshop", nazev:"B2B s e-shopem", popis:"Prodává firmám, část objednávek jde přes e-shop. Kombinace nákupních automatizací a péče o poptávky.",
+   radky:["nastroj","audit","strategie","eshop","sablona","formulare","import","welcome","kosik","ponakupu","poptavky","winback",
+          "kampane","databaze","segmenty","report","ladeni","kvartal","osloveni"],
+   balicky:[
+    {nazev:"Základ", popis:"Uvítání, opuštěný košík a jeden newsletter měsíčně.",
+     r:{nastroj:1,audit:1,strategie:1,eshop:1,sablona:1,formulare:1,import:1,welcome:1,kosik:1,kampane:{units:1},databaze:1,report:{cx:"simple"}}},
+    {nazev:"Růst", dop:true, popis:"Navíc série po nákupu a pro poptávky. Dvě kampaně měsíčně podle segmentů.",
+     r:{nastroj:1,audit:1,strategie:1,eshop:1,sablona:1,formulare:1,import:1,welcome:1,kosik:1,ponakupu:1,poptavky:1,kampane:{units:2},databaze:1,segmenty:1,report:1,ladeni:1}},
+    {nazev:"Max", popis:"Celý e-mailing a k tomu aktivní oslovování nových firem přes GetLeads.",
+     r:{nastroj:1,audit:1,strategie:1,eshop:1,sablona:1,formulare:1,import:1,welcome:1,kosik:1,ponakupu:1,poptavky:1,winback:1,kampane:{units:4},databaze:1,segmenty:1,report:1,ladeni:1,kvartal:1,osloveni:1}},
+   ]},
+  {id:"b2b", nazev:"B2B bez e-shopu", popis:"Prodává firmám přes obchodníky. E-mail sbírá a ohřívá poptávky, objednávka jde jinudy.",
+   radky:["nastroj","audit","strategie","crm","sablona","formulare","import","welcome","poptavky","winback",
+          "kampane","databaze","segmenty","report","ladeni","kvartal","osloveni"],
+   balicky:[
+    {nazev:"Základ", popis:"Uvítání nového kontaktu a jeden newsletter měsíčně.",
+     r:{nastroj:1,audit:1,strategie:1,crm:1,sablona:1,formulare:1,import:1,welcome:1,kampane:{units:1},databaze:1,report:{cx:"simple"}}},
+    {nazev:"Růst", dop:true, popis:"Série, která poptávku dovede k obchodníkovi, a dvě kampaně měsíčně.",
+     r:{nastroj:1,audit:1,strategie:1,crm:1,sablona:1,formulare:1,import:1,welcome:1,poptavky:1,kampane:{units:2},databaze:1,segmenty:1,report:1,ladeni:1}},
+    {nazev:"Max", popis:"K tomu aktivní oslovování nových firem přes GetLeads a kvartální strategie.",
+     r:{nastroj:1,audit:1,strategie:1,crm:1,sablona:1,formulare:1,import:1,welcome:1,poptavky:1,winback:1,kampane:{units:2},databaze:1,segmenty:1,report:1,ladeni:1,kvartal:1,osloveni:1}},
+   ]},
+  // Navrženo 26. 11. 2026 podle prodejce aut, který prodává koncovým zákazníkům přes showroom a prodejcům ve velkém,
+  // ve čtyřech jazycích, bez košíku. Pokrývá i služby, kde nákup uzavírá člověk (reality, stavby, finance).
+  {id:"sluzby", nazev:"Služby",
+   popis:"Služba nebo drahé zboží, kde nákup uzavírá obchodník, třeba auta nebo reality. E-mail drží zájemce, než přijde na schůzku.",
+   nazvy:{poptavky:"Navazování po poptávce", prohlidka:"Připomenutí prohlížené nabídky"},
+   popisy:{
+     poptavky:"Navazující e-maily po poptávce nebo domluvené prohlídce, než se ozve obchodník, a po schůzce. U drahého nákupu se zájemce rozhoduje dlouho a e-mail ho mezitím drží u nás.",
+     prohlidka:"Připomenutí nabídky, kterou si někdo na webu prohlížel a neozval se. Potřebuje sledování návštěv na webu, smysl má při větší návštěvnosti.",
+   },
+   radky:["nastroj","audit","strategie","crm","vicetrh","sablona","formulare","import","welcome","poptavky","prohlidka","winback",
+          "kampane","databaze","segmenty","report","ladeni","abtest","kvartal","osloveni"],
+   balicky:[
+    {nazev:"Základ", popis:"Uvítání zájemce z webu, navazování po poptávce a jeden newsletter měsíčně.",
+     r:{nastroj:1,audit:1,strategie:1,crm:1,sablona:1,formulare:1,import:1,welcome:1,poptavky:1,kampane:{units:1},databaze:1,report:{cx:"simple"}}},
+    {nazev:"Růst", dop:true, popis:"Navíc připomenutí prohlížené nabídky, segmenty podle zájmu a dvě kampaně měsíčně.",
+     r:{nastroj:1,audit:1,strategie:1,crm:1,sablona:1,formulare:1,import:1,welcome:1,poptavky:1,prohlidka:1,kampane:{units:2},databaze:1,segmenty:1,report:1,ladeni:1}},
+    {nazev:"Max", popis:"Víc jazyků a trhů, kampaň každý týden a aktivní oslovování firem přes GetLeads.",
+     r:{nastroj:1,audit:1,strategie:1,crm:1,vicetrh:1,sablona:1,formulare:1,import:1,welcome:1,poptavky:1,prohlidka:1,winback:1,kampane:{units:4},databaze:1,segmenty:1,report:1,ladeni:1,abtest:{units:1},kvartal:1,osloveni:1}},
+   ]},
+  {id:"gastro", nazev:"Gastro a hospitality", popis:"Restaurace, bar nebo hotel. Pravidelný newsletter v brandu podniku a sezónní akce.",
+   radky:["nastroj","audit","strategie","sablona","formulare","import","welcome","winback","kampane","databaze","segmenty","report","sezonni","abtest"],
+   balicky:[
+    {nazev:"Základ", popis:"Šablona v brandu, sběr kontaktů, uvítací e-mail a jeden newsletter měsíčně.",
+     r:{nastroj:1,audit:1,strategie:{hours:4},sablona:1,formulare:1,import:1,welcome:{cx:"simple"},kampane:{units:1,cx:"simple"},databaze:1,report:{cx:"simple"}}},
+    {nazev:"Růst", dop:true, popis:"Dva newslettery měsíčně a obměna automatizací podle sezóny.",
+     r:{nastroj:1,audit:1,strategie:{hours:4},sablona:1,formulare:1,import:1,welcome:{cx:"simple"},kampane:{units:2,cx:"simple"},databaze:1,report:{cx:"simple"},sezonni:1}},
+    {nazev:"Max", popis:"Newsletter každý týden, segmenty podle návštěv a návrat hostů, kteří dlouho nepřišli.",
+     r:{nastroj:1,audit:1,strategie:{hours:4},sablona:1,formulare:1,import:1,welcome:{cx:"simple"},winback:{cx:"simple"},kampane:{units:4,cx:"simple"},databaze:1,segmenty:1,report:{cx:"simple"},sezonni:1,abtest:{units:1}}},
+   ]},
+];
+
+const BALICKY = {
+  skupiny: { r: "Rozjezd", a: "Automatizace", m: "Každý měsíc", x: "Navíc" },
+  radky: BAL_RADKY,
+  typy: BAL_TYPY,
+  // Samostatné zakázky bez měsíční správy, otevírají šablonu nacenění.
+  samostatne: [
+    { sablona: "audit" },
+    { sablona: "osloveni", gl: true },
+  ],
+};
+Object.entries(BAL_RADKY).forEach(([id, r]) => r.u.forEach((u) => {
+  if (!vsechnyId.has(u)) throw new Error("Řádek balíčku " + id + " odkazuje na neexistující úkon " + u);
+}));
+BAL_TYPY.forEach((t) => {
+  t.radky.forEach((id) => { if (!BAL_RADKY[id]) throw new Error("Typ " + t.id + " má neznámý řádek " + id); });
+  t.balicky.forEach((b) => Object.keys(b.r).forEach((id) => {
+    if (!t.radky.includes(id)) throw new Error("Balíček " + t.id + "/" + b.nazev + " má řádek mimo typ: " + id);
+  }));
+});
+BALICKY.samostatne.forEach((s) => {
+  if (!TYPY_PROJEKTU.some((t) => t.id === s.sablona)) throw new Error("Samostatná zakázka bez šablony " + s.sablona);
+});
+
 // ── 6. Výchozí sazby ──────────────────────────────────────────────────────────
 // Klientovi se fakturují částky, hodiny jsou jen interní. VÝCHOZÍ HODNOTY, přepsat
 // skutečnými. Nákladová sazba je zvolená tak, aby poměr cena / náklad bez Clauda
@@ -483,6 +631,7 @@ const doc = {
     "Katalog vytažený z živé Macaly verze 23. 9. 2026, upravený podle poznámek z 22. 9. 2026 (ZADANI-v9.md). Šablony, úspora s Claudem a sazby doplněny 3. 11. 2026.",
   nastaveni: NASTAVENI,
   typyProjektu: TYPY_PROJEKTU,
+  balicky: BALICKY,
   faze: [
     { id: "before", cs: "Rozjezd", en: "Setup", de: "Start", fakturace: { cs: "jednorázově" } },
     { id: "during", cs: "Měsíční správa", en: "Monthly management", de: "Monatliche Betreuung", fakturace: { cs: "měsíčně" } },

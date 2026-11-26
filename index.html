@@ -50,15 +50,78 @@ textarea{min-height:56px;resize:vertical}
 /* domů */
 .intro{margin:26px 0 6px}
 .intro p{margin:0;color:var(--gray)}
-.sablony{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;margin-top:14px}
-.sablona{display:flex;flex-direction:column;gap:6px;text-align:left;background:#fff;border:var(--line);border-radius:var(--radius);
-  padding:16px;font:inherit;color:inherit;cursor:pointer;transition:border-color .15s,box-shadow .15s}
-.sablona:hover{border-color:var(--pink);box-shadow:0 4px 14px rgba(234,64,111,.12)}
-.sablona .n{font-weight:700;font-size:16px}
-.sablona .d{font-size:13px;color:var(--gray);flex:1}
-.sablona .c{font-size:13px;border-top:var(--line);padding-top:8px;margin-top:4px}
-.sablona .c strong{color:var(--pink)}
-.sablona.prazdna{border-style:dashed;justify-content:center}
+
+/* úvod: typ klienta a balíčky */
+.typy{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:14px}
+.typ{background:#fff;border:var(--line);border-radius:var(--radius);padding:18px;text-align:left;cursor:pointer;font:inherit;color:inherit;
+  display:flex;flex-direction:column;gap:6px;transition:border-color .15s,box-shadow .15s,transform .15s}
+.typ:hover{border-color:var(--pink);box-shadow:0 6px 18px rgba(234,64,111,.13);transform:translateY(-2px)}
+.typ .n{font-weight:700;font-size:17px}
+.typ .d{font-size:13px;color:var(--gray);flex:1}
+.typ .od{font-size:13px;border-top:var(--line);padding-top:8px;margin-top:6px}
+.typ .od strong{color:var(--pink)}
+.oddil{margin-top:30px;font-size:13px;font-weight:600;color:var(--gray);text-transform:uppercase;letter-spacing:.04em}
+.mensi{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:10px}
+.mensi .typ{padding:14px}
+.mensi .typ .n{font-size:15px}
+.mensi .prazdna{border-style:dashed;background:transparent}
+.typ.gl{border-left:4px solid #042150}
+.gl-tag{font-size:11px;font-weight:700;color:#042150}
+.drobek{margin-top:24px;font-size:13px;color:var(--gray)}
+.drobek button{background:none;border:0;padding:0;font:inherit;color:var(--pink);cursor:pointer;text-decoration:underline}
+.situace{display:inline-flex;background:#fff;border:var(--line);border-radius:99px;padding:4px;margin:12px 0 18px}
+.situace button{border:0;background:none;border-radius:99px;padding:8px 16px;cursor:pointer;font:inherit;font-size:14px;color:var(--gray)}
+.situace button.on{background:var(--dark);color:#fff;font-weight:600}
+.balicky{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;align-items:start}
+.bal{position:relative;background:#fff;border:var(--line);border-radius:16px;padding:24px 22px 18px}
+.bal.dop{border:2px solid var(--pink);box-shadow:0 10px 30px rgba(234,64,111,.14)}
+.bal .stitek{position:absolute;top:-12px;right:18px;background:var(--grad);color:#fff;font-size:12px;font-weight:700;padding:3px 12px;border-radius:99px}
+.bal h3{font-size:26px;margin:0;color:var(--pink)}
+.bal .bpopis{font-size:14px;color:var(--gray);min-height:63px;margin:6px 0 14px}
+.bal .cena-m{font-size:30px;font-weight:700;line-height:1.1}
+.bal .cena-m small{font-size:15px;font-weight:400;color:var(--gray)}
+.bal .cena-r{font-size:13px;color:var(--gray);margin-top:4px}
+.bal .cena-r strong{color:var(--dark)}
+.bal .bhodiny{display:inline-block;margin-top:8px;font-size:12px;color:var(--gray);background:#f3f3f3;border-radius:6px;padding:2px 8px}
+.bal .upraveno{display:flex;align-items:center;gap:8px;font-size:12px;margin-top:8px;color:var(--pink);font-weight:600;min-height:20px}
+.bal .upraveno button{border:0;background:none;color:var(--gray);text-decoration:underline;cursor:pointer;font:inherit;font-size:12px;padding:0;font-weight:400}
+.bal .cta{display:block;width:100%;margin:14px 0 6px;padding:12px;border-radius:10px;border:0;cursor:pointer;font:inherit;font-weight:600;
+  background:var(--bgpink);color:var(--pink)}
+.bal .cta:hover{background:var(--lightpink)}
+.bal.dop .cta{background:var(--grad);color:#fff}
+.bal .skupina{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--gray);margin:16px 0 4px}
+.bal .radek{position:relative;display:flex;align-items:center;gap:10px;padding:5px 0;font-size:14px}
+.bal .ik{width:22px;height:22px;flex:none;display:grid;place-items:center;border-radius:50%;font-size:12px;font-weight:700;
+  border:0;padding:0;cursor:pointer;transition:transform .12s,background .12s}
+.bal button.ik:hover{transform:scale(1.15)}
+.bal .ik:focus-visible{outline:2px solid var(--pink);outline-offset:2px}
+.bal .radek.on .ik{background:#E9F7EE;color:#1F9D55}
+.bal .radek.on .ik::before{content:"✓"}
+.bal .radek.on button.ik:hover{background:#FDECEC;color:#E25555}
+.bal .radek.on button.ik:hover::before{content:"×"}
+.bal .radek.off{color:#9a9a9a}
+.bal .radek.off .ik{background:#FDECEC;color:#E25555}
+.bal .radek.off .ik::before{content:"×"}
+.bal .radek.off button.ik:hover{background:#E9F7EE;color:#1F9D55}
+.bal .radek.off button.ik:hover::before{content:"+"}
+.bal .radek .t{cursor:help;border-bottom:1px dotted transparent}
+.bal .radek .t:hover,.bal .radek .t:focus{border-bottom-color:#bbb;outline:0}
+.bal .radek.on .t{font-weight:600}
+.bal .radek.zmeneno .t::after{content:"•";color:var(--pink);margin-left:5px}
+.bal .tip{position:absolute;left:32px;right:-8px;top:calc(100% + 2px);z-index:5;background:var(--dark);color:#fff;font-size:12.5px;
+  font-weight:400;line-height:1.45;padding:9px 12px;border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,.18);
+  opacity:0;visibility:hidden;transform:translateY(-3px);transition:opacity .12s,transform .12s;pointer-events:none}
+.bal .tip::before{content:"";position:absolute;top:-5px;left:14px;border:5px solid transparent;border-top:0;border-bottom-color:var(--dark)}
+.bal .radek .t:hover ~ .tip,.bal .radek .t:focus ~ .tip{opacity:1;visibility:visible;transform:none}
+.bal .stepper{margin-left:auto;display:inline-flex;align-items:center;border:1px solid #ddd;border-radius:8px;overflow:hidden}
+.bal .stepper button{border:0;background:#fff;width:28px;height:28px;cursor:pointer;font:inherit;font-size:16px}
+.bal .stepper button:hover{background:var(--bgpink);color:var(--pink)}
+.bal .stepper span{min-width:26px;text-align:center;font-weight:600}
+.bal .glm{font-size:10px;font-weight:700;color:#fff;background:#042150;border-radius:4px;padding:1px 5px;margin-left:6px}
+.pozn{font-size:12.5px;color:var(--gray);margin-top:18px}
+@media (max-width:1100px){ .typy{grid-template-columns:repeat(3,1fr)} }
+@media (max-width:980px){ .typy,.mensi{grid-template-columns:1fr 1fr} .balicky{grid-template-columns:1fr} .bal .bpopis{min-height:0} }
+@media (max-width:560px){ .typy,.mensi{grid-template-columns:1fr} }
 
 /* editor */
 .layout{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:24px;align-items:start}
@@ -609,6 +672,770 @@ const CATALOG = /*__CATALOG__*/{
       ]
     }
   ],
+  "balicky": {
+    "skupiny": {
+      "r": "Rozjezd",
+      "a": "Automatizace",
+      "m": "Každý měsíc",
+      "x": "Navíc"
+    },
+    "radky": {
+      "nastroj": {
+        "t": "Výběr nástroje, doména a DNS",
+        "g": "r",
+        "jen": "nula",
+        "u": [
+          "ob-briefing",
+          "pl-eval",
+          "pl-account",
+          "pl-dns",
+          "pl-senddomain",
+          "ob-lists",
+          "ob-utm"
+        ],
+        "d": "Doporučíme nástroj podle velikosti databáze a rozpočtu, založíme účet a ověříme doménu. Bez ověřené domény e-maily častěji končí ve spamu, proto je to základ všeho dalšího."
+      },
+      "audit": {
+        "t": "Audit stávajícího e-mailingu",
+        "g": "r",
+        "jen": "prevzeti",
+        "u": [
+          "ob-briefing",
+          "ob-audit",
+          "ob-lists",
+          "ob-utm"
+        ],
+        "d": "Rozbor dosavadních kampaní, automatizací a dat. Ukáže, co funguje a co opravit dřív, než začneme stavět nové věci."
+      },
+      "strategie": {
+        "t": "Strategie e-mailingu",
+        "g": "r",
+        "vychozi": "nula",
+        "u": [
+          "st-strategy"
+        ],
+        "d": "Plán, komu, co a jak často posílat a jaké automatizace postavit. U nového projektu jím začínáme, aby každá další položka měla jasný cíl. U převzetí jen tehdy, když stávající směr nefunguje."
+      },
+      "eshop": {
+        "t": "Napojení e-shopu",
+        "g": "r",
+        "jen": "nula",
+        "u": [
+          "pl-integration"
+        ],
+        "d": "Propojení nástroje s e-shopem, aby se kontakty, objednávky a produkty propisovaly samy. Bez něj nefunguje košík, série po nákupu ani segmenty podle nákupů."
+      },
+      "crm": {
+        "t": "Napojení CRM nebo webu",
+        "g": "r",
+        "jen": "nula",
+        "u": [
+          "pl-integration"
+        ],
+        "d": "Propojení s CRM nebo formuláři na webu, aby nový zájemce skončil v nástroji hned a správně označený. Jinak se kontakty přenášejí ručně a poptávky stydnou."
+      },
+      "vicetrh": {
+        "t": "Víc jazyků a trhů",
+        "g": "r",
+        "u": [
+          "st-multimarket"
+        ],
+        "d": "Nastavení pro víc jazyků nebo zemí, aby každý trh dostával vlastní obsah, ne strojový překlad. Hodí se, když klient prodává i do zahraničí."
+      },
+      "sablona": {
+        "t": "Šablona e-mailu v brandu",
+        "g": "r",
+        "u": [
+          "ob-template"
+        ],
+        "d": "Grafická šablona v barvách značky, vyzkoušená na mobilu i v Outlooku. Další e-maily se skládají z ní, takže se kampaně připravují rychleji."
+      },
+      "formulare": {
+        "t": "Formuláře a potvrzení odběru",
+        "g": "r",
+        "u": [
+          "ob-optin",
+          "ob-doubleoptin"
+        ],
+        "d": "Formuláře na webu a potvrzení přihlášení e-mailem. Databáze roste z lidí, kteří o e-maily stojí, a souhlas je doložitelný kvůli GDPR."
+      },
+      "import": {
+        "t": "Import a čištění databáze",
+        "g": "r",
+        "u": [
+          "ob-import"
+        ],
+        "d": "Převod stávajících kontaktů a vyřazení neplatných a duplicitních adres. Špatné adresy zhoršují doručitelnost i e-mailům, které jdou správným lidem."
+      },
+      "welcome": {
+        "t": "Uvítací série",
+        "g": "a",
+        "u": [
+          "if-welcome"
+        ],
+        "d": "E-maily, které nový kontakt dostane hned po přihlášení. Zájem je v tu chvíli nejvyšší, proto se uvítání čte víc než běžný newsletter."
+      },
+      "kosik": {
+        "t": "Opuštěný košík",
+        "g": "a",
+        "u": [
+          "if-cart"
+        ],
+        "d": "Připomenutí zboží, které zůstalo v košíku. Míří na lidi, kteří už nakoupit chtěli, proto nese tržby hned od spuštění."
+      },
+      "ponakupu": {
+        "t": "Série po nákupu",
+        "g": "a",
+        "u": [
+          "if-postpurchase"
+        ],
+        "d": "Poděkování, tipy k produktu a žádost o recenzi. Z prvního nákupu dělá druhý a sbírá recenze, které pomáhají prodávat dalším."
+      },
+      "prohlidka": {
+        "t": "Opuštěná prohlídka zboží",
+        "g": "a",
+        "u": [
+          "if-browse"
+        ],
+        "d": "Připomenutí produktu, který si někdo prohlížel a nekoupil. Potřebuje sledování návštěv na webu, smysl má až při větší návštěvnosti."
+      },
+      "poptavky": {
+        "t": "Série pro B2B poptávky",
+        "g": "a",
+        "u": [
+          "if-b2b"
+        ],
+        "d": "Navazující e-maily po poptávce, než se ozve obchodník, a po schůzce. Udrží zájem, dokud se obchod neuzavře."
+      },
+      "winback": {
+        "t": "Reaktivační série",
+        "g": "a",
+        "u": [
+          "if-winback"
+        ],
+        "d": "Série pro kontakty, které delší dobu nereagují nebo nenakoupily. Část vrátí zpět a zbytek vyřadí, což chrání doručitelnost."
+      },
+      "kampane": {
+        "t": "kampaně měsíčně",
+        "g": "m",
+        "pocet": "ca-campaign",
+        "u": [
+          "ca-campaign"
+        ],
+        "d": "Kompletní kampaň od zadání přes text a grafiku po odeslání. Počet volíme podle toho, kolik má klient co říct, pravidelnost drží značku v paměti."
+      },
+      "databaze": {
+        "t": "Péče o databázi a doručitelnost",
+        "g": "m",
+        "u": [
+          "lm-cleaning",
+          "tt-monitoring"
+        ],
+        "d": "Vyřazování neaktivních adres a hlídání, že e-maily dorážejí do doručené pošty. Bez toho klesá doručitelnost a s ní výsledky všech ostatních e-mailů."
+      },
+      "segmenty": {
+        "t": "Segmentace",
+        "g": "m",
+        "u": [
+          "lm-segment"
+        ],
+        "d": "Rozdělení kontaktů podle chování a zájmů. Každý dostává to, co ho zajímá, takže víc čte a méně se odhlašuje."
+      },
+      "report": {
+        "t": "Měsíční report",
+        "g": "m",
+        "u": [
+          "re-monthly"
+        ],
+        "d": "Měsíční přehled výsledků s komentářem a doporučením. Klient vidí, co e-mail přinesl, a podle něj plánujeme další měsíc."
+      },
+      "ladeni": {
+        "t": "Kontrola a ladění automatizací",
+        "g": "m",
+        "u": [
+          "au-qa",
+          "au-tuning"
+        ],
+        "d": "Pravidelná kontrola, že automatizace chodí a odkazy a kódy fungují, a úpravy podle výsledků. Spuštěním automatizace nekončí, časem zastarává."
+      },
+      "sezonni": {
+        "t": "Sezónní obměna automatizací",
+        "g": "m",
+        "u": [
+          "au-seasonal"
+        ],
+        "d": "Obměna obsahu automatických e-mailů podle sezóny, menu nebo akcí. Uvítání s letní nabídkou v prosinci působí jako zapomenutý podnik."
+      },
+      "abtest": {
+        "t": "A/B testy",
+        "g": "m",
+        "u": [
+          "ca-abtest"
+        ],
+        "d": "Porovnání dvou variant předmětu nebo obsahu. Ukazuje, co na publikum klienta skutečně funguje, místo odhadu."
+      },
+      "kvartal": {
+        "t": "Kvartální strategický přehled",
+        "g": "m",
+        "u": [
+          "re-quarterly"
+        ],
+        "d": "Čtvrtletní schůzka nad výsledky a plánem na další období. Hodí se, když je e-mail pro klienta hlavní kanál a chce ho řídit podle čísel."
+      },
+      "osloveni": {
+        "t": "Aktivní oslovování firem",
+        "g": "x",
+        "gl": true,
+        "u": [
+          "co-briefing",
+          "co-setup",
+          "co-mailbox",
+          "co-warmup",
+          "co-list-setup",
+          "co-sequence",
+          "co-list-monthly",
+          "co-snippets",
+          "co-wave",
+          "co-replies",
+          "co-report"
+        ],
+        "d": "Oslovování nových firem dvěma automatickými e-maily z oddělené domény, dodává GetLeads. Pro klienta, kterému nestačí čekat, až se firmy ozvou samy."
+      }
+    },
+    "typy": [
+      {
+        "id": "eshop",
+        "nazev": "E-shop",
+        "popis": "Prodává koncovým zákazníkům online. Automatizace nesou největší část tržeb z e-mailu.",
+        "radky": [
+          "nastroj",
+          "audit",
+          "strategie",
+          "eshop",
+          "sablona",
+          "formulare",
+          "import",
+          "welcome",
+          "kosik",
+          "ponakupu",
+          "winback",
+          "prohlidka",
+          "kampane",
+          "databaze",
+          "segmenty",
+          "report",
+          "ladeni",
+          "abtest",
+          "kvartal"
+        ],
+        "balicky": [
+          {
+            "nazev": "Základ",
+            "popis": "Základ, který se vyplatí každému e-shopu. Uvítání, košík a dvě kampaně měsíčně.",
+            "r": {
+              "nastroj": 1,
+              "audit": 1,
+              "strategie": 1,
+              "eshop": 1,
+              "sablona": 1,
+              "formulare": 1,
+              "import": 1,
+              "welcome": 1,
+              "kosik": 1,
+              "kampane": {
+                "units": 2
+              },
+              "databaze": 1,
+              "report": {
+                "cx": "simple"
+              }
+            }
+          },
+          {
+            "nazev": "Růst",
+            "dop": true,
+            "popis": "Celý životní cyklus zákazníka. Po nákupu, reaktivace a segmentované kampaně každý týden.",
+            "r": {
+              "nastroj": 1,
+              "audit": 1,
+              "strategie": 1,
+              "eshop": 1,
+              "sablona": 1,
+              "formulare": 1,
+              "import": 1,
+              "welcome": 1,
+              "kosik": 1,
+              "ponakupu": 1,
+              "winback": 1,
+              "kampane": {
+                "units": 4
+              },
+              "databaze": 1,
+              "segmenty": 1,
+              "report": 1,
+              "ladeni": 1
+            }
+          },
+          {
+            "nazev": "Max",
+            "popis": "Pro e-shop, kde je e-mail hlavní kanál. Víc kampaní, testování a kvartální strategie.",
+            "r": {
+              "nastroj": 1,
+              "audit": 1,
+              "strategie": 1,
+              "eshop": 1,
+              "sablona": 1,
+              "formulare": 1,
+              "import": 1,
+              "welcome": 1,
+              "kosik": 1,
+              "ponakupu": 1,
+              "winback": 1,
+              "prohlidka": 1,
+              "kampane": {
+                "units": 6
+              },
+              "databaze": 1,
+              "segmenty": 1,
+              "report": 1,
+              "ladeni": 1,
+              "abtest": {
+                "units": 2
+              },
+              "kvartal": 1
+            }
+          }
+        ]
+      },
+      {
+        "id": "b2b-eshop",
+        "nazev": "B2B s e-shopem",
+        "popis": "Prodává firmám, část objednávek jde přes e-shop. Kombinace nákupních automatizací a péče o poptávky.",
+        "radky": [
+          "nastroj",
+          "audit",
+          "strategie",
+          "eshop",
+          "sablona",
+          "formulare",
+          "import",
+          "welcome",
+          "kosik",
+          "ponakupu",
+          "poptavky",
+          "winback",
+          "kampane",
+          "databaze",
+          "segmenty",
+          "report",
+          "ladeni",
+          "kvartal",
+          "osloveni"
+        ],
+        "balicky": [
+          {
+            "nazev": "Základ",
+            "popis": "Uvítání, opuštěný košík a jeden newsletter měsíčně.",
+            "r": {
+              "nastroj": 1,
+              "audit": 1,
+              "strategie": 1,
+              "eshop": 1,
+              "sablona": 1,
+              "formulare": 1,
+              "import": 1,
+              "welcome": 1,
+              "kosik": 1,
+              "kampane": {
+                "units": 1
+              },
+              "databaze": 1,
+              "report": {
+                "cx": "simple"
+              }
+            }
+          },
+          {
+            "nazev": "Růst",
+            "dop": true,
+            "popis": "Navíc série po nákupu a pro poptávky. Dvě kampaně měsíčně podle segmentů.",
+            "r": {
+              "nastroj": 1,
+              "audit": 1,
+              "strategie": 1,
+              "eshop": 1,
+              "sablona": 1,
+              "formulare": 1,
+              "import": 1,
+              "welcome": 1,
+              "kosik": 1,
+              "ponakupu": 1,
+              "poptavky": 1,
+              "kampane": {
+                "units": 2
+              },
+              "databaze": 1,
+              "segmenty": 1,
+              "report": 1,
+              "ladeni": 1
+            }
+          },
+          {
+            "nazev": "Max",
+            "popis": "Celý e-mailing a k tomu aktivní oslovování nových firem přes GetLeads.",
+            "r": {
+              "nastroj": 1,
+              "audit": 1,
+              "strategie": 1,
+              "eshop": 1,
+              "sablona": 1,
+              "formulare": 1,
+              "import": 1,
+              "welcome": 1,
+              "kosik": 1,
+              "ponakupu": 1,
+              "poptavky": 1,
+              "winback": 1,
+              "kampane": {
+                "units": 4
+              },
+              "databaze": 1,
+              "segmenty": 1,
+              "report": 1,
+              "ladeni": 1,
+              "kvartal": 1,
+              "osloveni": 1
+            }
+          }
+        ]
+      },
+      {
+        "id": "b2b",
+        "nazev": "B2B bez e-shopu",
+        "popis": "Prodává firmám přes obchodníky. E-mail sbírá a ohřívá poptávky, objednávka jde jinudy.",
+        "radky": [
+          "nastroj",
+          "audit",
+          "strategie",
+          "crm",
+          "sablona",
+          "formulare",
+          "import",
+          "welcome",
+          "poptavky",
+          "winback",
+          "kampane",
+          "databaze",
+          "segmenty",
+          "report",
+          "ladeni",
+          "kvartal",
+          "osloveni"
+        ],
+        "balicky": [
+          {
+            "nazev": "Základ",
+            "popis": "Uvítání nového kontaktu a jeden newsletter měsíčně.",
+            "r": {
+              "nastroj": 1,
+              "audit": 1,
+              "strategie": 1,
+              "crm": 1,
+              "sablona": 1,
+              "formulare": 1,
+              "import": 1,
+              "welcome": 1,
+              "kampane": {
+                "units": 1
+              },
+              "databaze": 1,
+              "report": {
+                "cx": "simple"
+              }
+            }
+          },
+          {
+            "nazev": "Růst",
+            "dop": true,
+            "popis": "Série, která poptávku dovede k obchodníkovi, a dvě kampaně měsíčně.",
+            "r": {
+              "nastroj": 1,
+              "audit": 1,
+              "strategie": 1,
+              "crm": 1,
+              "sablona": 1,
+              "formulare": 1,
+              "import": 1,
+              "welcome": 1,
+              "poptavky": 1,
+              "kampane": {
+                "units": 2
+              },
+              "databaze": 1,
+              "segmenty": 1,
+              "report": 1,
+              "ladeni": 1
+            }
+          },
+          {
+            "nazev": "Max",
+            "popis": "K tomu aktivní oslovování nových firem přes GetLeads a kvartální strategie.",
+            "r": {
+              "nastroj": 1,
+              "audit": 1,
+              "strategie": 1,
+              "crm": 1,
+              "sablona": 1,
+              "formulare": 1,
+              "import": 1,
+              "welcome": 1,
+              "poptavky": 1,
+              "winback": 1,
+              "kampane": {
+                "units": 2
+              },
+              "databaze": 1,
+              "segmenty": 1,
+              "report": 1,
+              "ladeni": 1,
+              "kvartal": 1,
+              "osloveni": 1
+            }
+          }
+        ]
+      },
+      {
+        "id": "sluzby",
+        "nazev": "Služby",
+        "popis": "Služba nebo drahé zboží, kde nákup uzavírá obchodník, třeba auta nebo reality. E-mail drží zájemce, než přijde na schůzku.",
+        "nazvy": {
+          "poptavky": "Navazování po poptávce",
+          "prohlidka": "Připomenutí prohlížené nabídky"
+        },
+        "popisy": {
+          "poptavky": "Navazující e-maily po poptávce nebo domluvené prohlídce, než se ozve obchodník, a po schůzce. U drahého nákupu se zájemce rozhoduje dlouho a e-mail ho mezitím drží u nás.",
+          "prohlidka": "Připomenutí nabídky, kterou si někdo na webu prohlížel a neozval se. Potřebuje sledování návštěv na webu, smysl má při větší návštěvnosti."
+        },
+        "radky": [
+          "nastroj",
+          "audit",
+          "strategie",
+          "crm",
+          "vicetrh",
+          "sablona",
+          "formulare",
+          "import",
+          "welcome",
+          "poptavky",
+          "prohlidka",
+          "winback",
+          "kampane",
+          "databaze",
+          "segmenty",
+          "report",
+          "ladeni",
+          "abtest",
+          "kvartal",
+          "osloveni"
+        ],
+        "balicky": [
+          {
+            "nazev": "Základ",
+            "popis": "Uvítání zájemce z webu, navazování po poptávce a jeden newsletter měsíčně.",
+            "r": {
+              "nastroj": 1,
+              "audit": 1,
+              "strategie": 1,
+              "crm": 1,
+              "sablona": 1,
+              "formulare": 1,
+              "import": 1,
+              "welcome": 1,
+              "poptavky": 1,
+              "kampane": {
+                "units": 1
+              },
+              "databaze": 1,
+              "report": {
+                "cx": "simple"
+              }
+            }
+          },
+          {
+            "nazev": "Růst",
+            "dop": true,
+            "popis": "Navíc připomenutí prohlížené nabídky, segmenty podle zájmu a dvě kampaně měsíčně.",
+            "r": {
+              "nastroj": 1,
+              "audit": 1,
+              "strategie": 1,
+              "crm": 1,
+              "sablona": 1,
+              "formulare": 1,
+              "import": 1,
+              "welcome": 1,
+              "poptavky": 1,
+              "prohlidka": 1,
+              "kampane": {
+                "units": 2
+              },
+              "databaze": 1,
+              "segmenty": 1,
+              "report": 1,
+              "ladeni": 1
+            }
+          },
+          {
+            "nazev": "Max",
+            "popis": "Víc jazyků a trhů, kampaň každý týden a aktivní oslovování firem přes GetLeads.",
+            "r": {
+              "nastroj": 1,
+              "audit": 1,
+              "strategie": 1,
+              "crm": 1,
+              "vicetrh": 1,
+              "sablona": 1,
+              "formulare": 1,
+              "import": 1,
+              "welcome": 1,
+              "poptavky": 1,
+              "prohlidka": 1,
+              "winback": 1,
+              "kampane": {
+                "units": 4
+              },
+              "databaze": 1,
+              "segmenty": 1,
+              "report": 1,
+              "ladeni": 1,
+              "abtest": {
+                "units": 1
+              },
+              "kvartal": 1,
+              "osloveni": 1
+            }
+          }
+        ]
+      },
+      {
+        "id": "gastro",
+        "nazev": "Gastro a hospitality",
+        "popis": "Restaurace, bar nebo hotel. Pravidelný newsletter v brandu podniku a sezónní akce.",
+        "radky": [
+          "nastroj",
+          "audit",
+          "strategie",
+          "sablona",
+          "formulare",
+          "import",
+          "welcome",
+          "winback",
+          "kampane",
+          "databaze",
+          "segmenty",
+          "report",
+          "sezonni",
+          "abtest"
+        ],
+        "balicky": [
+          {
+            "nazev": "Základ",
+            "popis": "Šablona v brandu, sběr kontaktů, uvítací e-mail a jeden newsletter měsíčně.",
+            "r": {
+              "nastroj": 1,
+              "audit": 1,
+              "strategie": {
+                "hours": 4
+              },
+              "sablona": 1,
+              "formulare": 1,
+              "import": 1,
+              "welcome": {
+                "cx": "simple"
+              },
+              "kampane": {
+                "units": 1,
+                "cx": "simple"
+              },
+              "databaze": 1,
+              "report": {
+                "cx": "simple"
+              }
+            }
+          },
+          {
+            "nazev": "Růst",
+            "dop": true,
+            "popis": "Dva newslettery měsíčně a obměna automatizací podle sezóny.",
+            "r": {
+              "nastroj": 1,
+              "audit": 1,
+              "strategie": {
+                "hours": 4
+              },
+              "sablona": 1,
+              "formulare": 1,
+              "import": 1,
+              "welcome": {
+                "cx": "simple"
+              },
+              "kampane": {
+                "units": 2,
+                "cx": "simple"
+              },
+              "databaze": 1,
+              "report": {
+                "cx": "simple"
+              },
+              "sezonni": 1
+            }
+          },
+          {
+            "nazev": "Max",
+            "popis": "Newsletter každý týden, segmenty podle návštěv a návrat hostů, kteří dlouho nepřišli.",
+            "r": {
+              "nastroj": 1,
+              "audit": 1,
+              "strategie": {
+                "hours": 4
+              },
+              "sablona": 1,
+              "formulare": 1,
+              "import": 1,
+              "welcome": {
+                "cx": "simple"
+              },
+              "winback": {
+                "cx": "simple"
+              },
+              "kampane": {
+                "units": 4,
+                "cx": "simple"
+              },
+              "databaze": 1,
+              "segmenty": 1,
+              "report": {
+                "cx": "simple"
+              },
+              "sezonni": 1,
+              "abtest": {
+                "units": 1
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "samostatne": [
+      {
+        "sablona": "audit"
+      },
+      {
+        "sablona": "osloveni",
+        "gl": true
+      }
+    ]
+  },
   "faze": [
     {
       "id": "before",
@@ -2547,7 +3374,8 @@ const CATALOG = /*__CATALOG__*/{
 const NASTAVENI_KLIC = "aktivity-nastaveni";
 const state = {
   lang:"cs", view:"home",
-  klient:"", projekt:"", cil:"", typ:null,
+  klient:"", projekt:"", cil:"", typ:null, balicek:"",
+  uvod:{typ:null, situace:"nula", upravy:{}},  // výběr balíčku na úvodu; upravy: "typ|situace|balíček" -> {řádek: hodnota | false}
   nastaveni: nacistNastaveni(),
   interni:false,
   acts:{},               // id -> {sel,hours,units,cx,skut}
@@ -2601,7 +3429,7 @@ function vyberUkon(a, vychozi){
   }
 }
 function novyProjekt(typ){
-  Object.assign(state, {klient:"", projekt:"", cil:"", typ: typ ? typ.id : null, acts:{}, vlastni:{}, otevrene:{}});
+  Object.assign(state, {klient:"", projekt:"", cil:"", typ: typ ? typ.id : null, balicek:"", acts:{}, vlastni:{}, otevrene:{}});
   if(!typ) return;
   const podleId = Object.fromEntries(typ.ukony.map(u => [u.id, u]));
   KATEGORIE.forEach(c => c.activities.forEach(a => {
@@ -2691,15 +3519,17 @@ function render(){
 }
 
 /* ── adresa a tlačítko Zpět ────────────────────────────────────────────────── */
-// Úvod má adresu bez #, editor nese v # celé nacenění (stejně jako sdílecí odkaz).
-// Přechod mezi úvodem a editorem přidá záznam do historie, takže Zpět vede na úvod,
-// ne pryč z appky. Úpravy v editoru adresu jen přepisují, historii nezaplňují.
+// Výběr typu klienta je #typ=eshop, editor nese v # celé nacenění (stejně jako
+// sdílecí odkaz). Přechod mezi obrazovkami přidá záznam do historie, takže Zpět
+// vede o krok zpátky, ne pryč z appky. Úpravy adresu jen přepisují.
 function adresaStavu(){
-  return state.view === "home" ? location.pathname + location.search : shareUrl();
+  if(state.view !== "home") return shareUrl();
+  return location.pathname + location.search + (state.uvod.typ ? "#typ=" + state.uvod.typ : "");
 }
 function aktualizovatUrl(){
   const cil = adresaStavu();
-  if(cil === location.href || cil === location.pathname + location.search && !location.hash) return;
+  const ted = cil.startsWith("http") ? location.href : location.pathname + location.search + location.hash;
+  if(cil === ted) return;
   try { history.replaceState(null, "", cil); } catch(e){ /* Safari omezuje počet zápisů, adresa se dorovná při dalším */ }
 }
 function prejit(view){
@@ -2712,63 +3542,123 @@ function prejitSHistorii(view){
   try { history.pushState(null, "", location.href); } catch(e){ /* bez historie se jen přepne pohled */ }
   prejit(view);
 }
+function typZAdresy(){
+  const id = new URLSearchParams(location.hash.slice(1)).get("typ");
+  return BALICKY.typy.some(t => t.id === id) ? id : null;
+}
 window.addEventListener("popstate", () => {
   if(!$("#pruvodce").hidden) ukoncitPruvodce();
-  if(location.hash.length > 2){
+  if(new URLSearchParams(location.hash.slice(1)).get("a") != null){
     // Jiné nacenění, než je rozpracované (Zpět přes víc projektů): načíst z adresy.
     if(location.href !== shareUrl()){ novyProjekt(null); nacistZOdkazu(); }
     prejit("edit");
-  } else prejit("home");
+  } else {
+    state.uvod.typ = typZAdresy();
+    prejit("home");
+  }
 });
 
 
-/* úvod */
-function odhadTypu(typ){
-  const zaloha = {acts:state.acts, vlastni:state.vlastni, otevrene:state.otevrene, typ:state.typ,
+/* ── úvod: typ klienta a balíčky ───────────────────────────────────────────── */
+// Ceny balíčků počítá stejný výpočet jako editor: výběr se na chvíli dosadí
+// do stavu, sečte a stav se vrátí. Díky tomu karta a editor nemůžou ukázat jiné číslo.
+const BALICKY = CATALOG.balicky;
+const RADKY = BALICKY.radky;
+
+function sDocasnymVyberem(nastav, spocitej){
+  const zaloha = {acts:state.acts, vlastni:state.vlastni, otevrene:state.otevrene, typ:state.typ, balicek:state.balicek,
     klient:state.klient, projekt:state.projekt, cil:state.cil};
-  novyProjekt(typ);
-  // Audit má hlavní práci ve fázi na vyžádání, proto se jednorázové sčítá ze všech fází mimo měsíční.
-  const jedno = ["before","adhoc","after"].map(f => soucetFaze(f));
-  const m = soucetFaze("during");
-  const r = {jednoraz: jedno.reduce((a,s)=>a+s.cena,0), jednorazH: jedno.reduce((a,s)=>a+s.h,0), mesic: m.cena, mesicH: m.h};
+  novyProjekt(null);
+  nastav();
+  const r = spocitej();
   Object.assign(state, zaloha);
   return r;
 }
+function odhadFazi(){
+  // Audit má hlavní práci ve fázi na vyžádání, proto se jednorázové sčítá ze všech fází mimo měsíční.
+  const jedno = ["before","adhoc","after"].map(f => soucetFaze(f));
+  const m = soucetFaze("during"), r = soucetFaze("before");
+  return {jednoraz: jedno.reduce((a,s)=>a+s.cena,0), jednorazH: jedno.reduce((a,s)=>a+s.h,0),
+    rozjezd: r.cena, rozjezdH: r.h, mesic: m.cena, mesicH: m.h};
+}
+const odhadTypu = typ => sDocasnymVyberem(() => novyProjekt(typ), odhadFazi);
+const odhadVyberu = vyber => sDocasnymVyberem(() => nastavVyber(vyber), odhadFazi);
+
+// Výchozí hodnota řádku v balíčku pro aktuální situaci (strategie se u převzetí nepředvybírá).
+function zakladRadku(b, id){
+  return RADKY[id].vychozi && RADKY[id].vychozi !== state.uvod.situace ? undefined : b.r[id];
+}
+const klicUprav = (t, b) => t.id + "|" + state.uvod.situace + "|" + b.nazev;
+const radekVSituaci = id => !RADKY[id].jen || RADKY[id].jen === state.uvod.situace;
+function aktivniRadky(t, b){
+  const upr = state.uvod.upravy[klicUprav(t, b)] || {}, r = {};
+  t.radky.filter(radekVSituaci).forEach(id => {
+    const v = id in upr ? upr[id] : zakladRadku(b, id);
+    if(v) r[id] = v;
+  });
+  return r;
+}
+// Z řádků balíčku vybere úkony. Parametr (hodiny, počet, složitost) patří hlavnímu
+// úkonu řádku, ostatní jedou z katalogu. Když dva řádky sdílí úkon, vyhraje vyšší počet.
+function vyberUkonu(radky){
+  const v = {};
+  Object.entries(radky).forEach(([id, p]) => {
+    const prm = typeof p === "object" ? p : {};
+    RADKY[id].u.forEach((uid, i) => {
+      const nove = i === 0 || RADKY[id].pocet === uid ? Object.assign({}, prm) : {};
+      if(!v[uid] || (nove.units || 0) > (v[uid].units || 0)) v[uid] = nove;
+    });
+  });
+  return v;
+}
+function nastavVyber(vyber){
+  KATEGORIE.forEach(c => c.activities.forEach(a => {
+    if(vyber[a.id]){ vyberUkon(a, vyber[a.id]); state.otevrene[c.id] = true; }
+  }));
+}
+const tvarKampani = n => n === 1 ? "kampaň měsíčně" : n > 1 && n < 5 ? "kampaně měsíčně" : "kampaní měsíčně";
 
 function viewHome(){
   $("#mbar").innerHTML = "";
+  const t = BALICKY.typy.find(x => x.id === state.uvod.typ);
+  if(t) viewBalicky(t); else viewTypy();
+}
+
+function viewTypy(){
   const n = state.nastaveni;
-  const karty = TYPY.map(p => {
-    const o = odhadTypu(p);
-    const ceny = [o.jednoraz ? `jednorázově <strong>${fmtKc(o.jednoraz)}</strong> ${hod(o.jednorazH)}` : "",
-                  o.mesic ? `měsíčně <strong>${fmtKc(o.mesic)}</strong> ${hod(o.mesicH)}` : ""].filter(Boolean).join("<br>");
-    return `<button class="sablona" data-typ="${p.id}">
-      <span class="n">${esc(L(p.name))}</span>
-      <span class="d">${esc(L(p.popis))}</span>
-      <span class="c">${ceny}</span>
-    </button>`;
+  const s = state.uvod.situace; state.uvod.situace = "nula";
+  const karty = BALICKY.typy.map(t => {
+    const o = odhadVyberu(vyberUkonu(aktivniRadky(t, t.balicky[0])));
+    return `<button class="typ" data-uvod-typ="${t.id}">
+      <span class="n">${esc(t.nazev)}</span><span class="d">${esc(t.popis)}</span>
+      <span class="od">od <strong>${fmtKc(o.mesic)}</strong> měsíčně · 3 balíčky</span></button>`;
+  }).join("");
+  state.uvod.situace = s;
+  const samostatne = BALICKY.samostatne.map(x => {
+    const p = TYPY.find(y => y.id === x.sablona), o = odhadTypu(p);
+    const cena = o.mesic ? `měsíčně <strong>${fmtKc(o.mesic)}</strong>` : `jednorázově <strong>${fmtKc(o.jednoraz)}</strong>`;
+    return `<button class="typ ${x.gl ? "gl" : ""}" data-typ="${p.id}">
+      <span class="n">${esc(L(p.name))}</span>${x.gl ? `<span class="gl-tag">GetLeads</span>` : ""}
+      <span class="d">${esc(L(p.popis))}</span><span class="od">${cena}</span></button>`;
   }).join("");
 
-  const rozpracovano = Object.values(state.acts).some(s => s.sel);
+  const rozpracovano = Object.values(state.acts).some(a => a.sel);
   $("#view").innerHTML = `
     <div class="intro">
-      <h2>Nové nacenění</h2>
-      <p>Vyber šablonu, která je projektu nejblíž. Úkony a počty pak upravíš na jedné stránce a cenu vidíš průběžně.</p>
+      <h2>Pro koho naceňujeme?</h2>
+      <p>Vyber typ klienta. Ukážu tři balíčky, které se dají upravit odškrtáváním položek, a pak je doladíš v editoru.</p>
     </div>
-    <div class="sablony">
-      ${karty}
-      <button class="sablona prazdna" data-typ="">
-        <span class="n">Prázdné nacenění</span>
-        <span class="d">Bez předvybraných úkonů.</span>
-      </button>
-    </div>
-
-    <div class="bar" style="margin-top:18px">
-      ${rozpracovano ? `<button class="btn" id="b-pokracovat">Pokračovat v rozpracovaném${state.klient ? ": " + esc(state.klient) : ""}</button>` : ""}
-      <button class="btn ghost" id="b-nacist">Načíst uložený projekt</button>
+    ${rozpracovano ? `<div class="bar" style="margin-top:14px"><button class="btn" id="b-pokracovat">Pokračovat v rozpracovaném${state.klient ? ": " + esc(state.klient) : ""}</button></div>` : ""}
+    <div class="typy">${karty}</div>
+    <div class="oddil">Jednorázově a samostatně</div>
+    <div class="mensi">${samostatne}
+      <button class="typ prazdna" data-typ=""><span class="n">Prázdné nacenění</span>
+        <span class="d">Bez předvybraných úkonů, všechno ručně.</span></button>
+      <button class="typ prazdna" id="b-nacist"><span class="n">Načíst uložený projekt</span>
+        <span class="d">Soubor .json z dřívějšího nacenění.</span></button>
     </div>
 
-    <div class="card">
+    <div class="card" style="margin-top:26px">
       <details class="nast">
         <summary>Sazby a výchozí hodnoty</summary>
         <div class="grid3">
@@ -2788,6 +3678,10 @@ function viewHome(){
       </details>
     </div>`;
 
+  $("#view").querySelectorAll("[data-uvod-typ]").forEach(b => b.onclick = () => {
+    try { history.pushState(null, "", location.href); } catch(e){ /* bez historie */ }
+    state.uvod.typ = b.dataset.uvodTyp; render(); window.scrollTo(0,0);
+  });
   $("#view").querySelectorAll("[data-typ]").forEach(b => b.onclick = () => {
     novyProjekt(TYPY.find(p => p.id === b.dataset.typ));
     prejitSHistorii("edit");
@@ -2802,6 +3696,89 @@ function viewHome(){
   };
   $("#b-nacist").onclick = nacistSoubor;
   if(rozpracovano) $("#b-pokracovat").onclick = () => prejitSHistorii("edit");
+}
+
+function viewBalicky(t){
+  const sit = state.uvod.situace;
+  $("#view").innerHTML = `
+    <div class="drobek"><button id="b-typy">Typ klienta</button> › ${esc(t.nazev)}</div>
+    <div class="intro" style="margin-top:8px"><h2>${esc(t.nazev)}</h2><p>${esc(t.popis)}</p></div>
+    <div class="situace" role="tablist">
+      <button role="tab" aria-selected="${sit === "nula"}" class="${sit === "nula" ? "on" : ""}" data-sit="nula">E-mailing teprve rozjíždí</button>
+      <button role="tab" aria-selected="${sit === "prevzeti"}" class="${sit === "prevzeti" ? "on" : ""}" data-sit="prevzeti">E-maily už posílá, přebíráme</button>
+    </div>
+    <div class="balicky">${t.balicky.map((b, bi) => kartaBalicku(t, b, bi)).join("")}</div>
+    <p class="pozn">Najetím na název položky uvidíš, co obsahuje a proč se hodí. Kolečkem před názvem ji přidáš nebo odebereš, cena se přepočítá.
+      Upravený balíček má tečku u změněných položek. Hodiny v šedém rámečku jsou jen pro nás, do nacenění pro klienta se nedostanou.</p>`;
+
+  $("#b-typy").onclick = () => {
+    try { history.pushState(null, "", location.href); } catch(e){ /* bez historie */ }
+    state.uvod.typ = null; render(); window.scrollTo(0,0);
+  };
+  $("#view").querySelectorAll("[data-sit]").forEach(b => b.onclick = () => { state.uvod.situace = b.dataset.sit; render(); });
+  const upravy = bi => { const k = klicUprav(t, t.balicky[bi]); return state.uvod.upravy[k] = state.uvod.upravy[k] || {}; };
+  $("#view").querySelectorAll("[data-radek]").forEach(el => el.onclick = () => {
+    const [bi, id] = el.dataset.radek.split("|"), b = t.balicky[bi], upr = upravy(bi);
+    const vych = zakladRadku(b, id), nyni = id in upr ? upr[id] : vych;
+    upr[id] = nyni ? false : (b.r[id] || 1);
+    if(JSON.stringify(upr[id]) === JSON.stringify(vych) || (!upr[id] && !vych)) delete upr[id];
+    render();
+  });
+  $("#view").querySelectorAll("[data-krok]").forEach(el => el.onclick = () => {
+    const [bi, id, d] = el.dataset.krok.split("|"), b = t.balicky[bi], upr = upravy(bi);
+    const nyni = (id in upr ? upr[id] : zakladRadku(b, id)) || {units:0};
+    const n = Math.max(0, Math.min(12, (nyni.units || 1) + Number(d)));
+    upr[id] = n ? Object.assign({}, nyni, {units:n}) : false;
+    if(JSON.stringify(upr[id]) === JSON.stringify(zakladRadku(b, id))) delete upr[id];
+    render();
+  });
+  $("#view").querySelectorAll("[data-reset]").forEach(el => el.onclick = () => {
+    delete state.uvod.upravy[klicUprav(t, t.balicky[el.dataset.reset])]; render();
+  });
+  $("#view").querySelectorAll("[data-pouzit]").forEach(el => el.onclick = () => {
+    const b = t.balicky[el.dataset.pouzit];
+    novyProjekt(null);
+    nastavVyber(vyberUkonu(aktivniRadky(t, b)));
+    state.balicek = t.nazev + ", " + b.nazev + (state.uvod.situace === "prevzeti" ? ", převzetí" : "");
+    prejitSHistorii("edit");
+  });
+}
+
+function kartaBalicku(t, b, bi){
+  const upr = state.uvod.upravy[klicUprav(t, b)] || {};
+  const radky = aktivniRadky(t, b);
+  const o = odhadVyberu(vyberUkonu(radky));
+  const zmen = Object.keys(upr).filter(radekVSituaci).length;
+  let skupina = "";
+  const polozky = t.radky.filter(radekVSituaci).map(id => {
+    const r = RADKY[id], on = !!radky[id], zm = id in upr;
+    const hl = r.g !== skupina ? `<div class="skupina">${esc(BALICKY.skupiny[r.g])}</div>` : "";
+    skupina = r.g;
+    const tip = `<span class="tip" role="tooltip">${esc((t.popisy || {})[id] || r.d)}</span>`;
+    const tridy = `radek ${on ? "on" : "off"} ${zm ? "zmeneno" : ""}`;
+    if(r.pocet){
+      const n = on ? (radky[id].units || 1) : 0;
+      return hl + `<div class="${tridy}"><span class="ik" aria-hidden="true"></span>
+        <span class="t" tabindex="0">${n} ${esc(tvarKampani(n))}</span>${tip}
+        <span class="stepper"><button data-krok="${bi}|${id}|-1" aria-label="Méně">−</button><span>${n}</span>
+        <button data-krok="${bi}|${id}|1" aria-label="Více">+</button></span></div>`;
+    }
+    const nazev = (t.nazvy || {})[id] || r.t, akce = on ? "Odebrat" : "Přidat";
+    return hl + `<div class="${tridy}">
+      <button class="ik" data-radek="${bi}|${id}" title="${akce}" aria-label="${akce}: ${esc(nazev)}"></button>
+      <span class="t" tabindex="0">${esc(nazev)}${r.gl ? `<span class="glm">GetLeads</span>` : ""}</span>${tip}</div>`;
+  }).join("");
+  return `<div class="bal ${b.dop ? "dop" : ""}">
+    ${b.dop ? `<span class="stitek">Doporučujeme</span>` : ""}
+    <h3>${esc(b.nazev)}</h3>
+    <p class="bpopis">${esc(b.popis)}</p>
+    <div class="cena-m">${fmtKc(o.mesic)} <small>měsíčně</small></div>
+    <div class="cena-r">a rozjezd <strong>${fmtKc(o.rozjezd)}</strong> jednorázově</div>
+    <span class="bhodiny">rozjezd ${fmtH(o.rozjezdH)} h · měsíčně ${fmtH(o.mesicH)} h</span>
+    <div class="upraveno">${zmen ? `Upraveno (${zmen}) <button data-reset="${bi}">vrátit původní</button>` : ""}</div>
+    <button class="cta" data-pouzit="${bi}">Upravit v detailu a exportovat →</button>
+    ${polozky}
+  </div>`;
 }
 
 /* editor */
@@ -2826,7 +3803,8 @@ function viewEditor(){
         <div class="card">
           <div class="bar" style="justify-content:space-between">
             <h2 style="margin:0">Zadání</h2>
-            ${sablona ? `<span class="muted" style="font-size:13px">Šablona: ${esc(L(sablona.name))}</span>` : ""}
+            ${state.balicek ? `<span class="muted" style="font-size:13px">Balíček: ${esc(state.balicek)}</span>`
+              : sablona ? `<span class="muted" style="font-size:13px">Šablona: ${esc(L(sablona.name))}</span>` : ""}
           </div>
           <div class="grid2">
             <div><label class="f">Klient</label>
@@ -3123,7 +4101,7 @@ function nazevSouboru(predpona){
 }
 function projektData(){
   return {
-    verze:11, klient:state.klient, projekt:state.projekt, cil:state.cil, typ:state.typ,
+    verze:11, klient:state.klient, projekt:state.projekt, cil:state.cil, typ:state.typ, balicek:state.balicek,
     nastaveni:state.nastaveni, acts:state.acts, vlastni:state.vlastni,
   };
 }
@@ -3133,7 +4111,7 @@ function nacistData(d){
   if(d.sazba) nast.cenovaSazba = Number(d.sazba);
   if(d.komunikace != null && !d.nastaveni) nast.komunikace = Number(d.komunikace);
   Object.assign(state, {
-    klient:d.klient||"", projekt:d.projekt||"", cil:d.cil||"", typ:d.typ||null,
+    klient:d.klient||"", projekt:d.projekt||"", cil:d.cil||"", typ:d.typ||null, balicek:d.balicek||"",
     nastaveni:nast, acts:d.acts||{}, vlastni:d.vlastni||{}, otevrene:{},
   });
   KATEGORIE.forEach(c => { if(pocetVybranych(c)) state.otevrene[c.id] = true; });
@@ -3217,12 +4195,18 @@ function toast(msg){
 // rozpracovaný stav přesně tak, jak byl). Z editoru projde jen editor.
 // Krok, jehož prvek na stránce není, se přeskočí.
 const KROKY_UVOD = [
-  {cil:".sablony", nadpis:"Šablony", text:"Začni šablonou, která je projektu nejblíž. Předvybere úkony i počty, takže pak už jen ubíráš a ladíš. Cena na kartě je orientační, spočítaná z aktuálních sazeb."},
-  {cil:".sablona.prazdna", nadpis:"Prázdné nacenění", text:"Když žádná šablona nesedí, začni s prázdným a úkony si naklikej sám."},
-  {cil:"#b-nacist", nadpis:"Uložené projekty", text:"Načte nacenění, které jsi dřív uložil tlačítkem Uložit projekt. Soubor .json patří ke klientovi, ne do appky."},
-  {cil:"details.nast", nadpis:"Sazby a výchozí hodnoty", text:"Ceníková sazba určuje cenu pro klienta, nákladová je jen interní. Procento komunikace se přičítá ke každé fázi. Hodnoty si pamatuje tenhle prohlížeč."},
+  {cil:".typy", pred:ukazTypy, nadpis:"Typ klienta", text:"Začni typem klienta. Každý má tři balíčky Základ, Růst a Max. Cena na kartě je nejlevnější balíček pro klienta, který e-mailing teprve rozjíždí."},
+  {cil:".mensi", pred:ukazTypy, nadpis:"Jednorázově a samostatně", text:"Audit, samotné aktivní oslovování, prázdné nacenění a načtení uloženého projektu ze souboru .json. Tyhle zakázky balíčky nemají a otevřou rovnou editor."},
+  {cil:"details.nast", pred:ukazTypy, nadpis:"Sazby a výchozí hodnoty", text:"Ceníková sazba určuje cenu pro klienta, nákladová je jen interní. Procento komunikace se přičítá ke každé fázi. Hodnoty si pamatuje tenhle prohlížeč."},
+  {cil:".bal.dop", pred:ukazBalicky, nadpis:"Balíčky", text:"Ukázka na e-shopu. Tři balíčky vedle sebe, doporučený je zvýrazněný. Nahoře je měsíční cena a rozjezd, v šedém rámečku hodiny, které vidíme jen my."},
+  {cil:".situace", pred:ukazBalicky, nadpis:"Rozjíždí, nebo přebíráme", text:"Přepne obsah rozjezdu. U nového e-mailingu je v něm výběr nástroje, napojení a strategie, u převzetí audit toho, co už běží."},
+  {cil:".bal.dop .radek .t", pred:ukazBalicky, nadpis:"Položky", text:"Najetím na název uvidíš, co položka obsahuje a proč se hodí. Kolečkem před ní ji přidáš nebo odebereš a cena se hned přepočítá. Počet kampaní se mění tlačítky minus a plus."},
+  {cil:".bal.dop .cta", pred:ukazBalicky, nadpis:"Do editoru", text:"Otevře balíček v editoru. Tam se doladí hodiny a počty, doplní zadání a vytiskne nacenění pro klienta."},
   {cil:null, nadpis:"Teď editor", text:"Ukážu zbytek na ukázkovém nacenění Gastro: rozjezd newsletteru. Nic se tím neuloží a na konci se vrátíš sem.", ukazka:true},
 ];
+// Kroky úvodu přepínají mezi výběrem typu a balíčky. Původní výběr se po skončení vrátí.
+function ukazTypy(){ if(state.uvod.typ){ state.uvod.typ = null; render(); } }
+function ukazBalicky(){ if(state.uvod.typ !== "eshop"){ state.uvod.typ = "eshop"; render(); } }
 const KROKY_EDITOR = [
   {cil:"main > .card", nadpis:"Zadání", text:"Klient, název a cíl spolupráce. Všechno se propíše do nacenění pro klienta, cíl jako první odstavec."},
   {cil:"#faze-before", nadpis:"Fáze", text:"Nacenění má čtyři části: Rozjezd platí klient jednou, Měsíční správu každý měsíc, Na vyžádání jen když si ji objedná a Ukončení na konci spolupráce. Vpravo je cena celé fáze."},
@@ -3234,11 +4218,11 @@ const KROKY_EDITOR = [
   {cil:"#souhrn .card", nadpis:"Cena pro klienta", text:"Průběžný součet podle fází. Mění se s každým zaškrtnutím. Na mobilu jsou rozjezd a měsíční cena i ve spodní liště."},
   {cil:".prepinac", nadpis:"Interní pohled", text:"Zapne hodiny podle katalogu proti skutečným hodinám s Claudem, náklad, marži v korunách i procentech. Klient z toho nic nevidí, do exportu se to nedostane."},
   {cil:".akce", nadpis:"Výstupy", text:"Nacenění pro klienta jako .md nebo tisk do PDF v brandu, jen s položkami a cenami. Uložit projekt stáhne .json k dalším úpravám, odkaz se dá poslat kolegovi."},
-  {cil:"#b-home", nadpis:"Zpět na úvod", text:"Kliknutím na @ktivity se vrátíš na šablony. Rozpracované nacenění zůstane a dá se v něm pokračovat."},
+  {cil:"#b-home", nadpis:"Zpět na úvod", text:"Kliknutím na @ktivity se vrátíš na výběr typu klienta. Rozpracované nacenění zůstane a dá se v něm pokračovat."},
   {cil:"#b-help", nadpis:"Hotovo", text:"Průvodce spustíš kdykoli znovu tímhle otazníkem."},
 ];
 
-const pruvodce = {kroky:[], i:0, zaloha:null};
+const pruvodce = {kroky:[], i:0, zaloha:null, uvod:null};
 
 function otevritKategorii(){
   if(document.querySelector("details.kat[open] .act:not(.vypnuto)")) return;
@@ -3250,6 +4234,7 @@ function otevritKategorii(){
 function spustitPruvodce(){
   zavritTipPoprve();
   pruvodce.zaloha = null;
+  pruvodce.uvod = JSON.parse(JSON.stringify(state.uvod));
   pruvodce.kroky = state.view === "home" ? KROKY_UVOD.concat(KROKY_EDITOR) : KROKY_EDITOR.slice();
   pruvodce.i = 0;
   $("#pruvodce").hidden = false;
@@ -3346,7 +4331,10 @@ function ukoncitPruvodce(){
   document.removeEventListener("keydown", klavesyPruvodce);
   window.removeEventListener("resize", umistitKrok);
   window.removeEventListener("scroll", priScrollu);
+  const zmenaUvodu = pruvodce.uvod && JSON.stringify(pruvodce.uvod) !== JSON.stringify(state.uvod);
+  if(pruvodce.uvod){ state.uvod = pruvodce.uvod; pruvodce.uvod = null; }
   if(pruvodce.zaloha){ Object.assign(state, pruvodce.zaloha); pruvodce.zaloha = null; render(); window.scrollTo(0,0); }
+  else if(zmenaUvodu){ render(); window.scrollTo(0,0); }
   $("#b-help").focus();
 }
 
@@ -3374,9 +4362,13 @@ $("#pr-dal").onclick = () => pruvodce.i === pruvodce.kroky.length - 1 ? ukoncitP
 $("#pr-zpet").onclick = predchoziKrok;
 $("#pr-konec").onclick = ukoncitPruvodce;
 
-$("#b-home").onclick = () => { if(state.view !== "home") prejitSHistorii("home"); };
+$("#b-home").onclick = () => {
+  if(state.view === "home" && !state.uvod.typ) return;
+  try { history.pushState(null, "", location.href); } catch(e){ /* bez historie */ }
+  state.uvod.typ = null; prejit("home");
+};
 ukazatTipPoprve();
-nacistZOdkazu();
+if(!nacistZOdkazu()) state.uvod.typ = typZAdresy();
 render();
 </script>
 </body>

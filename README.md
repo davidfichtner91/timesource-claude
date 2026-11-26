@@ -1,6 +1,6 @@
 # @ktivity (dřív Time Source)
 
-Nacenění e-mailového projektu. Na úvodní stránce se vybere šablona, na jedné stránce se upraví úkony a počty a vedle se průběžně počítá cena. Klientovi jdou jen částky (export do `.md` nebo tisk do PDF), hodiny, náklad a marže zůstávají v interním pohledu.
+Nacenění e-mailového projektu. Na úvodní stránce se vybere typ klienta a jeden ze tří balíčků (nebo samostatná zakázka), na jedné stránce se upraví úkony a počty a vedle se průběžně počítá cena. Klientovi jdou jen částky (export do `.md` nebo tisk do PDF), hodiny, náklad a marže zůstávají v interním pohledu.
 
 Otevírá se `index.html`. Je to jeden soubor bez závislostí, takže se dá poslat kolegovi jako příloha a otevřít dvojklikem. Nepotřebuje server ani build.
 
@@ -53,9 +53,15 @@ Struktura úkonu:
 
 Rozdělení na rozjezd a provoz je podstatné. Bez něj vznikne jedna hromada hodin, ve které se jednorázová práce míchá s tou opakovanou a číslo nedává smysl ani nám, ani klientovi.
 
+## Balíčky na úvodu
+
+Úvod začíná typem klienta: e-shop, B2B s e-shopem, B2B bez e-shopu, služby, gastro a hospitality. Každý typ má balíčky Základ, Růst (doporučený) a Max a přepínač „e-mailing teprve rozjíždí / přebíráme“, který mění obsah rozjezdu. Položky balíčku se odškrtávají kolečkem, najetím na název se ukáže, co položka obsahuje a proč se hodí. Tlačítko pod cenou otevře výběr v editoru. Ceny na kartách počítá stejný výpočet jako editor.
+
+Data jsou v `data/build-catalog.js` v `BALICKY`: řádky (`BAL_RADKY`, každý se skládá z úkonů katalogu a má text tooltipu) a typy s balíčky (`BAL_TYPY`). Build spadne, když řádek odkazuje na neexistující úkon nebo balíček na řádek mimo svůj typ. Obsah balíčků je návrh z 26. 11. 2026, ne ověřená praxe. Typ ve výběru je v adrese (`#typ=eshop`), tlačítko Zpět prohlížeče tak vede o krok zpátky.
+
 ## Šablony
 
-Šablona předvybere úkony i s počty a složitostí, account pak jen ubírá a ladí. Seznam je v `data/build-catalog.js` v `TYPY_PROJEKTU`: e-shop od nuly, měsíční správa, jednorázový audit, gastro rozjezd newsletteru, gastro audit a převzetí, aktivní oslovování. Build katalogu spadne, když šablona odkazuje na úkon, který v katalogu není.
+Šablona předvybere úkony i s počty a složitostí, account pak jen ubírá a ladí. Na úvodu se z nich nabízí jen jednorázový audit a aktivní oslovování, zbytek nahradily balíčky a ukázka v průvodci používá gastro rozjezd. Seznam je v `data/build-catalog.js` v `TYPY_PROJEKTU`: e-shop od nuly, měsíční správa, jednorázový audit, gastro rozjezd newsletteru, gastro audit a převzetí, aktivní oslovování. Build katalogu spadne, když šablona odkazuje na úkon, který v katalogu není.
 
 ## Cena, náklad a marže
 
