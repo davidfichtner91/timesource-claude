@@ -2687,7 +2687,39 @@ function pocetVybranych(c){
 /* ── vykreslení ────────────────────────────────────────────────────────────── */
 function render(){
   if(state.view === "home") viewHome(); else viewEditor();
+  aktualizovatUrl();
 }
+
+/* ── adresa a tlačítko Zpět ────────────────────────────────────────────────── */
+// Úvod má adresu bez #, editor nese v # celé nacenění (stejně jako sdílecí odkaz).
+// Přechod mezi úvodem a editorem přidá záznam do historie, takže Zpět vede na úvod,
+// ne pryč z appky. Úpravy v editoru adresu jen přepisují, historii nezaplňují.
+function adresaStavu(){
+  return state.view === "home" ? location.pathname + location.search : shareUrl();
+}
+function aktualizovatUrl(){
+  const cil = adresaStavu();
+  if(cil === location.href || cil === location.pathname + location.search && !location.hash) return;
+  try { history.replaceState(null, "", cil); } catch(e){ /* Safari omezuje počet zápisů, adresa se dorovná při dalším */ }
+}
+function prejit(view){
+  state.view = view;
+  render();
+  window.scrollTo(0,0);
+}
+// Nový záznam dostane nejdřív stávající adresu, render ji pak přepíše na cílovou.
+function prejitSHistorii(view){
+  try { history.pushState(null, "", location.href); } catch(e){ /* bez historie se jen přepne pohled */ }
+  prejit(view);
+}
+window.addEventListener("popstate", () => {
+  if(!$("#pruvodce").hidden) ukoncitPruvodce();
+  if(location.hash.length > 2){
+    // Jiné nacenění, než je rozpracované (Zpět přes víc projektů): načíst z adresy.
+    if(location.href !== shareUrl()){ novyProjekt(null); nacistZOdkazu(); }
+    prejit("edit");
+  } else prejit("home");
+});
 
 
 /* úvod */
@@ -2758,7 +2790,7 @@ function viewHome(){
 
   $("#view").querySelectorAll("[data-typ]").forEach(b => b.onclick = () => {
     novyProjekt(TYPY.find(p => p.id === b.dataset.typ));
-    state.view = "edit"; render(); window.scrollTo(0,0);
+    prejitSHistorii("edit");
   });
   $("#view").querySelectorAll("[data-n]").forEach(i => i.onchange = () => {
     state.nastaveni[i.dataset.n] = Number(i.value) || 0; ulozitNastaveni(); render();
@@ -2769,7 +2801,7 @@ function viewHome(){
     render();
   };
   $("#b-nacist").onclick = nacistSoubor;
-  if(rozpracovano) $("#b-pokracovat").onclick = () => { state.view = "edit"; render(); };
+  if(rozpracovano) $("#b-pokracovat").onclick = () => prejitSHistorii("edit");
 }
 
 /* editor */
@@ -3116,7 +3148,7 @@ function nacistSoubor(){
     const f = e.target.files[0]; if(!f) return;
     const r = new FileReader();
     r.onload = ev => {
-      try { nacistData(JSON.parse(ev.target.result)); state.view = "edit"; render(); toast("Projekt načten"); }
+      try { nacistData(JSON.parse(ev.target.result)); prejitSHistorii("edit"); toast("Projekt načten"); }
       catch(err){ toast("Soubor se nepodařilo načíst"); }
     };
     r.readAsText(f);
@@ -3342,7 +3374,7 @@ $("#pr-dal").onclick = () => pruvodce.i === pruvodce.kroky.length - 1 ? ukoncitP
 $("#pr-zpet").onclick = predchoziKrok;
 $("#pr-konec").onclick = ukoncitPruvodce;
 
-$("#b-home").onclick = () => { state.view = "home"; render(); window.scrollTo(0,0); };
+$("#b-home").onclick = () => { if(state.view !== "home") prejitSHistorii("home"); };
 ukazatTipPoprve();
 nacistZOdkazu();
 render();
