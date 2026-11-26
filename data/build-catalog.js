@@ -216,6 +216,17 @@ cats.forEach((cat) => {
   });
 });
 
+// Strategií se u nového projektu začíná, proto patří do rozjezdu hned za audit,
+// ne mezi úkony na vyžádání. U převzatého projektu se nepředvybírá, ale přidat jde.
+// Zadal David 26. 11. 2026.
+{
+  const zdroj = cats.find((c) => c.id === "strategy");
+  const cil = cats.find((c) => c.id === "onboarding");
+  const i = zdroj.activities.findIndex((a) => a.id === "st-strategy");
+  const [strategie] = zdroj.activities.splice(i, 1);
+  cil.activities.splice(cil.activities.findIndex((a) => a.id === "ob-audit") + 1, 0, strategie);
+}
+
 // Automatizace se jednou postaví, ale pak se musí hlídat, ladit a obměňovat.
 // Bez téhle kategorie by nacenění tvrdilo, že po rozjezdu běží samy. Doplněno 3. 11. 2026.
 const AUTOMATIZACE_PECE = {
@@ -392,7 +403,7 @@ const TYPY_PROJEKTU = [
     popis: { cs: "Nový e-shop bez e-mailingu. Nástroj, šablona, základní automatizace a první kampaně." },
     ukony: [
       "pl-eval", "pl-account", "pl-dns", "pl-senddomain", "pl-integration",
-      "ob-briefing", "ob-audit", "ob-import", "ob-lists", "ob-template", "ob-optin", "ob-doubleoptin", "ob-utm",
+      "ob-briefing", "ob-audit", "st-strategy", "ob-import", "ob-lists", "ob-template", "ob-optin", "ob-doubleoptin", "ob-utm",
       "if-welcome", "if-cart", "if-postpurchase", "if-winback",
       { id: "ca-campaign", units: 2 }, "lm-cleaning", "lm-segment", "re-monthly", "tt-monitoring",
       "au-qa", "au-tuning",
@@ -418,7 +429,7 @@ const TYPY_PROJEKTU = [
     name: { cs: "Gastro: rozjezd newsletteru", en: "Hospitality: newsletter launch", de: "Gastro: Newsletter-Start" },
     popis: { cs: "Restaurace nebo bar bez e-mailingu. Nástroj, šablona v brandu, sběr kontaktů, uvítací e-mail a dva newslettery měsíčně." },
     ukony: [
-      "pl-eval", "pl-account", "pl-dns", "ob-briefing", "ob-import", "ob-lists", "ob-template",
+      "pl-eval", "pl-account", "pl-dns", "ob-briefing", { id: "st-strategy", hours: 4 }, "ob-import", "ob-lists", "ob-template",
       "ob-optin", "ob-doubleoptin", "ob-utm",
       { id: "if-welcome", cx: "simple" },
       { id: "ca-campaign", units: 2, cx: "simple" }, "lm-cleaning", { id: "re-monthly", cx: "simple" }, "tt-monitoring",

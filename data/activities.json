@@ -41,6 +41,9 @@
           "id": "ob-audit"
         },
         {
+          "id": "st-strategy"
+        },
+        {
           "id": "ob-import"
         },
         {
@@ -188,6 +191,10 @@
         },
         {
           "id": "ob-briefing"
+        },
+        {
+          "id": "st-strategy",
+          "hours": 4
         },
         {
           "id": "ob-import"
@@ -562,6 +569,28 @@
           "uspora": 0.4,
           "popisKlient": {
             "cs": "Rozbor dosavadních kampaní a dat s tím, co funguje a co opravit."
+          }
+        },
+        {
+          "kind": "hours",
+          "id": "st-strategy",
+          "name": {
+            "cs": "E-mail marketing strategie",
+            "en": "Email marketing strategy",
+            "de": "E-Mail-Marketing-Strategie"
+          },
+          "tooltip": {
+            "cs": "Tvorba komplexní strategie: cíle, kanály, automatizace, frekvence, segmenty. Menší klient zhruba 4 hodiny, vícetrhový projekt zhruba 12 hodin.",
+            "en": "Creating a comprehensive strategy — goals, channels, flows, frequency, segments. Smaller client ~4 h; multi-market ~12 h.",
+            "de": "Erstellung einer umfassenden Strategie — Ziele, Kanäle, Flows, Frequenz, Segmente."
+          },
+          "minHours": 4,
+          "maxHours": 12,
+          "avgHours": 7,
+          "role": "specialista",
+          "uspora": 0.4,
+          "popisKlient": {
+            "cs": "Plán e-mailingu: komu, co a jak často posílat a jaké automatizace postavit."
           }
         },
         {
@@ -1879,28 +1908,6 @@
         "de": "Einmalige strategische Aktivitäten außerhalb des Retainers — typischerweise projektbasiert abgerechnet."
       },
       "activities": [
-        {
-          "kind": "hours",
-          "id": "st-strategy",
-          "name": {
-            "cs": "E-mail marketing strategie",
-            "en": "Email marketing strategy",
-            "de": "E-Mail-Marketing-Strategie"
-          },
-          "tooltip": {
-            "cs": "Tvorba komplexní strategie: cíle, kanály, automatizace, frekvence, segmenty. Menší klient zhruba 4 hodiny, vícetrhový projekt zhruba 12 hodin.",
-            "en": "Creating a comprehensive strategy — goals, channels, flows, frequency, segments. Smaller client ~4 h; multi-market ~12 h.",
-            "de": "Erstellung einer umfassenden Strategie — Ziele, Kanäle, Flows, Frequenz, Segmente."
-          },
-          "minHours": 4,
-          "maxHours": 12,
-          "avgHours": 7,
-          "role": "specialista",
-          "uspora": 0.4,
-          "popisKlient": {
-            "cs": "Plán e-mailingu: komu, co a jak často posílat a jaké automatizace postavit."
-          }
-        },
         {
           "kind": "hours",
           "id": "st-fullaudit",

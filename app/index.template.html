@@ -107,7 +107,10 @@ aside .card{margin:0 0 14px}
 .souhrn-r:last-of-type{border-bottom:0}
 .souhrn-r .k{font-size:13px}
 .souhrn-r .k small{display:block;color:var(--gray);font-size:11.5px}
-.souhrn-r .v{font-weight:700;font-size:18px;white-space:nowrap}
+.souhrn-r .v{font-weight:700;font-size:18px;white-space:nowrap;text-align:right}
+.souhrn-r .v small{display:block;font-weight:400;font-size:12px;color:var(--gray)}
+.hod{font-weight:400;font-size:.8em;color:var(--gray);white-space:nowrap}
+.hod::before{content:"· "}
 .prepinac{display:flex;align-items:center;gap:8px;font-size:13px;cursor:pointer;margin:4px 0 0}
 .prepinac input{accent-color:var(--pink);width:16px;height:16px}
 .interni{background:#fafafa;border:1px dashed #cfcfcf}
@@ -149,6 +152,7 @@ details.nast summary{cursor:pointer;font-weight:600}
   box-shadow:0 12px 32px rgba(0,0,0,.25);transition:top .25s ease,left .25s ease;outline:none}
 .pr-karta h3{margin:2px 0 6px;color:var(--pink);font-size:17px}
 .pr-karta p{margin:0 0 14px;font-size:14px;line-height:1.5}
+.pruvodce.bez-animace .pr-svetlo,.pruvodce.bez-animace .pr-karta{transition:none}
 .pr-krok{font-size:12px;color:var(--gray)}
 .pr-tlacitka{display:flex;gap:8px;align-items:center}
 .pr-tlacitka .spacer{flex:1}
@@ -231,7 +235,7 @@ details.nast summary{cursor:pointer;font-weight:600}
     </div>
     <div class="napoveda">
       <button class="otaznik" id="b-help" title="Průvodce appkou" aria-label="Spustit průvodce appkou">?</button>
-      <div class="tip-poprve" id="tip-poprve" hidden>Poprvé tady? Klikni na otazník a průvodce ukáže, co je co.
+      <div class="tip-poprve" id="tip-poprve" hidden>Jste tu poprvé? Klikni na otazník a průvodce ukáže, co je co.
         <button id="b-tip-zavrit" aria-label="Zavřít">×</button></div>
     </div>
   </div>
@@ -393,6 +397,11 @@ function soucetFaze(f, div){
 function cenaKategorie(c){
   return c.activities.reduce((a,x)=>a+cena(hodinyUkonu(x)),0) + vlastniKat(c.id).reduce((a,v)=>a+cena(Number(v.hours)||0),0);
 }
+function hodinyKategorie(c){
+  return c.activities.reduce((a,x)=>a+hodinyUkonu(x),0) + vlastniKat(c.id).reduce((a,v)=>a+(Number(v.hours)||0),0);
+}
+// Hodiny jsou vidět jen na obrazovce. Do tisku a .md se nedostanou, ty se skládají zvlášť z položek a cen.
+const hod = h => `<span class="hod">${fmtH(h)} h</span>`;
 function pocetVybranych(c){
   return c.activities.filter(a => state.acts[a.id]?.sel).length + vlastniKat(c.id).length;
 }
@@ -409,7 +418,9 @@ function odhadTypu(typ){
     klient:state.klient, projekt:state.projekt, cil:state.cil};
   novyProjekt(typ);
   // Audit má hlavní práci ve fázi na vyžádání, proto se jednorázové sčítá ze všech fází mimo měsíční.
-  const r = {jednoraz: ["before","adhoc","after"].reduce((a,f)=>a+soucetFaze(f).cena,0), mesic: soucetFaze("during").cena};
+  const jedno = ["before","adhoc","after"].map(f => soucetFaze(f));
+  const m = soucetFaze("during");
+  const r = {jednoraz: jedno.reduce((a,s)=>a+s.cena,0), jednorazH: jedno.reduce((a,s)=>a+s.h,0), mesic: m.cena, mesicH: m.h};
   Object.assign(state, zaloha);
   return r;
 }
@@ -419,8 +430,8 @@ function viewHome(){
   const n = state.nastaveni;
   const karty = TYPY.map(p => {
     const o = odhadTypu(p);
-    const ceny = [o.jednoraz ? `jednorázově <strong>${fmtKc(o.jednoraz)}</strong>` : "",
-                  o.mesic ? `měsíčně <strong>${fmtKc(o.mesic)}</strong>` : ""].filter(Boolean).join(" · ");
+    const ceny = [o.jednoraz ? `jednorázově <strong>${fmtKc(o.jednoraz)}</strong> ${hod(o.jednorazH)}` : "",
+                  o.mesic ? `měsíčně <strong>${fmtKc(o.mesic)}</strong> ${hod(o.mesicH)}` : ""].filter(Boolean).join("<br>");
     return `<button class="sablona" data-typ="${p.id}">
       <span class="n">${esc(L(p.name))}</span>
       <span class="d">${esc(L(p.popis))}</span>
@@ -492,11 +503,11 @@ function viewEditor(){
     const kh = DIVIZE.reduce((a,d) => a + hodinyKomunikace(f.id, d), 0);
     return `<div class="faze" id="faze-${f.id}">
         <h2>${esc(L(f))}</h2><span class="fakt">${esc(L(f.fakturace))}</span>
-        <span class="cena">${s.cena ? fmtKc(s.cena) : ""}</span>
+        <span class="cena">${s.cena ? fmtKc(s.cena) + " " + hod(s.h) : ""}</span>
       </div>
       ${kats}
       ${kh ? `<div class="komrow"><span>Koordinace, komunikace a schvalování (${esc(state.nastaveni.komunikace)} %)</span>
-        <span>${fmtKc(cenaKomunikace(f.id))}${state.interni ? ` <span class="muted">· ${fmtH(kh)} h</span>` : ""}</span></div>` : ""}`;
+        <span>${fmtKc(cenaKomunikace(f.id))} ${hod(kh)}</span></div>` : ""}`;
   }).join("");
 
   $("#view").innerHTML = `
@@ -536,7 +547,7 @@ function blokKategorie(c){
   return `<details class="kat ${gl ? "kat-gl" : ""}" data-kat="${c.id}" ${open}>
     <summary><span class="kn">${esc(L(c.name))}</span>${gl ? LOGO_GL : ""}
       <span class="kpocet">${n ? n + " vybráno" : ""}</span>
-      <span class="kcena">${n ? fmtKc(cenaKategorie(c)) : ""}</span></summary>
+      <span class="kcena">${n ? fmtKc(cenaKategorie(c)) + " " + hod(hodinyKategorie(c)) : ""}</span></summary>
     <div class="kbody">
       <p class="kpopis">${esc(L(c.description))}</p>
       ${radky}
@@ -564,7 +575,7 @@ function radekUkonu(a){
     ctl += `<label class="muted">skutečně <input type="number" min="0" step="0.5" value="${esc(s.skut ?? "")}"
       placeholder="${fmtH(h*(1-(a.uspora||0)))}" data-skut="${a.id}"> h</label>`;
   }
-  const int = on && state.interni ? `<span class="int">${fmtH(h)} h → ${fmtH(skutecneUkonu(a))} h</span>` : "";
+  const int = !on ? "" : `<span class="int">${fmtH(h)} h${state.interni ? ` → ${fmtH(skutecneUkonu(a))} h` : ""}</span>`;
   // Odborný název působí odborně, proto zůstává. Lidské vysvětlení je pod „i“
   // a stejnou větu dostane klient v nacenění pod názvem položky.
   const otevreno = state.info[a.id];
@@ -579,7 +590,7 @@ function radekUkonu(a){
 }
 
 function radekVlastni(c, v, i){
-  const int = state.interni ? `<span class="int">${fmtH(v.hours)} h → ${fmtH(skutecneVlastni(v))} h</span>` : "";
+  const int = `<span class="int">${fmtH(v.hours)} h${state.interni ? ` → ${fmtH(skutecneVlastni(v))} h` : ""}</span>`;
   return `<div class="act">
     <div class="head">
       <input type="checkbox" checked data-vldel="${c.id}" data-i="${i}" title="Odebrat">
@@ -599,16 +610,18 @@ function rozpocet(){
 
 function souhrnHtml(){
   const r = rozpocet();
-  const radek = (k, pozn, v) => v ? `<div class="souhrn-r"><span class="k">${k}<small>${pozn}</small></span><span class="v">${fmtKc(v)}</span></div>` : "";
+  const radek = (k, pozn, s) => s.cena ? `<div class="souhrn-r"><span class="k">${k}<small>${pozn}</small></span>
+    <span class="v">${fmtKc(s.cena)}<small>${fmtH(s.h)} h</small></span></div>` : "";
   const nic = !r.start && !r.mesic && !r.adhoc && !r.konec;
   const interni = state.interni ? interniHtml(r) : "";
   return `<div class="card">
       <h3>Cena pro klienta</h3>
       ${nic ? `<p class="muted" style="font-size:13px">Zatím není vybraný žádný úkon.</p>` : ""}
-      ${radek("Rozjezd", "jednorázově", r.start)}
-      ${radek("Měsíční správa", "každý měsíc", r.mesic)}
-      ${radek("Na vyžádání", "vybrané položky, při objednání", r.adhoc)}
-      ${radek("Ukončení spolupráce", "jednorázově na konci", r.konec)}
+      ${radek("Rozjezd", "jednorázově", r.f.before)}
+      ${radek("Měsíční správa", "každý měsíc", r.f.during)}
+      ${radek("Na vyžádání", "vybrané položky, při objednání", r.f.adhoc)}
+      ${radek("Ukončení spolupráce", "jednorázově na konci", r.f.after)}
+      ${nic ? "" : `<p class="hint">Hodiny jsou jen tady v appce, do tisku ani do .md se nedostanou.</p>`}
       <label class="prepinac"><input type="checkbox" id="i-interni" ${state.interni?"checked":""}> Interní pohled: hodiny, náklad a marže</label>
     </div>
     ${interni}
@@ -880,7 +893,7 @@ const KROKY_EDITOR = [
   {cil:"main > .card", nadpis:"Zadání", text:"Klient, název a cíl spolupráce. Všechno se propíše do nacenění pro klienta, cíl jako první odstavec."},
   {cil:"#faze-before", nadpis:"Fáze", text:"Nacenění má čtyři části: Rozjezd platí klient jednou, Měsíční správu každý měsíc, Na vyžádání jen když si ji objedná a Ukončení na konci spolupráce. Vpravo je cena celé fáze."},
   {cil:"details.kat[open]", nadpis:"Kategorie", text:"Kategorie se rozbalují kliknutím. V záhlaví je vidět, kolik úkonů je vybraných a kolik stojí.", pred:otevritKategorii},
-  {cil:"details.kat[open] .act:not(.vypnuto)", nadpis:"Úkon", text:"Zaškrtnutím se úkon přidá do nacenění. Pak se nastaví hodiny, nebo počet a složitost. Tlačítka s čísly jsou rychlá volba minima, průměru a maxima. Cena úkonu je vpravo."},
+  {cil:"details.kat[open] .act:not(.vypnuto)", nadpis:"Úkon", text:"Zaškrtnutím se úkon přidá do nacenění. Pak se nastaví hodiny, nebo počet a složitost. Tlačítka s čísly jsou rychlá volba minima, průměru a maxima. Vpravo je cena a pod ní hodiny. Hodiny vidíš jen v appce, klient je v nacenění nedostane."},
   {cil:"details.kat[open] .info", nadpis:"Vysvětlivka", text:"Pod „i“ je lidské vysvětlení úkonu a technická poznámka. Lidská věta jde klientovi do nacenění pod odborný název."},
   {cil:".komrow", nadpis:"Komunikace a schvalování", text:"Hovory, schvalovací kola a zápisy se přičítají samy jako procento z hodin specialisty v dané fázi. Nemusí se na ně myslet."},
   {cil:"details.kat-gl", nadpis:"GetLeads", text:"Aktivní oslovování dodává GetLeads, B2B divize CreatiComu. Poznáš ho podle navy linky a loga. V nacenění má vlastní část, a když je v něm jen oslovování, vyjde celé v brandu GetLeads."},
@@ -908,6 +921,7 @@ function spustitPruvodce(){
   $("#pruvodce").hidden = false;
   document.addEventListener("keydown", klavesyPruvodce);
   window.addEventListener("resize", umistitKrok);
+  window.addEventListener("scroll", priScrollu, {passive:true});
   ukazKrok(1);
 }
 
@@ -925,6 +939,7 @@ function ukazKrok(smer){
   $("#pr-text").textContent = k.text;
   $("#pr-zpet").disabled = pruvodce.i === 0;
   $("#pr-dal").textContent = k.ukazka ? "Ukázat editor" : pruvodce.i === pruvodce.kroky.length - 1 ? "Hotovo" : "Další";
+  $("#pruvodce").classList.remove("bez-animace");
   if(el) el.scrollIntoView({block:"center", behavior:"instant"});
   umistitKrok();
   $("#pr-karta").focus();
@@ -952,6 +967,18 @@ function umistitKrok(){
   const kLeft = Math.min(innerWidth - kw - 16, Math.max(16, r.left));
   karta.style.top = kTop + "px";
   karta.style.left = kLeft + "px";
+}
+
+// Při scrollu světlo i karta jedou s prvkem. Animace se na tu chvíli vypne,
+// jinak by zvýraznění za prvkem viditelně zaostávalo.
+let scrollRaf = 0;
+function priScrollu(){
+  if(scrollRaf) return;
+  scrollRaf = requestAnimationFrame(() => {
+    scrollRaf = 0;
+    $("#pruvodce").classList.add("bez-animace");
+    umistitKrok();
+  });
 }
 
 function dalsiKrok(){
@@ -984,6 +1011,7 @@ function ukoncitPruvodce(){
   $("#pruvodce").hidden = true;
   document.removeEventListener("keydown", klavesyPruvodce);
   window.removeEventListener("resize", umistitKrok);
+  window.removeEventListener("scroll", priScrollu);
   if(pruvodce.zaloha){ Object.assign(state, pruvodce.zaloha); pruvodce.zaloha = null; render(); window.scrollTo(0,0); }
   $("#b-help").focus();
 }
